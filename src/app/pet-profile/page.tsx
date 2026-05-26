@@ -11,7 +11,7 @@ import { useLanguageStore, translations } from '@/store/useLanguageStore';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// --- REFINED LUXURY 3D CARD COMPONENT ---
+// --- REFINED LUXURY 3D CARD COMPONENT (Optimized for Mobile/Touch) ---
 const LuxuryCard = ({ profile, tier, points, t }: { profile: any, tier: string, points: number, t: any }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -39,6 +39,7 @@ const LuxuryCard = ({ profile, tier, points, t }: { profile: any, tier: string, 
     y.set(yPct);
   };
 
+  // Support for Gyroscope/Device Orientation on Mobile (Optional, but here we smooth return)
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
@@ -48,14 +49,14 @@ const LuxuryCard = ({ profile, tier, points, t }: { profile: any, tier: string, 
 
   return (
     <div 
-      className="perspective-2000 w-full max-w-[600px] aspect-[1.58/1] mx-auto cursor-pointer relative"
+      className="perspective-2000 w-full max-w-[550px] aspect-[1.58/1] mx-auto cursor-pointer relative touch-none"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       ref={cardRef}
     >
       <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="relative w-full h-full rounded-[32px] overflow-hidden bg-[#0d0d0d] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] border border-white/10 transition-shadow duration-500"
+        className="relative w-full h-full rounded-[24px] sm:rounded-[32px] overflow-hidden bg-[#0d0d0d] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)] border border-white/10 transition-shadow duration-500"
       >
         <div className="absolute inset-0 z-0">
           <Image src={cardImage} alt="Card Texture" fill className="object-cover opacity-30 grayscale" />
@@ -73,39 +74,39 @@ const LuxuryCard = ({ profile, tier, points, t }: { profile: any, tier: string, 
           }}
         />
 
-        <div className="absolute inset-0 p-10 flex flex-col justify-between z-20" style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}>
+        <div className="absolute inset-0 p-6 sm:p-10 flex flex-col justify-between z-20" style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}>
           <div className="flex justify-between items-start" style={{ transform: "translateZ(20px)" }}>
             <div className="space-y-1">
               <div className="flex items-center gap-2 opacity-60">
                 <div className="w-1 h-1 rounded-full bg-accent-gold" />
-                <span className="text-[8px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.crm.memberCard}</span>
+                <span className="text-[7px] sm:text-[8px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.crm.memberCard}</span>
               </div>
-              <h3 className="text-3xl font-black uppercase tracking-tight text-white">{profile?.name || "GUEST"}</h3>
+              <h3 className="text-xl sm:text-3xl font-black uppercase tracking-tight text-white">{profile?.name || "GUEST"}</h3>
             </div>
-            <Award className="text-accent-gold/80" size={32} strokeWidth={1} />
+            <Award className="text-accent-gold/80" size={24} sm:size={32} strokeWidth={1} />
           </div>
 
-          <div className="space-y-8" style={{ transform: "translateZ(30px)" }}>
-            <div className="flex gap-12">
+          <div className="space-y-4 sm:space-y-8" style={{ transform: "translateZ(30px)" }}>
+            <div className="flex gap-8 sm:gap-12">
                <div className="space-y-1">
-                 <span className="block text-[8px] font-bold uppercase tracking-[0.2em] text-neutral-500">{t.crm.tierLevel}</span>
-                 <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-accent-gold via-[#f3e2b4] to-accent-gold tracking-[0.1em] uppercase">{tier}</span>
+                 <span className="block text-[7px] sm:text-[8px] font-bold uppercase tracking-[0.2em] text-neutral-500">{t.crm.tierLevel}</span>
+                 <span className="text-lg sm:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-accent-gold via-[#f3e2b4] to-accent-gold tracking-[0.1em] uppercase">{tier}</span>
                </div>
                <div className="space-y-1">
-                 <span className="block text-[8px] font-bold uppercase tracking-[0.2em] text-neutral-500">{t.crm.points}</span>
-                 <span className="text-2xl font-black text-white tracking-tight">{points.toLocaleString()}</span>
+                 <span className="block text-[7px] sm:text-[8px] font-bold uppercase tracking-[0.2em] text-neutral-500">{t.crm.points}</span>
+                 <span className="text-lg sm:text-2xl font-black text-white tracking-tight">{points.toLocaleString()}</span>
                </div>
             </div>
             <div className="flex justify-between items-end border-t border-white/5 pt-4">
-               <span className="text-[8px] font-bold text-neutral-500 uppercase tracking-[0.2em]">{t.crm.verifiedOwner}</span>
-               <div className="text-[8px] font-mono text-white/20 tracking-[0.3em]">PRIME-AUTH-8824</div>
+               <span className="text-[7px] sm:text-[8px] font-bold text-neutral-500 uppercase tracking-[0.2em]">{t.crm.verifiedOwner}</span>
+               <div className="text-[7px] sm:text-[8px] font-mono text-white/20 tracking-[0.3em]">PRIME-8824</div>
             </div>
           </div>
         </div>
-        <div className="absolute inset-0 rounded-[32px] border border-white/5 pointer-events-none z-30" />
+        <div className="absolute inset-0 rounded-[24px] sm:rounded-[32px] border border-white/5 pointer-events-none z-30" />
       </motion.div>
       <motion.div 
-        className="absolute -bottom-6 left-10 right-10 h-10 bg-black/50 blur-[30px] rounded-full -z-10"
+        className="absolute -bottom-4 left-6 right-6 h-8 bg-black/50 blur-[20px] rounded-full -z-10"
         style={{
           opacity: useTransform(mouseYSpring, [-0.5, 0.5], [0.3, 0.7]),
           scale: useTransform(mouseXSpring, [-0.5, 0.5], [0.95, 1.05]),
@@ -162,15 +163,15 @@ export default function PetProfilePage() {
   const sizeOptions = useMemo(() => {
     if (type === 'dog') {
       return [
-        { value: 'small', label: language === 'th' ? 'ขนาดเล็ก (น้อยกว่า 10 กก.)' : 'Small (Under 10kg)' },
-        { value: 'medium', label: language === 'th' ? 'ขนาดกลาง (10 - 25 กก.)' : 'Average (10 - 25kg)' },
-        { value: 'large', label: language === 'th' ? 'ขนาดใหญ่ (25 กก. ขึ้นไป)' : 'Big (Above 25kg)' },
+        { value: 'small', label: language === 'th' ? 'ขนาดเล็ก (< 10 กก.)' : 'Small (< 10kg)' },
+        { value: 'medium', label: language === 'th' ? 'ขนาดกลาง (10-25 กก.)' : 'Average (10-25kg)' },
+        { value: 'large', label: language === 'th' ? 'ขนาดใหญ่ (> 25 กก.)' : 'Big (> 25kg)' },
       ];
     } else {
       return [
-        { value: 'small', label: language === 'th' ? 'ขนาดเล็ก (น้อยกว่า 3.5 กก.)' : 'Small (Under 3.5kg)' },
-        { value: 'medium', label: language === 'th' ? 'ขนาดปกติ (3.6 - 5.5 กก.)' : 'Average (3.6 - 5.5kg)' },
-        { value: 'large', label: language === 'th' ? 'ขนาดใหญ่ (5.5 กก. ขึ้นไป)' : 'Big (Above 5.5kg)' },
+        { value: 'small', label: language === 'th' ? 'ขนาดเล็ก (< 3.5 กก.)' : 'Small (< 3.5kg)' },
+        { value: 'medium', label: language === 'th' ? 'ขนาดปกติ (3.6-5.5 กก.)' : 'Average (3.6-5.5kg)' },
+        { value: 'large', label: language === 'th' ? 'ขนาดใหญ่ (> 5.5 กก.)' : 'Big (> 5.5kg)' },
       ];
     }
   }, [type, language]);
@@ -207,70 +208,74 @@ export default function PetProfilePage() {
         <Image src="https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=1440" fill className="object-cover" alt="" />
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20 pt-40 pb-40 relative z-10">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20 pt-32 sm:pt-40 pb-20 sm:pb-40 relative z-10">
         <AnimatePresence mode="wait">
           {step < 4 && (
-            <motion.div key="onboarding" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, y: -20 }} className="max-w-4xl mx-auto space-y-24 py-20">
+            <motion.div key="onboarding" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, y: -20 }} className="max-w-4xl mx-auto space-y-12 sm:space-y-24 py-10 sm:py-20">
               {step === 1 && (
-                <div className="text-center space-y-12">
+                <div className="text-center space-y-8 sm:space-y-12">
                    <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex justify-center">
-                      <div className="w-24 h-24 bg-cream-light rounded-full flex items-center justify-center text-accent-gold"><Sparkles size={40} /></div>
+                      <div className="w-16 h-16 sm:w-24 sm:h-24 bg-cream-light rounded-full flex items-center justify-center text-accent-gold"><Sparkles size={32} sm:size={40} /></div>
                    </motion.div>
-                   <div className="space-y-6">
-                      <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">{t.crm.welcomeTitle} <br /> <span className="text-accent-gold italic">Duit Atelier.</span></h1>
-                      <p className="text-xl text-secondary font-medium max-w-xl mx-auto opacity-70">{t.crm.welcomeSubtitle}</p>
+                   <div className="space-y-4 sm:space-y-6">
+                      <h1 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">{t.crm.welcomeTitle} <br /> <span className="text-accent-gold italic">Duit Atelier.</span></h1>
+                      <p className="text-base sm:text-xl text-secondary font-medium max-w-xl mx-auto opacity-70 px-4">{t.crm.welcomeSubtitle}</p>
                    </div>
-                   <button onClick={() => setStep(2)} className="bg-primary text-white px-16 py-8 rounded-full font-black text-xs uppercase tracking-[0.4em] hover:bg-accent-gold transition-all shadow-xl">{t.crm.initDiscovery}</button>
+                   <button onClick={() => setStep(2)} className="bg-primary text-white px-10 sm:px-16 py-5 sm:py-8 rounded-full font-black text-[10px] sm:text-xs uppercase tracking-[0.4em] hover:bg-accent-gold transition-all shadow-xl active:scale-95">
+                      {t.crm.initDiscovery}
+                   </button>
                 </div>
               )}
 
               {step === 2 && (
-                <div className="space-y-20">
-                   <div className="text-center space-y-4">
+                <div className="space-y-12 sm:space-y-20">
+                   <div className="text-center space-y-2 sm:space-y-4">
                       <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.crm.stage01}</span>
-                      <h2 className="text-5xl font-black uppercase tracking-tight">{t.crm.definePet}</h2>
+                      <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight">{t.crm.definePet}</h2>
                    </div>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                      <button onClick={() => { setType('dog'); setStep(3); }} className="group aspect-square bg-white border border-neutral-100 rounded-[64px] flex flex-col items-center justify-center gap-8 hover:bg-primary transition-all duration-700 shadow-sm">
-                         <div className="w-32 h-32 bg-neutral-50 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Dog size={64} strokeWidth={1} /></div>
-                         <span className="text-sm font-black uppercase tracking-[0.4em] group-hover:text-white transition-colors">{t.crm.dog}</span>
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 px-4 sm:px-0">
+                      <button onClick={() => { setType('dog'); setStep(3); }} className="group aspect-video sm:aspect-square bg-white border border-neutral-100 rounded-[32px] sm:rounded-[64px] flex flex-row sm:flex-col items-center justify-center gap-6 sm:gap-8 hover:bg-primary transition-all duration-700 shadow-sm active:scale-95">
+                         <div className="w-16 h-16 sm:w-32 sm:h-32 bg-neutral-50 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Dog size={32} sm:size={64} strokeWidth={1} /></div>
+                         <span className="text-xs sm:text-sm font-black uppercase tracking-[0.4em] group-hover:text-white transition-colors">{t.crm.dog}</span>
                       </button>
-                      <button onClick={() => { setType('cat'); setStep(3); }} className="group aspect-square bg-white border border-neutral-100 rounded-[64px] flex flex-col items-center justify-center gap-8 hover:bg-primary transition-all duration-700 shadow-sm">
-                         <div className="w-32 h-32 bg-neutral-50 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Cat size={64} strokeWidth={1} /></div>
-                         <span className="text-sm font-black uppercase tracking-[0.4em] group-hover:text-white transition-colors">{t.crm.cat}</span>
+                      <button onClick={() => { setType('cat'); setStep(3); }} className="group aspect-video sm:aspect-square bg-white border border-neutral-100 rounded-[32px] sm:rounded-[64px] flex flex-row sm:flex-col items-center justify-center gap-6 sm:gap-8 hover:bg-primary transition-all duration-700 shadow-sm active:scale-95">
+                         <div className="w-16 h-16 sm:w-32 sm:h-32 bg-neutral-50 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Cat size={32} sm:size={64} strokeWidth={1} /></div>
+                         <span className="text-xs sm:text-sm font-black uppercase tracking-[0.4em] group-hover:text-white transition-colors">{t.crm.cat}</span>
                       </button>
                    </div>
                 </div>
               )}
 
               {step === 3 && (
-                <div className="max-w-2xl mx-auto space-y-16">
-                   <div className="text-center space-y-4">
+                <div className="max-w-2xl mx-auto space-y-12 sm:space-y-16 px-4">
+                   <div className="text-center space-y-2 sm:space-y-4">
                       <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.crm.stage02}</span>
-                      <h2 className="text-5xl font-black uppercase tracking-tight">{t.crm.detailedPortfolio}</h2>
+                      <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight">{t.crm.detailedPortfolio}</h2>
                    </div>
-                   <div className="space-y-12">
+                   <div className="space-y-8 sm:space-y-12">
                       <div className="space-y-4">
-                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 ml-8">{t.crm.officialName}</label>
-                        <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full h-24 bg-transparent border-b border-neutral-200 text-3xl font-black uppercase tracking-tight outline-none px-8 focus:border-accent-gold transition-colors" placeholder="..." />
+                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 ml-4 sm:ml-8">{t.crm.officialName}</label>
+                        <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full h-16 sm:h-24 bg-transparent border-b border-neutral-200 text-xl sm:text-3xl font-black uppercase tracking-tight outline-none px-4 sm:px-8 focus:border-accent-gold transition-colors" placeholder="..." />
                       </div>
-                      <div className="grid grid-cols-2 gap-8">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                          <div className="space-y-4">
-                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 ml-8">{t.crm.heritage}</label>
-                            <select value={breed} onChange={e => setBreed(e.target.value)} className="w-full h-16 bg-transparent border-b border-neutral-200 text-lg font-bold outline-none">
+                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 ml-4 sm:ml-8">{t.crm.heritage}</label>
+                            <select value={breed} onChange={e => setBreed(e.target.value)} className="w-full h-12 sm:h-16 bg-transparent border-b border-neutral-200 text-base sm:text-lg font-bold outline-none">
                                <option value="">{t.crm.selectBreed}</option>
                                {sortedBreeds.map(b => <option key={b.en} value={b.en}>{language === 'th' ? b.th : b.en}</option>)}
                             </select>
                          </div>
                          <div className="space-y-4">
-                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 ml-8">{t.crm.classification}</label>
-                            <select value={size || ''} onChange={e => setSize(e.target.value as PetSize)} className="w-full h-16 bg-transparent border-b border-neutral-200 text-lg font-bold outline-none">
+                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 ml-4 sm:ml-8">{t.crm.classification}</label>
+                            <select value={size || ''} onChange={e => setSize(e.target.value as PetSize)} className="w-full h-12 sm:h-16 bg-transparent border-b border-neutral-200 text-base sm:text-lg font-bold outline-none">
                                <option value="">{t.crm.selectSize}</option>
                                {sizeOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
                             </select>
                          </div>
                       </div>
-                      <button onClick={handleSave} className="w-full bg-primary text-white py-8 rounded-full font-black text-xs uppercase tracking-[0.4em] hover:bg-accent-gold transition-all shadow-xl">{t.crm.generate}</button>
+                      <button onClick={handleSave} className="w-full bg-primary text-white py-5 sm:py-8 rounded-full font-black text-[10px] sm:text-xs uppercase tracking-[0.4em] hover:bg-accent-gold transition-all shadow-xl active:scale-95">
+                         {t.crm.generate}
+                      </button>
                    </div>
                 </div>
               )}
@@ -278,48 +283,48 @@ export default function PetProfilePage() {
           )}
 
           {step === 4 && (
-            <motion.div key="dashboard" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-24">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-                 <div className="space-y-12 text-center lg:text-left">
-                    <div className="space-y-6">
+            <motion.div key="dashboard" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-16 sm:space-y-24">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-24 items-center px-4 sm:px-0">
+                 <div className="space-y-8 sm:space-y-12 text-center lg:text-left">
+                    <div className="space-y-4 sm:space-y-6">
                        <div className="flex items-center justify-center lg:justify-start gap-4">
-                          <div className={`h-px w-12 ${type === 'dog' ? 'bg-blue-600' : 'bg-accent-gold'}`}></div>
+                          <div className={`h-px w-8 sm:w-12 ${type === 'dog' ? 'bg-blue-600' : 'bg-accent-gold'}`}></div>
                           <span className={`${type === 'dog' ? 'text-blue-600' : 'text-accent-gold'} text-[10px] font-black uppercase tracking-[0.4em]`}>{t.crm.memberCard}</span>
                        </div>
-                       <h1 className="text-6xl md:text-[100px] font-black uppercase tracking-tighter leading-[0.85]">{t.crm.memberPavilion.split(' ')[0]} <br /> <span className={`${type === 'dog' ? 'text-blue-600' : 'text-accent-gold'} italic`}>{t.crm.memberPavilion.split(' ')[1] || 'Pavilion.'}</span></h1>
-                       <p className="text-lg text-secondary font-medium leading-relaxed max-w-md mx-auto lg:mx-0 opacity-70">{t.crm.dashboardSubtitle}</p>
+                       <h1 className="text-4xl sm:text-6xl md:text-[100px] font-black uppercase tracking-tighter leading-[0.85]">{t.crm.memberPavilion.split(' ')[0]} <br /> <span className={`${type === 'dog' ? 'text-blue-600' : 'text-accent-gold'} italic`}>{t.crm.memberPavilion.split(' ')[1] || 'Pavilion.'}</span></h1>
+                       <p className="text-base sm:text-lg text-secondary font-medium leading-relaxed max-w-md mx-auto lg:mx-0 opacity-70">{t.crm.dashboardSubtitle}</p>
                     </div>
-                    <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                       <button onClick={() => setActiveTab('profile')} className={`px-10 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all ${activeTab === 'profile' ? 'bg-primary text-white shadow-xl' : 'bg-white/50 text-neutral-400 hover:bg-white'}`}>{t.crm.tabPersona}</button>
-                       <button onClick={() => setActiveTab('registry')} className={`px-10 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all ${activeTab === 'registry' ? 'bg-primary text-white shadow-xl' : 'bg-white/50 text-neutral-400 hover:bg-white'}`}>{t.crm.tabCollection}</button>
-                       <button onClick={() => setActiveTab('rewards')} className={`px-10 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all ${activeTab === 'rewards' ? 'bg-primary text-white shadow-xl' : 'bg-white/50 text-neutral-400 hover:bg-white'}`}>{t.crm.tabPrivileges}</button>
+                    <div className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 overflow-x-auto no-scrollbar py-2">
+                       <button onClick={() => setActiveTab('profile')} className={`px-6 sm:px-10 py-3 sm:py-5 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${activeTab === 'profile' ? 'bg-primary text-white shadow-xl' : 'bg-white/50 text-neutral-400 hover:bg-white'}`}>{t.crm.tabPersona}</button>
+                       <button onClick={() => setActiveTab('registry')} className={`px-6 sm:px-10 py-3 sm:py-5 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${activeTab === 'registry' ? 'bg-primary text-white shadow-xl' : 'bg-white/50 text-neutral-400 hover:bg-white'}`}>{t.crm.tabCollection}</button>
+                       <button onClick={() => setActiveTab('rewards')} className={`px-6 sm:px-10 py-3 sm:py-5 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${activeTab === 'rewards' ? 'bg-primary text-white shadow-xl' : 'bg-white/50 text-neutral-400 hover:bg-white'}`}>{t.crm.tabPrivileges}</button>
                     </div>
                  </div>
                  <LuxuryCard profile={profile} tier="Gold" points={2450} t={t} />
               </div>
 
-              <div className="pt-24 border-t border-neutral-100">
+              <div className="pt-16 sm:pt-24 border-t border-neutral-100">
                  {activeTab === 'profile' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
-                       <div className="space-y-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-24 px-4 sm:px-0">
+                       <div className="space-y-8 sm:space-y-12">
                           <div className="space-y-6">
-                             <h2 className="text-4xl font-black uppercase tracking-tight">{t.crm.identitySynthesis}</h2>
-                             <div className={`${themeColors.card} p-12 rounded-[48px] border border-neutral-100 relative overflow-hidden shadow-sm`}>
-                                <Sparkles className={`absolute top-8 right-8 ${type === 'dog' ? 'text-blue-600/10' : 'text-accent-gold/20'}`} size={100} />
-                                <div className="space-y-8 relative z-10">
-                                   <div className="space-y-4">
+                             <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">{t.crm.identitySynthesis}</h2>
+                             <div className={`${themeColors.card} p-8 sm:p-12 rounded-[32px] sm:rounded-[48px] border border-neutral-100 relative overflow-hidden shadow-sm`}>
+                                <Sparkles className={`absolute top-4 right-4 sm:top-8 sm:right-8 ${type === 'dog' ? 'text-blue-600/10' : 'text-accent-gold/20'}`} size={60} sm:size={100} />
+                                <div className="space-y-6 sm:space-y-8 relative z-10">
+                                   <div className="space-y-2 sm:space-y-4">
                                       <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${type === 'dog' ? 'text-blue-600' : 'text-accent-gold'}`}>{t.crm.aiResult}</span>
-                                      <h3 className="text-2xl font-black uppercase">{aiInsights?.title}</h3>
+                                      <h3 className="text-xl sm:text-2xl font-black uppercase">{aiInsights?.title}</h3>
                                    </div>
-                                   <p className="text-lg text-secondary font-medium leading-relaxed italic">"{aiInsights?.reason}"</p>
-                                   <div className="flex gap-8">
-                                      <div className="text-center">
-                                         <span className="block text-[8px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Energy Level</span>
+                                   <p className="text-base sm:text-lg text-secondary font-medium leading-relaxed italic">"{aiInsights?.reason}"</p>
+                                   <div className="flex flex-wrap gap-6 sm:gap-8">
+                                      <div className="text-left">
+                                         <span className="block text-[8px] font-bold text-neutral-400 uppercase tracking-widest mb-2">Energy Level</span>
                                          <div className="flex gap-1">
-                                            {[1,2,3,4,5].map(i => <div key={i} className={`w-4 h-1 rounded-full ${i <= 4 ? (type === 'dog' ? 'bg-blue-600' : 'bg-accent-gold') : 'bg-neutral-200'}`}></div>)}
+                                            {[1,2,3,4,5].map(i => <div key={i} className={`w-4 sm:w-6 h-1 rounded-full ${i <= 4 ? (type === 'dog' ? 'bg-blue-600' : 'bg-accent-gold') : 'bg-neutral-200'}`}></div>)}
                                          </div>
                                       </div>
-                                      <div className="text-center">
+                                      <div className="text-left">
                                          <span className="block text-[8px] font-bold text-neutral-400 uppercase tracking-widest mb-1">Design Preference</span>
                                          <span className="text-[10px] font-black uppercase tracking-widest">MINIMALIST</span>
                                       </div>
@@ -329,18 +334,18 @@ export default function PetProfilePage() {
                           </div>
                           <button onClick={() => { clearProfile(); setStep(1); }} className="flex items-center gap-3 text-red-500 font-black text-[10px] uppercase tracking-[0.2em] hover:translate-x-2 transition-all"><Trash2 size={16} /> {t.crm.resetProfile}</button>
                        </div>
-                       <div className="space-y-12">
-                          <h2 className="text-4xl font-black uppercase tracking-tight">{t.crm.bespokeCuration}</h2>
-                          <div className="grid grid-cols-1 gap-6">
+                       <div className="space-y-8 sm:space-y-12">
+                          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">{t.crm.bespokeCuration}</h2>
+                          <div className="grid grid-cols-1 gap-4 sm:gap-6">
                              {aiInsights?.products.map(p => (
-                                <Link key={p.id} href={`/products/${p.id}`} className="group flex items-center gap-8 p-8 bg-white border border-neutral-100 rounded-[40px] hover:border-accent-gold hover:shadow-luxury transition-all">
-                                   <div className="w-32 h-32 bg-neutral-50 rounded-3xl overflow-hidden relative"><Image src={p.image} alt={p.name} fill className="object-contain p-4 group-hover:scale-110 transition-transform duration-700" /></div>
-                                   <div className="space-y-2">
-                                      <span className={`text-[9px] font-black ${type === 'dog' ? 'text-blue-600' : 'text-accent-gold'} uppercase tracking-[0.2em]`}>{t.crm.recommended}</span>
-                                      <h4 className="text-xl font-black uppercase tracking-tight">{p.name}</h4>
-                                      <p className="text-sm text-secondary font-medium opacity-60">Design for refined aesthetics</p>
+                                <Link key={p.id} href={`/products/${p.id}`} className="group flex items-center gap-4 sm:gap-8 p-4 sm:p-8 bg-white border border-neutral-100 rounded-[24px] sm:rounded-[40px] hover:border-accent-gold hover:shadow-luxury transition-all active:scale-[0.98]">
+                                   <div className="w-20 h-20 sm:w-32 sm:h-32 bg-neutral-50 rounded-2xl sm:rounded-3xl overflow-hidden relative shrink-0"><Image src={p.image} alt={p.name} fill className="object-contain p-2 group-hover:scale-110 transition-transform duration-700" /></div>
+                                   <div className="space-y-1">
+                                      <span className={`text-[8px] sm:text-[9px] font-black ${type === 'dog' ? 'text-blue-600' : 'text-accent-gold'} uppercase tracking-[0.2em]`}>{t.crm.recommended}</span>
+                                      <h4 className="text-base sm:text-xl font-black uppercase tracking-tight line-clamp-1">{p.name}</h4>
+                                      <p className="text-[10px] sm:text-sm text-secondary font-medium opacity-60">Design for refined aesthetics</p>
                                    </div>
-                                   <div className="ml-auto w-12 h-12 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all"><ChevronRight size={20} /></div>
+                                   <div className="ml-auto w-8 h-8 sm:w-12 sm:h-12 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all"><ChevronRight size={16} sm:size={20} /></div>
                                 </Link>
                              ))}
                           </div>
@@ -349,29 +354,29 @@ export default function PetProfilePage() {
                  )}
 
                  {activeTab === 'registry' && (
-                    <div className="max-w-4xl mx-auto space-y-12 text-center py-20">
-                       <div className={`w-32 h-32 ${type === 'dog' ? 'bg-blue-50 text-blue-600' : 'bg-cream-light text-accent-gold'} rounded-full flex items-center justify-center mx-auto mb-8`}><ShieldCheck size={64} strokeWidth={1} /></div>
-                       <h2 className="text-4xl font-black uppercase tracking-tight">{t.crm.managedCollection}</h2>
-                       <p className="text-secondary max-w-md mx-auto">{t.crm.collectionSubtitle}</p>
-                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left mt-16">
-                          <div className="p-10 border border-neutral-100 rounded-[48px] bg-white/50 space-y-4 shadow-sm">
-                             <h4 className="font-black text-xl uppercase">Duit The Table</h4>
-                             <p className="text-xs font-bold text-green-600 tracking-widest uppercase">Warranty Active</p>
+                    <div className="max-w-4xl mx-auto space-y-12 text-center py-10 sm:py-20 px-4">
+                       <div className={`w-20 h-20 sm:w-32 sm:h-32 ${type === 'dog' ? 'bg-blue-50 text-blue-600' : 'bg-cream-light text-accent-gold'} rounded-full flex items-center justify-center mx-auto mb-8`}><ShieldCheck size={40} sm:size={64} strokeWidth={1} /></div>
+                       <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">{t.crm.managedCollection}</h2>
+                       <p className="text-sm sm:text-lg text-secondary max-w-md mx-auto">{t.crm.collectionSubtitle}</p>
+                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 text-left mt-10 sm:mt-16">
+                          <div className="p-8 sm:p-10 border border-neutral-100 rounded-[32px] sm:rounded-[48px] bg-white/50 space-y-4 shadow-sm">
+                             <h4 className="font-black text-lg sm:text-xl uppercase">Duit The Table</h4>
+                             <p className="text-[10px] sm:text-xs font-bold text-green-600 tracking-widest uppercase">Warranty Active</p>
                           </div>
-                          <button className="p-10 border-2 border-dashed border-neutral-200 rounded-[48px] flex flex-col items-center justify-center gap-4 hover:border-accent-gold hover:bg-white/50 transition-all text-neutral-300 hover:text-accent-gold">
-                             <QrCode size={40} strokeWidth={1} />
-                             <span className="text-[10px] font-black uppercase tracking-[0.2em]">{t.crm.registerNew}</span>
+                          <button className="p-8 sm:p-10 border-2 border-dashed border-neutral-200 rounded-[32px] sm:rounded-[48px] flex flex-col items-center justify-center gap-4 hover:border-accent-gold hover:bg-white/50 transition-all text-neutral-300 hover:text-accent-gold active:scale-95">
+                             <QrCode size={32} sm:size={40} strokeWidth={1} />
+                             <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em]">{t.crm.registerNew}</span>
                           </button>
                        </div>
                     </div>
                  )}
 
                  {activeTab === 'rewards' && (
-                    <div className="max-w-4xl mx-auto py-40 text-center space-y-12">
-                       <Gift size={64} className="mx-auto text-neutral-200" />
+                    <div className="max-w-4xl mx-auto py-20 sm:py-40 text-center space-y-8 sm:space-y-12 px-4">
+                       <Gift size={48} sm:size={64} className="mx-auto text-neutral-200" />
                        <div className="space-y-4">
-                          <h2 className="text-3xl font-black uppercase tracking-tight text-neutral-300">{t.crm.privilegesPending}</h2>
-                          <p className="text-secondary opacity-40">{t.crm.invitationPending}</p>
+                          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-neutral-300">{t.crm.privilegesPending}</h2>
+                          <p className="text-sm sm:text-base text-secondary opacity-40">{t.crm.invitationPending}</p>
                        </div>
                     </div>
                  )}
