@@ -50,8 +50,8 @@ export default function AboutPage() {
         <div className="max-w-[1440px] mx-auto w-full px-6 md:px-20 text-center relative z-10">
           <motion.div style={{ y: headingY, opacity }}>
             <motion.span 
-              initial={{ opacity: 0, tracking: "1em" }}
-              animate={{ opacity: 1, tracking: "0.5em" }}
+              initial={{ opacity: 0, letterSpacing: "1em" }}
+              animate={{ opacity: 1, letterSpacing: "0.5em" }}
               transition={{ duration: 1.5 }}
               className="block text-[10px] font-black uppercase text-accent-gold mb-12"
             >
