@@ -22,8 +22,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Keep only basePath for GitHub Pages sub-directory deployment
   basePath: '/Duit-webside',
-  assetPrefix: '/Duit-webside',
 };
 
 export default nextConfig;
