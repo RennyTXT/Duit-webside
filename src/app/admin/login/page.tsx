@@ -29,7 +29,7 @@ export default function AdminLoginPage() {
     });
 
     if (error) {
-      toast.error('Invalid Credentials', {
+      toast.error(error.message, {
         style: {
           background: '#FEF2F2',
           color: '#991B1B',
