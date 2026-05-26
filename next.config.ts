@@ -22,8 +22,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Keep only basePath for GitHub Pages sub-directory deployment
   basePath: '/Duit-webside',
+  // Help GitHub Pages resolve paths correctly by ensuring folders have trailing slashes
+  trailingSlash: true,
 };
 
 export default nextConfig;
