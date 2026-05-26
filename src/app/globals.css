@@ -20,6 +20,30 @@
   vertical-align: bottom;
 }
 
+/* Custom Cursor Styles */
+@media (pointer: fine) {
+  a, button, input, select, .group, [role="button"] {
+    cursor: none !important;
+  }
+  
+  body {
+    cursor: none !important;
+  }
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #111111;

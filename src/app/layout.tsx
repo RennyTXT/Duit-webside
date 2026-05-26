@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, IBM_Plex_Sans_Thai } from "next/font/google";
 import { Toaster } from 'sonner';
 import MainLayout from "@/components/MainLayout";
+import SmoothScroll from "@/components/SmoothScroll";
+import AuraCursor from "@/components/AuraCursor";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DUIT TH",
     description: "Designed for Better Living",
-    url: "https://duit.in.th",
+    url: "https://RennyTXT.github.io/Duit-webside",
     siteName: "Duit TH Thailand",
     locale: "th_TH",
     type: "website",
@@ -51,10 +53,13 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexSansThai.variable} antialiased`}>
       <body className="bg-white text-black min-h-screen flex flex-col font-sans selection:bg-black selection:text-white overflow-x-hidden">
         <div className="grain-overlay" />
-        <Toaster position="top-center" richColors />
-        <MainLayout>
-          {children}
-        </MainLayout>
+        <AuraCursor />
+        <SmoothScroll>
+          <Toaster position="top-center" richColors />
+          <MainLayout>
+            {children}
+          </MainLayout>
+        </SmoothScroll>
       </body>
     </html>
   );
