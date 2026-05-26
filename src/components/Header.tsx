@@ -1,0 +1,147 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { User, Search, Menu, X, ChevronDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguageStore, translations } from '@/store/useLanguageStore';
+import { LanguageSwitcher } from './LanguageSwitcher';
+
+const Header = () => {
+  const { language } = useLanguageStore();
+  const t = translations[language];
+  const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const isHomePage = pathname === '/';
+  const shouldShowSolid = !isHomePage || isScrolled;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 50);
+      setLastScrollY(currentScrollY);
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+  const navLinks = [
+    { name: t.nav.collections, href: '/shop' },
+    { name: t.nav.care, href: '/duit-care' },
+    { name: t.nav.journal, href: '/news' },
+    { name: t.nav.heritage, href: '/about' },
+  ];
+
+  return (
+    <motion.header 
+      initial={false}
+      animate={{ 
+        y: 0,
+        opacity: 1
+      }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 w-full z-50 transition-all duration-700 ${shouldShowSolid ? 'bg-white/80 backdrop-blur-2xl shadow-luxury h-20' : 'bg-transparent h-28'}`}
+    >
+      <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20 h-full flex items-center">
+        {/* Left: Logo */}
+        <div className="flex-1">
+          <Link href="/" className={`text-2xl font-black tracking-[-0.05em] inline-block transition-all duration-700 hover:scale-105 active:scale-95 ${shouldShowSolid ? 'text-primary' : 'text-white'}`}>
+            DUIT <span className={shouldShowSolid ? 'text-accent-gold italic' : 'text-white'}>TH</span>
+          </Link>
+        </div>
+
+        {/* Center: Desktop Navigation */}
+        <nav className={`hidden lg:flex items-center gap-10 transition-colors duration-700 ${shouldShowSolid ? 'text-secondary' : 'text-white/70'}`}>
+          {navLinks.map((link) => (
+            <Link 
+              key={link.name} 
+              href={link.href} 
+              className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 font-black uppercase ${language === 'th' ? 'text-[13px] tracking-normal' : 'text-[11px] tracking-[0.25em]'} ${shouldShowSolid ? 'text-secondary' : 'text-white/70'}`}
+            >
+              {link.name}
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-gold transition-all duration-500 group-hover:w-full"></span>
+            </Link>
+          ))}
+        </nav>
+
+        {/* Right: Action Icons */}
+        <div className={`flex-1 flex items-center justify-end gap-3 md:gap-6 transition-colors duration-700 ${shouldShowSolid ? 'text-primary' : 'text-white'}`}>
+          <LanguageSwitcher />
+          <button className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-white/10'}`}>
+            <Search size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+          </button>
+          <Link href="/pet-profile" className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-white/10'}`}>
+            <User size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+          </Link>
+          
+          {/* Mobile Menu Toggle */}
+          <button 
+            className={`lg:hidden p-2 rounded-full transition-all ${shouldShowSolid ? 'hover:bg-neutral-100 text-primary' : 'hover:bg-white/10 text-white'}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={22} strokeWidth={1.5} /> : <Menu size={22} strokeWidth={1.5} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Navigation Drawer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-md z-40 lg:hidden"
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="fixed right-0 top-0 h-full w-[85%] max-w-[400px] bg-white z-50 lg:hidden shadow-luxury flex flex-col"
+            >
+              <div className="p-8 flex justify-between items-center border-b border-neutral-50">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.common.directory}</span>
+                <button onClick={() => setIsMobileMenuOpen(false)} className="w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center hover:bg-neutral-100 transition-colors">
+                  <X size={20} strokeWidth={1} />
+                </button>
+              </div>
+              <nav className="flex flex-col p-10 gap-4">
+                {navLinks.map((link) => (
+                  <Link 
+                    key={link.name} 
+                    href={link.href} 
+                    className="text-2xl font-black uppercase tracking-tighter text-primary hover:text-accent-gold p-4 rounded-3xl hover:bg-cream-light transition-all flex items-center justify-between group"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span>{link.name}</span>
+                    <ChevronDown size={20} className="-rotate-90 opacity-0 group-hover:opacity-100 transition-all" />
+                  </Link>
+                ))}
+              </nav>
+              <div className="mt-auto p-10 border-t border-neutral-50 bg-cream-light/30">
+                <Link 
+                  href="/pet-profile" 
+                  className="flex items-center gap-4 p-6 bg-primary text-white rounded-[32px] shadow-luxury transition-transform active:scale-95"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center"><User size={20} strokeWidth={1.5} /></div>
+                  <span className="font-black uppercase tracking-[0.2em] text-xs">{t.common.petPortfolio}</span>
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </motion.header>
+  );
+};
+
+export default Header;
