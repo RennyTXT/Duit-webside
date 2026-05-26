@@ -49,8 +49,8 @@ export default function AdminLoginPage() {
           fontWeight: 700,
         }
       });
-      router.push('/admin');
-      router.refresh();
+      // Explicitly redirect to /admin/ within the basePath
+      router.push('/admin/');
     }
   };
 
