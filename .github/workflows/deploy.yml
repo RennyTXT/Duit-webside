@@ -21,14 +21,14 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: duit-thailand/package-lock.json
+          cache-dependency-path: "**/package-lock.json" # ค้นหาไฟล์ lock ในทุกโฟลเดอร์
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Install dependencies
         run: npm install
-        working-directory: duit-thailand
+        working-directory: duit-thailand # สั่งให้รันในโฟลเดอร์ที่มี package.json
 
       - name: Build with Next.js
         run: npm run build
@@ -40,7 +40,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./duit-thailand/out
+          path: ./duit-thailand/out # ระบุทางไปโฟลเดอร์ที่ build เสร็จแล้วให้ถูกต้อง
 
   deploy:
     environment:
