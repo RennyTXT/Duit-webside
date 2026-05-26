@@ -10,6 +10,7 @@ interface PetProfile {
   breed: string;
   size: PetSize;
   age: number | null;
+  imageUrl?: string;
 }
 
 interface PetStore {
