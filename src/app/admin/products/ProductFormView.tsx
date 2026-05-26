@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { upsertProduct } from './actions/product';
+import { upsertProduct } from '../actions/product';
 import { 
   ArrowLeft, 
   Upload, 
