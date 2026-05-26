@@ -103,11 +103,16 @@ const Home = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
+  // Cinematic Text Reveal Animation Variants
   const textRevealVariants = {
     hidden: { y: "100%" },
     visible: (i: number) => ({
       y: 0,
-      transition: { delay: 0.5 + i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+      transition: { 
+        delay: 0.5 + i * 0.1, 
+        duration: 0.8, 
+        ease: [0.16, 1, 0.3, 1] as const 
+      }
     })
   };
 
@@ -163,16 +168,19 @@ const Home = () => {
             <Link href="/shop" className="text-primary text-xs sm:text-sm font-black flex items-center gap-2 hover:translate-x-2 transition-transform duration-300 group">{t.shop.viewAll} <ArrowRight size={18} className="group-hover:text-primary" /></Link>
           </motion.div>
           <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-8">
-            {categories.map((cat) => (
-              <motion.div key={cat.href} variants={itemVariants}>
-                <Link href={cat.href} className="group block">
-                  <div className="aspect-square bg-white rounded-[32px] sm:rounded-[48px] flex flex-col items-center justify-center p-6 sm:p-10 transition-all duration-700 shadow-luxury hover:shadow-luxury-hover hover:-translate-y-1 relative overflow-hidden group-hover:bg-cream-light border border-neutral-50 active:scale-95">
-                    <div className="w-12 h-12 sm:w-20 sm:h-20 bg-cream-light rounded-[24px] sm:rounded-[32px] flex items-center justify-center mb-4 sm:mb-8 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3"><cat.Icon size={24} sm:size={32} strokeWidth={1.2} className="text-primary group-hover:text-accent-gold transition-colors" /></div>
-                    <span className="text-[8px] sm:text-[10px] font-black text-primary uppercase tracking-[0.2em] text-center">{cat.name}</span>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+            {categories.map((cat) => {
+              const Icon = cat.Icon;
+              return (
+                <motion.div key={cat.href} variants={itemVariants}>
+                  <Link href={cat.href} className="group block">
+                    <div className="aspect-square bg-white rounded-[32px] sm:rounded-[48px] flex flex-col items-center justify-center p-6 sm:p-10 transition-all duration-700 shadow-luxury hover:shadow-luxury-hover hover:-translate-y-1 relative overflow-hidden group-hover:bg-cream-light border border-neutral-50 active:scale-95">
+                      <div className="w-12 h-12 sm:w-20 sm:h-20 bg-cream-light rounded-[24px] sm:rounded-[32px] flex items-center justify-center mb-4 sm:mb-8 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3"><Icon strokeWidth={1.2} className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:text-accent-gold transition-colors" /></div>
+                      <span className="text-[8px] sm:text-[10px] font-black text-primary uppercase tracking-[0.2em] text-center">{cat.name}</span>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
@@ -296,15 +304,18 @@ const Home = () => {
             { title: t.common.heritageDesign, desc: t.common.heritageDesc, icon: Star },
             { title: t.common.premiumIntegrity, desc: t.common.premiumDesc, icon: ShieldCheck },
             { title: t.common.globalConcierge, desc: t.common.globalDesc, icon: Truck },
-          ].map((item, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.2, duration: 0.8 }} className="text-center space-y-6 sm:space-y-8 group">
-               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-[24px] sm:rounded-[32px] flex items-center justify-center mx-auto text-accent-gold transition-all duration-700 shadow-luxury group-hover:bg-primary group-hover:text-white border border-neutral-100 group-hover:-translate-y-2"><item.icon size={30} sm:size={36} strokeWidth={1} /></div>
-               <div className="space-y-4">
-                  <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-primary leading-none">{item.title}</h3>
-                  <p className="text-xs sm:text-sm text-secondary leading-relaxed font-medium opacity-60 px-4">{item.desc}</p>
-               </div>
-            </motion.div>
-          ))}
+          ].map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.2, duration: 0.8 }} className="text-center space-y-6 sm:space-y-8 group">
+                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-[24px] sm:rounded-[32px] flex items-center justify-center mx-auto text-accent-gold transition-all duration-700 shadow-luxury group-hover:bg-primary group-hover:text-white border border-neutral-100 group-hover:-translate-y-2"><Icon strokeWidth={1} className="w-[30px] h-[30px] sm:w-9 sm:h-9" /></div>
+                 <div className="space-y-4">
+                    <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-primary leading-none">{item.title}</h3>
+                    <p className="text-xs sm:text-sm text-secondary leading-relaxed font-medium opacity-60 px-4">{item.desc}</p>
+                 </div>
+              </motion.div>
+            );
+          })}
         </div>
       </section>
     </div>

@@ -54,7 +54,7 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as const,
       },
     },
   };

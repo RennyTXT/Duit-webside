@@ -44,7 +44,7 @@ const Header = () => {
         y: 0,
         opacity: 1
       }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
       className={`fixed top-0 w-full z-50 transition-all duration-700 ${shouldShowSolid ? 'bg-white/80 backdrop-blur-2xl shadow-luxury h-20' : 'bg-transparent h-28'}`}
     >
       <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20 h-full flex items-center">

@@ -39,7 +39,6 @@ const LuxuryCard = ({ profile, tier, points, t }: { profile: any, tier: string, 
     y.set(yPct);
   };
 
-  // Support for Gyroscope/Device Orientation on Mobile (Optional, but here we smooth return)
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
@@ -83,7 +82,7 @@ const LuxuryCard = ({ profile, tier, points, t }: { profile: any, tier: string, 
               </div>
               <h3 className="text-xl sm:text-3xl font-black uppercase tracking-tight text-white">{profile?.name || "GUEST"}</h3>
             </div>
-            <Award className="text-accent-gold/80" size={24} sm:size={32} strokeWidth={1} />
+            <Award className="text-accent-gold/80 w-6 h-6 sm:w-8 sm:h-8" strokeWidth={1} />
           </div>
 
           <div className="space-y-4 sm:space-y-8" style={{ transform: "translateZ(30px)" }}>
@@ -215,7 +214,7 @@ export default function PetProfilePage() {
               {step === 1 && (
                 <div className="text-center space-y-8 sm:space-y-12">
                    <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex justify-center">
-                      <div className="w-16 h-16 sm:w-24 sm:h-24 bg-cream-light rounded-full flex items-center justify-center text-accent-gold"><Sparkles size={32} sm:size={40} /></div>
+                      <div className="w-16 h-16 sm:w-24 sm:h-24 bg-cream-light rounded-full flex items-center justify-center text-accent-gold"><Sparkles className="w-8 h-8 sm:w-10 sm:h-10" /></div>
                    </motion.div>
                    <div className="space-y-4 sm:space-y-6">
                       <h1 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">{t.crm.welcomeTitle} <br /> <span className="text-accent-gold italic">Duit Atelier.</span></h1>
@@ -235,11 +234,11 @@ export default function PetProfilePage() {
                    </div>
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 px-4 sm:px-0">
                       <button onClick={() => { setType('dog'); setStep(3); }} className="group aspect-video sm:aspect-square bg-white border border-neutral-100 rounded-[32px] sm:rounded-[64px] flex flex-row sm:flex-col items-center justify-center gap-6 sm:gap-8 hover:bg-primary transition-all duration-700 shadow-sm active:scale-95">
-                         <div className="w-16 h-16 sm:w-32 sm:h-32 bg-neutral-50 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Dog size={32} sm:size={64} strokeWidth={1} /></div>
+                         <div className="w-16 h-16 sm:w-32 sm:h-32 bg-neutral-50 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Dog className="w-8 h-8 sm:w-16 sm:h-16" strokeWidth={1} /></div>
                          <span className="text-xs sm:text-sm font-black uppercase tracking-[0.4em] group-hover:text-white transition-colors">{t.crm.dog}</span>
                       </button>
                       <button onClick={() => { setType('cat'); setStep(3); }} className="group aspect-video sm:aspect-square bg-white border border-neutral-100 rounded-[32px] sm:rounded-[64px] flex flex-row sm:flex-col items-center justify-center gap-6 sm:gap-8 hover:bg-primary transition-all duration-700 shadow-sm active:scale-95">
-                         <div className="w-16 h-16 sm:w-32 sm:h-32 bg-neutral-50 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Cat size={32} sm:size={64} strokeWidth={1} /></div>
+                         <div className="w-16 h-16 sm:w-32 sm:h-32 bg-neutral-50 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Cat className="w-8 h-8 sm:w-16 sm:h-16" strokeWidth={1} /></div>
                          <span className="text-xs sm:text-sm font-black uppercase tracking-[0.4em] group-hover:text-white transition-colors">{t.crm.cat}</span>
                       </button>
                    </div>
@@ -257,7 +256,7 @@ export default function PetProfilePage() {
                         <label className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 ml-4 sm:ml-8">{t.crm.officialName}</label>
                         <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full h-16 sm:h-24 bg-transparent border-b border-neutral-200 text-xl sm:text-3xl font-black uppercase tracking-tight outline-none px-4 sm:px-8 focus:border-accent-gold transition-colors" placeholder="..." />
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                      <div className="grid grid-cols-2 gap-8">
                          <div className="space-y-4">
                             <label className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 ml-4 sm:ml-8">{t.crm.heritage}</label>
                             <select value={breed} onChange={e => setBreed(e.target.value)} className="w-full h-12 sm:h-16 bg-transparent border-b border-neutral-200 text-base sm:text-lg font-bold outline-none">
@@ -310,7 +309,7 @@ export default function PetProfilePage() {
                           <div className="space-y-6">
                              <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">{t.crm.identitySynthesis}</h2>
                              <div className={`${themeColors.card} p-8 sm:p-12 rounded-[32px] sm:rounded-[48px] border border-neutral-100 relative overflow-hidden shadow-sm`}>
-                                <Sparkles className={`absolute top-4 right-4 sm:top-8 sm:right-8 ${type === 'dog' ? 'text-blue-600/10' : 'text-accent-gold/20'}`} size={60} sm:size={100} />
+                                <Sparkles className={`absolute top-4 right-4 sm:top-8 sm:right-8 ${type === 'dog' ? 'text-blue-600/10' : 'text-accent-gold/20'} w-[60px] h-[60px] sm:w-[100px] sm:h-[100px]`} />
                                 <div className="space-y-6 sm:space-y-8 relative z-10">
                                    <div className="space-y-2 sm:space-y-4">
                                       <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${type === 'dog' ? 'text-blue-600' : 'text-accent-gold'}`}>{t.crm.aiResult}</span>
@@ -345,7 +344,7 @@ export default function PetProfilePage() {
                                       <h4 className="text-base sm:text-xl font-black uppercase tracking-tight line-clamp-1">{p.name}</h4>
                                       <p className="text-[10px] sm:text-sm text-secondary font-medium opacity-60">Design for refined aesthetics</p>
                                    </div>
-                                   <div className="ml-auto w-8 h-8 sm:w-12 sm:h-12 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all"><ChevronRight size={16} sm:size={20} /></div>
+                                   <div className="ml-auto w-8 h-8 sm:w-12 sm:h-12 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all"><ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" /></div>
                                 </Link>
                              ))}
                           </div>
@@ -355,7 +354,7 @@ export default function PetProfilePage() {
 
                  {activeTab === 'registry' && (
                     <div className="max-w-4xl mx-auto space-y-12 text-center py-10 sm:py-20 px-4">
-                       <div className={`w-20 h-20 sm:w-32 sm:h-32 ${type === 'dog' ? 'bg-blue-50 text-blue-600' : 'bg-cream-light text-accent-gold'} rounded-full flex items-center justify-center mx-auto mb-8`}><ShieldCheck size={40} sm:size={64} strokeWidth={1} /></div>
+                       <div className={`w-20 h-20 sm:w-32 sm:h-32 ${type === 'dog' ? 'bg-blue-50 text-blue-600' : 'bg-cream-light text-accent-gold'} rounded-full flex items-center justify-center mx-auto mb-8`}><ShieldCheck className="w-10 h-10 sm:w-16 sm:h-16" strokeWidth={1} /></div>
                        <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">{t.crm.managedCollection}</h2>
                        <p className="text-sm sm:text-lg text-secondary max-w-md mx-auto">{t.crm.collectionSubtitle}</p>
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 text-left mt-10 sm:mt-16">
@@ -364,7 +363,7 @@ export default function PetProfilePage() {
                              <p className="text-[10px] sm:text-xs font-bold text-green-600 tracking-widest uppercase">Warranty Active</p>
                           </div>
                           <button className="p-8 sm:p-10 border-2 border-dashed border-neutral-200 rounded-[32px] sm:rounded-[48px] flex flex-col items-center justify-center gap-4 hover:border-accent-gold hover:bg-white/50 transition-all text-neutral-300 hover:text-accent-gold active:scale-95">
-                             <QrCode size={32} sm:size={40} strokeWidth={1} />
+                             <QrCode className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1} />
                              <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em]">{t.crm.registerNew}</span>
                           </button>
                        </div>
@@ -373,7 +372,7 @@ export default function PetProfilePage() {
 
                  {activeTab === 'rewards' && (
                     <div className="max-w-4xl mx-auto py-20 sm:py-40 text-center space-y-8 sm:space-y-12 px-4">
-                       <Gift size={48} sm:size={64} className="mx-auto text-neutral-200" />
+                       <Gift className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-neutral-200" />
                        <div className="space-y-4">
                           <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-neutral-300">{t.crm.privilegesPending}</h2>
                           <p className="text-sm sm:text-base text-secondary opacity-40">{t.crm.invitationPending}</p>
