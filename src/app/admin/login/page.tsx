@@ -1,40 +1,35 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
-import { Lock, Mail, Loader2, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Lock, User, Loader2, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const supabase = createClient();
   const router = useRouter();
 
-  // Optimized: Don't signOut on every mount as it's a network request
-  // Only sign out if explicitly needed or handle via session logic
-  /* 
-  useEffect(() => {
-    supabase.auth.signOut();
-  }, [supabase.auth]);
-  */
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
+    // Map username to a pseudo-email for Supabase Auth compatibility
+    const authEmail = `${username.toLowerCase()}@duit.admin`;
+
     const { error } = await supabase.auth.signInWithPassword({
-      email,
+      email: authEmail,
       password,
     });
 
     if (error) {
-      toast.error(error.message, {
+      toast.error('Invalid Credentials', {
         style: {
           background: '#FEF2F2',
           color: '#991B1B',
@@ -124,24 +119,24 @@ export default function AdminLoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-3">
-              {/* Email Field */}
+              {/* Username Field */}
               <div className="relative">
                 <motion.div 
                   animate={{ 
-                    backgroundColor: focusedField === 'email' ? 'rgba(255,255,255,1)' : 'rgba(245,245,245,0.5)',
-                    borderColor: focusedField === 'email' ? 'rgba(197,165,114,1)' : 'rgba(0,0,0,0.05)'
+                    backgroundColor: focusedField === 'username' ? 'rgba(255,255,255,1)' : 'rgba(245,245,245,0.5)',
+                    borderColor: focusedField === 'username' ? 'rgba(197,165,114,1)' : 'rgba(0,0,0,0.05)'
                   }}
                   className="h-16 border rounded-3xl flex items-center px-6 transition-all duration-300"
                 >
-                  <Mail size={16} strokeWidth={1.5} className={`transition-colors duration-300 ${focusedField === 'email' ? 'text-accent-gold' : 'text-neutral-300'}`} />
+                  <User size={16} strokeWidth={1.5} className={`transition-colors duration-300 ${focusedField === 'username' ? 'text-accent-gold' : 'text-neutral-300'}`} />
                   <input 
-                    type="email" 
-                    value={email}
-                    onFocus={() => setFocusedField('email')}
+                    type="text" 
+                    value={username}
+                    onFocus={() => setFocusedField('username')}
                     onBlur={() => setFocusedField(null)}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                     className="flex-1 bg-transparent border-none outline-none pl-4 text-sm font-bold placeholder:text-neutral-300 text-primary"
-                    placeholder="Email Address"
+                    placeholder="Director ID"
                     required
                   />
                 </motion.div>
@@ -190,7 +185,8 @@ export default function AdminLoginPage() {
 
           <div className="mt-10 pt-8 border-t border-neutral-100/50 flex flex-col items-center gap-2">
              <p className="text-[8px] font-black uppercase tracking-[0.3em] text-primary/20">Authenticated Secure Session</p>
-             <p className="text-[8px] font-bold text-neutral-300 tracking-wider">© 2024 DUIT TH THAILAND</p>          </div>
+             <p className="text-[8px] font-bold text-neutral-300 tracking-wider">© 2026 DUIT TH THAILAND</p>
+          </div>
         </div>
 
         {/* Decorative elements - scaled down for better fit */}
