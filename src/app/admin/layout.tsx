@@ -31,22 +31,29 @@ export default function AdminLayout({
 
   useEffect(() => {
     async function checkAuth() {
-      if (pathname === '/admin/login') {
+      // Use endsWith to be safe with basePath on GitHub Pages
+      if (pathname?.endsWith('/admin/login') || pathname?.endsWith('/admin/login/')) {
         setIsFetchingAuth(false);
         return;
       }
 
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          router.push('/admin/login');
+        } else {
+          setIsFetchingAuth(false);
+        }
+      } catch (err) {
+        console.error('Auth check error:', err);
         router.push('/admin/login');
-      } else {
-        setIsFetchingAuth(false);
       }
     }
     checkAuth();
   }, [pathname, router, supabase.auth]);
 
-  if (pathname === '/admin/login') {
+  // Render children immediately for login page to avoid waiting for useEffect
+  if (pathname?.endsWith('/admin/login') || pathname?.endsWith('/admin/login/')) {
     return <>{children}</>;
   }
 

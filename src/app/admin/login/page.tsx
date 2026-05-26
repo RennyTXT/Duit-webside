@@ -16,9 +16,13 @@ export default function AdminLoginPage() {
   const supabase = createClient();
   const router = useRouter();
 
+  // Optimized: Don't signOut on every mount as it's a network request
+  // Only sign out if explicitly needed or handle via session logic
+  /* 
   useEffect(() => {
     supabase.auth.signOut();
   }, [supabase.auth]);
+  */
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
