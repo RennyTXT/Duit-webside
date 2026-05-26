@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { Product } from '@/data/products';
+import { Product, products as staticProducts } from '@/data/products';
 import Link from 'next/link';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
@@ -18,6 +18,19 @@ const categoryNames: Record<string, string> = {
   'travel': 'การเดินทาง'
 };
 
+// Fixed build error for static export
+export function generateStaticParams() {
+  return [
+    { category: 'eat-drink' },
+    { category: 'furniture' },
+    { category: 'play-rest' },
+    { category: 'hygiene' },
+    { category: 'daily' },
+    { category: 'bath' },
+    { category: 'travel' }
+  ];
+}
+
 export default function CategoryPage() {
   const { category } = useParams();
   const catKey = category as string;
@@ -33,8 +46,12 @@ export default function CategoryPage() {
         .eq('category', catKey)
         .order('created_at', { ascending: false });
       
-      if (data) {
+      if (data && data.length > 0) {
         setProducts(data.map(p => ({ ...p, image: p.image_url })));
+      } else {
+        // Fallback to static data filtered by category
+        const filtered = staticProducts.filter(p => p.category === catKey);
+        setProducts(filtered);
       }
       setIsLoading(false);
     };

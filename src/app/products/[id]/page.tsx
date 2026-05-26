@@ -17,6 +17,13 @@ interface ProductOption {
   price_modifier: number;
 }
 
+// Fixed build error for static export
+export function generateStaticParams() {
+  return staticProducts.map((product) => ({
+    id: product.id,
+  }));
+}
+
 export default function ProductDetail() {
   const { id } = useParams();
   const { language } = useLanguageStore();
@@ -58,9 +65,15 @@ export default function ProductDetail() {
           if (finalProduct.modelUrl && !finalProduct.image && (!finalProduct.images || finalProduct.images.length === 0)) {
             setViewMode('3d');
           }
+        } else {
+            // Fallback to static data if not in DB (essential for static export build time)
+            const staticProd = staticProducts.find(p => p.id === id);
+            if (staticProd) setProduct(staticProd);
         }
       } catch (err) {
         console.error('Error:', err);
+        const staticProd = staticProducts.find(p => p.id === id);
+        if (staticProd) setProduct(staticProd);
       } finally {
         setIsLoading(false);
       }
@@ -105,7 +118,6 @@ export default function ProductDetail() {
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20 pb-40">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-32 items-start">
           
-          {/* Idea 7: 360-Degree Interactive Viewer (Integrated via viewMode) */}
           <div className="lg:col-span-7 space-y-12">
             <div className="relative group">
               <motion.div className="rounded-[64px] overflow-hidden bg-[#f9f9f9] border border-neutral-100 shadow-luxury relative p-8 md:p-16 lg:p-20 flex items-center justify-center min-h-[500px] md:min-h-[700px]" onMouseEnter={() => setIsAutoPlaying(false)} onMouseLeave={() => setIsAutoPlaying(true)}>
@@ -114,7 +126,6 @@ export default function ProductDetail() {
                     {viewMode === '3d' && product.modelUrl ? (
                       <motion.div key="3d" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="w-full h-full relative cursor-grab active:cursor-grabbing">
                         <Product3DViewer modelUrl={product.modelUrl} altText={product.name} />
-                        {/* 360 Rotation Hint Overlay */}
                         <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ delay: 2, duration: 1 }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
                            <div className="bg-primary/10 backdrop-blur-md px-8 py-4 rounded-full border border-primary/10 flex items-center gap-3">
                               <Rotate3D className="text-primary animate-bounce" size={24} />
@@ -196,7 +207,6 @@ export default function ProductDetail() {
                 </div>
               )}
 
-              {/* Added Trust Icons for Luxury Detail */}
               <div className="grid grid-cols-3 gap-6 pt-10 border-t border-neutral-100">
                  <div className="text-center space-y-3">
                     <div className="w-12 h-12 bg-cream-light rounded-2xl flex items-center justify-center mx-auto text-accent-gold"><ShieldCheck size={20} /></div>
