@@ -2,178 +2,194 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Box, History, Globe } from 'lucide-react';
-import { motion, Variants } from 'framer-motion';
+import { ArrowRight, Box, History, Globe, Sparkles, PenTool, Layout, CheckCircle2 } from 'lucide-react';
+import { motion, Variants, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { useLanguageStore, translations } from '@/store/useLanguageStore';
+
+const BlueprintSVG = () => (
+  <svg className="absolute inset-0 w-full h-full text-accent-gold/10 pointer-events-none" viewBox="0 0 100 100" fill="none">
+    <motion.path 
+      d="M 10,10 L 90,10 M 10,30 L 90,30 M 10,50 L 90,50 M 10,70 L 90,70 M 10,90 L 90,90 M 30,10 L 30,90 M 50,10 L 50,90 M 70,10 L 70,90" 
+      stroke="currentColor" strokeWidth="0.1" 
+      initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 2, ease: "easeInOut" }}
+    />
+    <motion.circle 
+      cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="0.2"
+      initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 2, delay: 0.5 }}
+    />
+  </svg>
+);
 
 export default function AboutPage() {
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
+  const { language } = useLanguageStore();
+  const t = translations[language];
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  const headingY = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40 },
     visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
+      opacity: 1, y: 0,
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
     },
   };
 
   return (
-    <div className="bg-white min-h-screen pt-20">
-      {/* Brand Hero */}
-      <section className="py-24 border-b border-neutral-100 bg-neutral-50/50">
-        <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20">
-          <motion.span 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-block px-4 py-1.5 bg-accent/10 text-accent text-[10px] font-black tracking-ultra rounded-full mb-8 uppercase"
-          >
-            เรื่องราวของเรา
-          </motion.span>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase mb-12 leading-[0.9]"
-          >
-            DESIGNED <br />
-            <span className="text-neutral-300">FOR YOU &</span> <br />
-            YOUR PETS.
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-2xl text-xl text-secondary leading-relaxed font-medium"
-          >
-            Duit Design Lab คือแบรนด์อุปกรณ์สัตว์เลี้ยงระดับพรีเมียมที่เชื่อในความกลมกลืนที่สมบูรณ์แบบระหว่างชีวิตมนุษย์สมัยใหม่และความสะดวกสบายของสัตว์เลี้ยง
-          </motion.p>
+    <div className="bg-white min-h-screen pt-20 overflow-x-hidden" ref={containerRef}>
+      {/* 1. Editorial Hero */}
+      <section className="relative h-[90vh] flex items-center justify-center bg-[#faf7f2] overflow-hidden">
+        <BlueprintSVG />
+        <div className="max-w-[1440px] mx-auto w-full px-6 md:px-20 text-center relative z-10">
+          <motion.div style={{ y: headingY, opacity }}>
+            <motion.span 
+              initial={{ opacity: 0, tracking: "1em" }}
+              animate={{ opacity: 1, tracking: "0.5em" }}
+              transition={{ duration: 1.5 }}
+              className="block text-[10px] font-black uppercase text-accent-gold mb-12"
+            >
+              {language === 'th' ? 'สถาบันการออกแบบระดับสากล' : 'THE GLOBAL DESIGN ATELIER'}
+            </motion.span>
+            <h1 className="text-6xl md:text-[140px] font-black leading-[0.8] tracking-tighter uppercase text-primary">
+              Design <br /> <span className="text-accent-gold italic">Integrity.</span>
+            </h1>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              transition={{ delay: 1, duration: 1.5 }}
+              className="mt-16 max-w-xl mx-auto text-lg font-medium text-secondary leading-relaxed"
+            >
+              {language === 'th' 
+                ? 'ความงามที่สร้างขึ้นจากการวิเคราะห์เชิงลึก เพื่อความสมบูรณ์แบบในการใช้ชีวิตของสัตว์เลี้ยงยุคใหม่' 
+                : 'Aesthetic precision forged through rigorous analysis, defining the standard for modern pet living.'}
+            </motion.p>
+          </motion.div>
+        </div>
+        
+        {/* Floating Scroll Indicator */}
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+        >
+          <span className="text-[8px] font-black uppercase tracking-[0.4em] text-neutral-300">SCROLL STORY</span>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-neutral-200 to-transparent"></div>
+        </motion.div>
+      </section>
+
+      {/* 2. Asymmetric Storytelling Section */}
+      <section className="py-40 md:py-60 px-6 md:px-20">
+        <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-32 items-center">
+           <div className="lg:col-span-5 space-y-16">
+              <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                <div className="flex items-center gap-4 mb-8">
+                   <div className="h-px w-12 bg-accent-gold"></div>
+                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">Philosophy 01</span>
+                </div>
+                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-tight text-primary">
+                  {language === 'th' ? 'ความงามที่ไร้' : 'Enduring'} <br /> <span className="italic text-accent-gold">{language === 'th' ? 'กาลเวลา' : 'Aesthetics.'}</span>
+                </h2>
+                <p className="mt-12 text-lg text-secondary font-medium leading-relaxed opacity-70">
+                  {language === 'th' 
+                    ? 'เราไม่ได้มองเฟอร์นิเจอร์สัตว์เลี้ยงเป็นเพียงอุปกรณ์ แต่เรามองว่าเป็นส่วนหนึ่งของงานสถาปัตยกรรมภายในบ้าน ดีไซน์ของเราจึงเน้นความเรียบง่ายที่ทรงพลัง' 
+                    : 'We do not perceive pet furniture as mere equipment; we view it as an extension of home architecture. Our designs embrace a minimal yet powerful presence.'}
+                </p>
+              </motion.div>
+              
+              <div className="grid grid-cols-2 gap-8">
+                 <div className="p-10 rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
+                    <Layout className="text-accent-gold" size={24} />
+                    <h4 className="font-black uppercase text-xs tracking-widest">Seoul Studio</h4>
+                    <p className="text-[10px] font-bold text-neutral-400">Headquarters of Innovation</p>
+                 </div>
+                 <div className="p-10 rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
+                    <PenTool className="text-accent-gold" size={24} />
+                    <h4 className="font-black uppercase text-xs tracking-widest">Hand-Crafted</h4>
+                    <p className="text-[10px] font-bold text-neutral-400">Precision in Every Line</p>
+                 </div>
+              </div>
+           </div>
+           
+           <div className="lg:col-span-7">
+              <motion.div 
+                initial={{ scale: 1.1, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5 }}
+                className="aspect-[16/10] rounded-[64px] overflow-hidden relative shadow-luxury"
+              >
+                 <Image src="https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/1eff7a9ff2bb1.jpg?w=1440" alt="About Duit" fill className="object-cover hover:scale-105 transition-transform duration-[2s]" />
+              </motion.div>
+           </div>
         </div>
       </section>
 
-      {/* Philosophy Grid */}
-      <section className="py-32">
-        <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center mb-40">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.8 }}
-              className="space-y-10"
-            >
-              <div className="w-16 h-16 bg-neutral-50 rounded-2xl flex items-center justify-center text-accent">
-                <Box size={32} strokeWidth={1.5} />
-              </div>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase">ความกลมกลืน <br /><span className="text-accent italic">Harmony.</span></h2>
-              <p className="text-lg text-secondary leading-relaxed font-medium">
-                เราออกแบบผลิตภัณฑ์ที่ไม่ใช่แค่ตั้งอยู่ในบ้านของคุณ แต่เป็นส่วนหนึ่งของบ้าน สไตล์ของเราคือความมินิมอล สะอาดตา และทันสมัย เพื่อให้มั่นใจว่าเฟอร์นิเจอร์ของสัตว์เลี้ยงจะช่วยเสริมการออกแบบตกแต่งภายในของคุณ
-              </p>
-              <div className="aspect-square bg-neutral-50 rounded-[48px] overflow-hidden relative border border-neutral-100 shadow-2xl">
-                <Image 
-                  src="https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=800" 
-                  alt="Duit Harmony Philosophy"
-                  fill
-                  className="object-cover transition-transform duration-1000 hover:scale-105" 
-                />
-              </div>
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:pt-40 space-y-10"
-            >
-              <div className="aspect-[4/5] bg-neutral-50 rounded-[48px] overflow-hidden mb-12 relative border border-neutral-100 shadow-2xl">
-                <Image 
-                  src="https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/02c3dd1725fb7.jpg?w=800" 
-                  alt="Duit Evolution Philosophy"
-                  fill
-                  className="object-cover transition-transform duration-1000 hover:scale-105" 
-                />
-              </div>
-              <div className="w-16 h-16 bg-neutral-50 rounded-2xl flex items-center justify-center text-accent">
-                <History size={32} strokeWidth={1.5} />
-              </div>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase">วิวัฒนาการ <br /><span className="text-accent italic">Evolution.</span></h2>
-              <p className="text-lg text-secondary leading-relaxed font-medium">
-                ด้วยการบูรณาการเทคโนโลยีอัจฉริยะและการออกแบบตามหลักสรีรศาสตร์ เรากำลังพัฒนารูปแบบการดูแลสัตว์เลี้ยงของเรา ตั้งแต่ถังขยะไร้สัมผัสไปจนด้วยเครื่องให้อาหารอัตโนมัติที่ปรับแต่งได้ เราทำให้การดูแลสัตว์เลี้ยงเป็นเรื่องง่ายและแม่นยำ
-              </p>
-            </motion.div>
+      {/* 3. Material Showcase (Editorial) */}
+      <section className="py-40 bg-primary text-white overflow-hidden">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-20 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+          <div className="order-2 lg:order-1 relative">
+             <motion.div 
+               initial={{ x: -100, opacity: 0 }}
+               whileInView={{ x: 0, opacity: 1 }}
+               viewport={{ once: true }}
+               transition={{ duration: 1.2 }}
+               className="aspect-[4/5] rounded-[64px] overflow-hidden relative z-10 shadow-2xl"
+             >
+                <Image src="https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=800" alt="Material" fill className="object-cover" />
+             </motion.div>
+             <div className="absolute -bottom-12 -right-12 w-80 h-80 bg-accent-gold/20 rounded-full blur-[100px]"></div>
+          </div>
+          <div className="order-1 lg:order-2 space-y-16">
+             <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-accent-gold mb-8 block">Quality 02</span>
+                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-12">
+                   Medical <br /> <span className="text-accent-gold italic">Grade.</span>
+                </h2>
+                <p className="text-xl text-neutral-400 font-medium leading-relaxed opacity-80">
+                   {language === 'th' 
+                    ? 'เพราะความปลอดภัยคือสิ่งสำคัญที่สุด เราเลือกใช้สแตนเลส 304L และวัสดุเกรดการแพทย์ที่ทนทานต่อแบคทีเรีย เพื่อสุขภาพที่ดีของเพื่อนตัวน้อยในระยะยาว' 
+                    : 'Safety is our absolute priority. We utilize 304L stainless steel and bio-inert medical-grade materials to ensure long-term well-being.'}
+                </p>
+                <div className="pt-12 grid grid-cols-1 gap-6">
+                   {['BPA Free', 'Food Safe Cert', 'Eco-Conscious Packaging'].map((item) => (
+                     <div key={item} className="flex items-center gap-6 group">
+                        <CheckCircle2 className="text-accent-gold opacity-40 group-hover:opacity-100 transition-opacity" size={20} />
+                        <span className="text-xs font-black uppercase tracking-[0.2em]">{item}</span>
+                     </div>
+                   ))}
+                </div>
+             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Global Presence */}
-      <section className="py-32 bg-primary text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-accent/10 skew-x-12 translate-x-1/2"></div>
-        <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20 relative z-10 text-center space-y-16">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl mx-auto space-y-6"
-          >
-            <Globe className="text-accent mx-auto" size={48} strokeWidth={1.5} />
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">From Seoul to the World</h2>
-            <p className="text-lg text-neutral-400 font-medium leading-relaxed">
-              นวัตกรรมที่เราสร้างขึ้นเริ่มต้นจากหัวใจสำคัญในเกาหลีใต้ และวันนี้เราพร้อมส่งต่อความสุขให้เพื่อนตัวน้อยทั่วโลก รวมถึง Duit Thailand Official ที่มุ่งมั่นให้บริการแฟนๆ ชาวไทยอย่างเต็มรูปแบบ
-            </p>
-          </motion.div>
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-12"
-          >
-            {[
-              { role: 'SEOUL HQ', name: 'Tae Hyung Kim', detail: 'Global Founder' },
-              { role: 'USA OFFICE', name: 'Brian Park', detail: 'North America Director' },
-              { role: 'THAILAND', name: 'Duit Thailand', detail: 'Official Partner' },
-            ].map((member, i) => (
-              <motion.div 
-                key={i} 
-                variants={itemVariants}
-                className="p-10 rounded-[32px] bg-neutral-900 border border-neutral-800 hover:border-accent/40 transition-all duration-500 group"
-              >
-                <h4 className="text-[10px] font-black uppercase tracking-ultra text-accent mb-4">{member.role}</h4>
-                <h3 className="text-2xl font-bold uppercase mb-2 group-hover:text-accent transition-colors">{member.name}</h3>
-                <p className="text-sm text-neutral-500 uppercase tracking-widest">{member.detail}</p>
-              </motion.div>
-            ))}
-          </motion.div>
+      {/* 4. Global Vision */}
+      <section className="py-60 text-center relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6 relative z-10 space-y-16">
+           <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}>
+              <Globe className="text-accent-gold mx-auto mb-12" size={64} strokeWidth={1} />
+              <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-primary leading-none">
+                 Global <br /> <span className="text-accent-gold italic">Visionary.</span>
+              </h2>
+           </motion.div>
+           <p className="text-xl text-secondary font-medium leading-relaxed max-w-2xl mx-auto opacity-70">
+              {language === 'th' 
+                ? 'จากจุดเริ่มต้นในโซล สู่ความรักความผูกพันในไทย Duit Thailand พร้อมส่งต่อคุณภาพชีวิตที่ดีให้กับทุกครอบครัว' 
+                : 'From our origins in Seoul to our heartbeat in Thailand, Duit is committed to elevating pet living globally.'}
+           </p>
+           <Link href="/shop" className="group relative inline-flex items-center gap-6 px-16 py-8 rounded-full border border-neutral-100 bg-white shadow-luxury hover:bg-primary hover:text-white transition-all duration-700 active:scale-95">
+              <span className="text-[10px] font-black uppercase tracking-[0.3em]">{t.hero.discover}</span>
+              <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+           </Link>
         </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-40 text-center">
-        <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-2xl mx-auto space-y-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-primary leading-tight">พร้อมที่จะเปลี่ยนชีวิตสัตว์เลี้ยงของคุณหรือยัง?</h2>
-            <Link href="/shop" className="inline-flex items-center gap-4 bg-primary text-white px-12 py-6 rounded-full text-base font-black hover:bg-accent transition-all shadow-2xl active:scale-95 duration-300">
-              ไปที่ร้านค้า <ArrowRight size={20} />
-            </Link>
-          </motion.div>
-        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full text-neutral-50/50 pointer-events-none select-none -z-10 font-black text-[30vw] uppercase opacity-20">SEOUL</div>
       </section>
     </div>
   );

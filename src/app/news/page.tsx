@@ -1,8 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { ArrowRight, Sparkles, Newspaper, TrendingUp, Mail } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowRight, Sparkles, Newspaper, TrendingUp, Mail, Clock, ChevronRight } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import Link from 'next/link';
+import { useLanguageStore, translations } from '@/store/useLanguageStore';
 
 const newsItems = [
   {
@@ -24,7 +27,7 @@ const newsItems = [
   {
     id: 3,
     title: 'The Table Plus: นิยามใหม่ของการให้อาหารที่แม่นยำ',
-    excerpt: 'เจาะลึกเครื่องให้อาหารอัตโนมัติรุ่นล่าสุดของเราและประโยชน์ต่อสุขภาพสำหรับสัตว์เลี้ยงของคุณในระยะยาว',
+    excerpt: 'เจาะลึกเครื่องให้อาหารอัตโนมัติรุ่นล่าสุดของเราและประโยชน์ต่อสุขภาพสำหรับสัตว์เลี้ยงที่คุณรักในระยะยาว',
     date: '10 MAY 2026',
     category: 'PRODUCTS',
     image: 'https://cdn.imweb.me/upload/S201801295a6ea8288a1a1/aab92744b8a85.jpg?w=800'
@@ -32,77 +35,123 @@ const newsItems = [
 ];
 
 export default function NewsPage() {
+  const { language } = useLanguageStore();
+  const t = translations[language];
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  const progressScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
   return (
-    <div className="bg-white min-h-screen pt-20 pb-32">
+    <div className="bg-white min-h-screen pt-20 overflow-x-hidden" ref={containerRef}>
+      {/* Editorial Progress Bar */}
+      <motion.div 
+        style={{ scaleX: progressScale }} 
+        className="fixed top-0 left-0 right-0 h-1 bg-accent-gold z-[100] origin-left"
+      />
+
       <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20">
-        <div className="text-center py-24 space-y-6">
-          <span className="inline-block px-4 py-1.5 bg-accent/10 text-accent text-[10px] font-black tracking-ultra rounded-full uppercase">Duit Journal</span>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-tight">Latest News</h1>
-          <p className="max-w-2xl mx-auto text-lg text-secondary font-medium leading-relaxed">
-            ติดตามนวัตกรรมล่าสุด กิจกรรมพิเศษ และเคล็ดลับจากผู้เชี่ยวชาญเพื่อการดูแลสัตว์เลี้ยงที่คุณรักอย่างมืออาชีพ
-          </p>
+        {/* Header - Editorial Style */}
+        <div className="py-24 md:py-40 grid grid-cols-1 lg:grid-cols-12 gap-12 items-end border-b border-neutral-100 mb-24">
+           <div className="lg:col-span-8 space-y-8">
+              <motion.span 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-[10px] font-black uppercase tracking-[0.5em] text-accent-gold block"
+              >
+                {language === 'th' ? 'สารานุกรมแห่งการอยู่อาศัย' : 'THE LIVING ARCHIVE'}
+              </motion.span>
+              <h1 className="text-6xl md:text-[120px] font-black tracking-tighter uppercase leading-[0.8] text-primary">
+                Duit <br /> <span className="text-accent-gold italic">Journal.</span>
+              </h1>
+           </div>
+           <div className="lg:col-span-4 pb-4">
+              <p className="text-lg text-secondary font-medium leading-relaxed opacity-70">
+                {language === 'th' 
+                  ? 'สำรวจโลกแห่งงานดีไซน์ นวัตกรรม และความรักที่มีต่อสัตว์เลี้ยง ผ่านบทความที่คัดสรรมาอย่างพิถีพิถัน' 
+                  : 'Curated narratives on design excellence, avant-garde innovation, and the enduring bond between companion and curator.'}
+              </p>
+           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
-          {newsItems.map((news, i) => (
-            <motion.div 
-              key={news.id} 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="group cursor-pointer"
-            >
-              <div className="aspect-[16/11] bg-neutral-50 rounded-[40px] overflow-hidden mb-10 relative border border-neutral-100 shadow-sm group-hover:shadow-2xl transition-all duration-500">
-                <Image 
-                  src={news.image} 
-                  alt={news.title} 
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105" 
-                />
-                <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-ultra shadow-lg">
-                  {news.category}
-                </div>
+        {/* Featured Story - Magazine Layout */}
+        <div className="mb-40">
+           <Link href="/news" className="group grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+              <div className="lg:col-span-7 aspect-[16/9] rounded-[64px] overflow-hidden relative shadow-luxury group-hover:shadow-luxury-hover transition-all duration-1000">
+                 <Image src={newsItems[0].image} alt="Featured" fill className="object-cover group-hover:scale-105 transition-transform duration-[2s]" />
               </div>
-              <div className="space-y-5 px-4">
-                <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-ultra text-neutral-400">
-                  <Newspaper size={12} className="text-accent" />
-                  {news.date}
-                </div>
-                <h3 className="text-2xl font-bold tracking-tight uppercase leading-snug group-hover:text-accent transition-colors duration-300">{news.title}</h3>
-                <p className="text-base text-secondary leading-relaxed line-clamp-2 font-medium">{news.excerpt}</p>
-                <div className="flex items-center gap-3 text-xs font-black uppercase tracking-ultra pt-4 group-hover:gap-6 transition-all duration-300 text-primary">
-                  Read More <ArrowRight size={16} strokeWidth={2.5} className="text-accent" />
-                </div>
+              <div className="lg:col-span-5 space-y-10">
+                 <div className="flex items-center gap-6">
+                    <span className="px-4 py-1.5 bg-primary text-white text-[9px] font-black uppercase tracking-widest rounded-full">{newsItems[0].category}</span>
+                    <span className="text-[10px] font-bold text-neutral-300 uppercase tracking-widest">{newsItems[0].date}</span>
+                 </div>
+                 <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight leading-tight group-hover:text-accent-gold transition-colors">{newsItems[0].title}</h2>
+                 <p className="text-lg text-secondary font-medium opacity-60 leading-relaxed">{newsItems[0].excerpt}</p>
+                 <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.3em] group-hover:gap-8 transition-all">
+                    READ ARTICLE <ChevronRight size={16} strokeWidth={3} />
+                 </div>
               </div>
-            </motion.div>
-          ))}
+           </Link>
         </div>
 
-        {/* Newsletter Section */}
-        <div className="mt-40 bg-primary text-white rounded-[64px] p-12 md:p-32 text-center relative overflow-hidden group">
-          <div className="absolute top-0 left-0 w-full h-full bg-accent/5 -skew-y-6 translate-y-24 group-hover:translate-y-12 transition-transform duration-[2s]"></div>
-          <div className="relative z-10 space-y-12">
-            <div className="w-20 h-20 bg-accent/20 rounded-3xl flex items-center justify-center mx-auto text-accent mb-8 shadow-2xl shadow-accent/20 transform group-hover:rotate-12 transition-transform duration-500">
-              <Sparkles size={40} strokeWidth={1.5} />
-            </div>
+        {/* Secondary Stories - Editorial Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-24 mb-40">
+           {newsItems.slice(1).map((news, i) => (
+             <motion.div 
+               key={news.id} 
+               initial={{ opacity: 0, y: 50 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               transition={{ delay: i * 0.2 }}
+               className="group cursor-pointer space-y-10"
+             >
+                <div className="aspect-[4/3] rounded-[48px] overflow-hidden relative shadow-luxury group-hover:shadow-luxury-hover transition-all duration-1000">
+                   <Image src={news.image} alt={news.title} fill className="object-cover group-hover:scale-110 transition-transform duration-[2s]" />
+                   <div className="absolute top-8 left-8">
+                      <span className="bg-white/90 backdrop-blur-md px-5 py-2 rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg">{news.category}</span>
+                   </div>
+                </div>
+                <div className="space-y-6">
+                   <div className="flex items-center gap-4 text-[10px] font-bold text-neutral-300 uppercase tracking-widest">
+                      <Clock size={12} /> {news.date}
+                   </div>
+                   <h3 className="text-3xl font-black uppercase tracking-tight leading-tight group-hover:text-accent-gold transition-colors">{news.title}</h3>
+                   <p className="text-base text-secondary font-medium opacity-60 leading-relaxed line-clamp-3">{news.excerpt}</p>
+                   <div className="w-12 h-12 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                      <ArrowRight size={18} />
+                   </div>
+                </div>
+             </motion.div>
+           ))}
+        </div>
+
+        {/* High-End Newsletter */}
+        <div className="mt-40 bg-neutral-50 rounded-[80px] p-12 md:p-32 relative overflow-hidden border border-neutral-100">
+          <div className="absolute -top-40 -right-40 w-96 h-96 bg-accent-gold/5 rounded-full blur-[100px]"></div>
+          <div className="max-w-3xl mx-auto text-center space-y-16 relative z-10">
             <div className="space-y-6">
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-tight">Join the Duit Family</h2>
-              <p className="max-w-xl mx-auto text-lg text-neutral-400 font-medium leading-relaxed">
-                สมัครรับข่าวสารเพื่อรับสิทธิ์เข้าถึงคอลเลกชันใหม่ก่อนใคร พร้อมโปรโมชันสุดพิเศษและสาระดีๆ ส่งตรงถึงกล่องข้อความของคุณ
+              <span className="text-[10px] font-black uppercase tracking-[0.5em] text-accent-gold">SUBSCRIBE</span>
+              <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none text-primary">Join the Atelier <br /> <span className="text-accent-gold italic">Circle.</span></h2>
+              <p className="text-lg text-secondary font-medium opacity-60 leading-relaxed px-4">
+                {language === 'th' 
+                  ? 'รับข่าวสารเกี่ยวกับนวัตกรรมและสิทธิประโยชน์พิเศษสำหรับสมาชิก Duit Care+ ส่งตรงถึงคุณ' 
+                  : 'Acquire insights on avant-garde innovations and exclusive Duit Care+ privileges delivered to your desk.'}
               </p>
             </div>
-            <div className="max-w-xl mx-auto flex flex-col sm:flex-row gap-5">
-              <div className="flex-grow relative group/input">
-                <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-neutral-500 group-focus-within/input:text-accent transition-colors" size={20} />
-                <input type="email" placeholder="Enter your email address" className="w-full h-16 bg-white/5 border border-white/10 rounded-full pl-16 pr-8 text-sm font-bold outline-none focus:ring-4 ring-accent/10 focus:border-accent transition-all" />
-              </div>
-              <button className="bg-white text-black px-12 h-16 rounded-full text-sm font-black uppercase tracking-ultra hover:bg-accent hover:text-white transition-all shadow-2xl active:scale-95 duration-300">
-                Subscribe Now
+            <div className="flex flex-col sm:flex-row gap-4 px-4">
+              <input type="email" placeholder="Email designation..." className="flex-grow h-20 bg-white border border-neutral-200 rounded-full px-10 text-sm font-bold outline-none focus:border-accent-gold focus:ring-4 ring-accent-gold/5 transition-all" />
+              <button className="bg-primary text-white px-12 h-20 rounded-full text-xs font-black uppercase tracking-[0.3em] hover:bg-accent-gold transition-all active:scale-95 shadow-luxury">
+                Subscribe
               </button>
             </div>
-            <p className="text-[10px] text-neutral-500 uppercase tracking-widest pt-4 font-bold opacity-50 italic flex items-center justify-center gap-2">
-              <TrendingUp size={12} /> Trusted by 50,000+ Pet Lovers
-            </p>
+            <div className="pt-8 flex justify-center items-center gap-12 text-[8px] font-black uppercase tracking-[0.4em] text-neutral-300">
+               <span className="flex items-center gap-2"><Sparkles size={10} /> Limited Access</span>
+               <span className="flex items-center gap-2"><TrendingUp size={10} /> Design Insights</span>
+            </div>
           </div>
         </div>
       </div>
