@@ -12,7 +12,7 @@ import {
   X,
   ExternalLink
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
@@ -27,9 +27,36 @@ export default function AdminLayout({
   const supabase = createClient();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCheckingAuth, setIsFetchingAuth] = useState(true);
+
+  useEffect(() => {
+    async function checkAuth() {
+      if (pathname === '/admin/login') {
+        setIsFetchingAuth(false);
+        return;
+      }
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/admin/login');
+      } else {
+        setIsFetchingAuth(false);
+      }
+    }
+    checkAuth();
+  }, [pathname, router, supabase.auth]);
 
   if (pathname === '/admin/login') {
     return <>{children}</>;
+  }
+
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6">
+        <div className="w-16 h-16 border-t-2 border-primary rounded-full animate-spin"></div>
+        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">Establishing Secure Session...</p>
+      </div>
+    );
   }
 
   const handleLogout = async () => {

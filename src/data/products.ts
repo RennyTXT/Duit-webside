@@ -34,254 +34,432 @@ export interface Product {
 }
 
 export const products: Product[] = [
-  // --- FEEDING ---
   {
-    id: 'the-table-plus',
-    name: 'The Table Plus',
-    price: 8900,
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=1000',
-    category: 'eat-drink',
-    tagline: 'Customizable Dry Food Dispenser for Dogs & Cats',
-    description: 'เครื่องให้อาหารอัตโนมัติระดับเรือธงที่มุ่งเน้นเรื่องสรีระของสัตว์เลี้ยงเป็นสำคัญ สามารถปรับระดับความสูงและองศาการกินได้ละเอียด เพื่อลดแรงกดทับของกระดูกสันหลังส่วนคอ มาพร้อมระบบจ่ายอาหารที่แม่นยำและวัสดุเกรดพรีเมียม',
-    features: [
-      'ปรับความสูงได้ 4 ระดับ (6cm, 8cm, 10cm, 12cm)',
-      'ปรับองศาชามได้ 3 ระดับ (0°, 10°, 20°)',
-      'ชามสแตนเลส 304 ทนทาน ไม่สะสมแบคทีเรีย',
-      'ระบบจ่ายอาหารอัจฉริยะ ป้องกันอาหารติดขัด',
-      'ดีไซน์มินิมอล ทำความสะอาดง่ายทุกชิ้นส่วน'
-    ],
+    id: "window-hammock",
+    name: "Duit Window Hammock",
+    price: 2450,
+    image: "https://duit.kr/web/product/big/window_hammock.jpg",
+    images: [],
+    category: "furniture",
+    tagline: "A wider world, wider enjoyment",
+    description: "A versatile window hammock for cats with three different styles to choose from, catering to your cat's preferences. It provides a wider view and a comfortable resting spot.",
+    features: ["3 different hammock styles", "Strong suction cups", "Space-saving design", "Durable fabric"],
     specs: [
-      { label: 'วัสดุ', value: 'ABS / Stainless Steel 304' },
-      { label: 'ขนาด', value: '180 x 180 x 250 mm' },
-      { label: 'น้ำหนัก', value: '2.8 KG' },
-      { label: 'ความจุ', value: '4 Liters' }
+      { label: "Type", value: "Window Hammock" },
+      { label: "Styles", value: "3 types" }
     ],
     isBest: true,
-    isNew: true,
-    modelUrl: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
-    recommendedFor: { type: 'dog', size: 'medium' }
+    recommendedFor: { type: "cat" }
   },
   {
-    id: 'the-water-pure-da',
-    name: 'The Water Pure Da',
-    price: 4500,
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/02c3dd1725fb7.jpg?w=1000',
-    category: 'eat-drink',
-    tagline: 'Ultra-Silent Premium Water Fountain',
-    description: 'น้ำพุแมวและสุนัขที่ออกแบบมาเพื่อความเงียบสงบและการกรองน้ำที่สะอาดที่สุด ระบบหมุนเวียนน้ำเลียนแบบธรรมชาติ ช่วยกระตุ้นให้สัตว์เลี้ยงดื่มน้ำมากขึ้น ป้องกันโรคไตและทางเดินปัสสาวะ',
-    features: [
-      'ปั๊มน้ำแม่เหล็ก Ultra-Silent เสียงต่ำกว่า 20dB',
-      'ระบบกรอง 3 ชั้น ขจัดคลอรีน โลหะหนัก และขน',
-      'วัสดุเซรามิกและสแตนเลสเกรดการแพทย์',
-      'ดีไซน์เปิดโล่ง 360 องศา ดื่มน้ำได้ทุกทิศทาง',
-      'ระบบตัดไฟอัตโนมัติเมื่อน้ำแห้ง'
-    ],
+    id: "catthenon",
+    name: "Duit Catthenon",
+    price: 1990,
+    image: "https://duit.kr/web/product/big/catthenon.jpg",
+    images: [],
+    category: "furniture",
+    tagline: "Catthenon, the kingdom of cats",
+    description: "Create a kingdom for your cats with the Duit Catthenon, a modular and stylish cat furniture piece that serves as a secret base and scratcher.",
+    features: ["Modular design", "Sturdy construction", "Aesthetic appeal", "Secret base for cats"],
     specs: [
-      { label: 'วัสดุ', value: 'Ceramic / PCTG / Stainless Steel' },
-      { label: 'ความจุ', value: '2.0 Liters' },
-      { label: 'แรงดันไฟ', value: 'DC 5V / 1A' },
-      { label: 'การรับประกัน', value: '1 Year Official' }
+      { label: "Material", value: "Premium Wood/Cardboard" }
     ],
     isBest: true,
-    recommendedFor: {} // All pets
+    recommendedFor: { type: "cat" }
   },
-
-  // --- LIVING ---
   {
-    id: 'tent-station',
-    name: 'Tent Station',
-    price: 5900,
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/189a556efbbf8.jpg?w=1000',
-    category: 'furniture',
-    tagline: 'Cozy Base Camp for Pet Adventures',
-    description: 'บ้านพักผ่อนทรงเต็นท์ที่มอบความรู้สึกปลอดภัยและอบอุ่น ออกแบบมาให้เป็นเฟอร์นิเจอร์ชิ้นหรูในบ้าน ผลิตจากเนื้อผ้าคุณภาพสูงที่ระบายอากาศได้ดีเยี่ยม พร้อมเบาะรองนอนหนานุ่มพิเศษ',
-    features: [
-      'โครงสร้างอลูมิเนียมเกรดอากาศยาน แข็งแรงน้ำหนักเบา',
-      'ผ้า Micro-Fiber ถักทอละเอียด กันไรฝุ่นและขนไม่ติด',
-      'เบาะรองนอน Double-Side (หนาว/ร้อน) ใช้ได้ทุกฤดู',
-      'ดีไซน์ปิดทึบบางส่วนเพื่อลดความเครียดของสัตว์เลี้ยง',
-      'ประกอบง่ายภายใน 5 นาที ไม่ต้องใช้เครื่องมือ'
-    ],
+    id: "pure-da",
+    name: "Duit Pure Da (Odor Free)",
+    price: 1250,
+    image: "https://duit.kr/web/product/big/pure_da.jpg",
+    images: [],
+    category: "hygiene",
+    tagline: "Small but powerful motion sensor deodorizer",
+    description: "A compact and powerful deodorizer that uses motion sensing technology to eliminate odors near the litter box or pet area.",
+    features: ["Motion sensor activation", "Powerful deodorization", "Compact and portable", "Long battery life"],
     specs: [
-      { label: 'วัสดุโครง', value: 'Aircraft Grade Aluminum' },
-      { label: 'เนื้อผ้า', value: 'Premium Canvas / Mesh' },
-      { label: 'น้ำหนัก', value: '1.5 KG' },
-      { label: 'การซัก', value: 'Machine Washable (Gentle Cycle)' }
+      { label: "Technology", value: "Motion Sensor" },
+      { label: "Function", value: "Deodorization" }
     ],
-    isNew: true,
-    recommendedFor: { size: 'medium' }
+    isBest: true,
+    recommendedFor: { type: "cat" }
   },
   {
-    id: 'all-day-board',
-    name: 'All Day Board',
-    price: 3200,
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/1ea24a0d5546d.jpg?w=1000',
-    category: 'play-rest',
-    tagline: 'Premium Natural Texture Cat Scratcher',
-    description: 'ที่ลับเล็บแมวระดับพรีเมียมที่ใช้วัสดุธรรมชาติ 100% ออกแบบตามหลักสรีรศาสตร์เพื่อให้แมวสามารถลับเล็บ ยืดเส้น และนอนพักผ่อนได้ในชิ้นเดียว ทนทานกว่าที่ลับเล็บทั่วไปหลายเท่า',
-    features: [
-      'กระดาษลูกฟูก High-Density อัดแน่นพิเศษ',
-      'ลดการเกิดฝุ่นผงขณะลับเล็บ',
-      'โครงสร้างไม้ Birch Wood สวยงาม แข็งแรง',
-      'เปลี่ยนแผ่นรีฟิลได้เมื่อสึกหรอ',
-      'ผิวสัมผัสแบบรังผึ้งที่แมวชื่นชอบที่สุด'
-    ],
+    id: "summer-cushion",
+    name: "Duit Summer Cushion",
+    price: 2150,
+    image: "https://duit.kr/web/product/big/summer_cushion.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "Instant -5°C cooling for a refreshing daily life",
+    description: "A cooling cushion with a 3D layered structure that provides an immediate cooling effect of -5°C, perfect for hot summer days.",
+    features: ["3D layered structure", "-5°C cooling effect", "Breathable material", "Washable cover"],
     specs: [
-      { label: 'วัสดุ', value: 'Natural Birch / Kraft Paper' },
-      { label: 'น้ำหนัก', value: '2.1 KG' },
-      { label: 'ขนาด', value: '450 x 320 x 140 mm' },
-      { label: 'แหล่งผลิต', value: 'South Korea' }
+      { label: "Sizes", value: "2 sizes available" },
+      { label: "Cooling", value: "Instant -5°C" }
     ],
-    recommendedFor: { type: 'cat' }
+    isBest: true,
+    recommendedFor: { type: "dog", size: "small" }
   },
   {
-    id: 'kitty-tree',
-    name: 'Kitty Tree (Modular)',
-    price: 15900,
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/1eff7a9ff2bb1.jpg?w=1000',
-    category: 'furniture',
-    tagline: 'Modern Architecture for Urban Cats',
-    description: 'คอนโดแมวระบบ Modular ที่สามารถปรับเปลี่ยนรูปแบบการติดตั้งได้ตามขนาดพื้นที่ในบ้าน ใช้วัสดุไม้จริงโทนสีสว่าง ดีไซน์โปร่งโล่งไม่ทำให้ห้องดูอึดอัด พร้อมสถาปัตยกรรมที่รองรับการกระโดดและปีนป่าย',
-    features: [
-      'โครงสร้างไม้สน New Zealand Pine แท้ 100%',
-      'เสาลับเล็บพันเชือกป่าน Cotton สีขาวพรีเมียม',
-      'ฐานถ่วงน้ำหนักพิเศษ ป้องกันการล้ม',
-      'ทางเดินและหลุมนอนอะคริลิกใส (Clear Bowl)',
-      'เบาะนอนนุ่มถอดซักได้ทุกชั้น'
-    ],
+    id: "all-day-board",
+    name: "Duit All Day Board",
+    price: 950,
+    image: "https://duit.kr/web/product/big/all_day_board.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "Durable cat scratcher with premium & natural texture",
+    description: "An essential scratcher for every cat, featuring a premium and natural texture that cats love. Available in multiple colors to match your home.",
+    features: ["Premium texture", "Durable construction", "4 colors available", "Eco-friendly material"],
     specs: [
-      { label: 'ความสูงสูงสุด', value: '175 cm' },
-      { label: 'วัสดุหลัก', value: 'Solid Pine Wood' },
-      { label: 'รองรับน้ำหนัก', value: 'สูงสุด 12 KG ต่อชั้น' },
-      { label: 'การติดตั้ง', value: 'Self-Assembly Required' }
+      { label: "Colors", value: "4 colors" },
+      { label: "Material", value: "Natural Cardboard" }
     ],
-    recommendedFor: { type: 'cat' }
+    isBest: true,
+    recommendedFor: { type: "cat" }
   },
-
-  // --- CLEAN & HYGIENE ---
   {
-    id: 'eraser-bin-v2',
-    name: 'Eraser Bin (Sensor)',
-    price: 3900,
-    image: 'https://cdn.imweb.me/upload/S201801295a6ea8288a1a1/aab92744b8a85.jpg?w=1000',
-    category: 'hygiene',
-    tagline: 'Touchless Odor-Sealing Pet Waste Bin',
-    description: 'ถังขยะอัจฉริยะที่เกิดมาเพื่อแก้ปัญหากลิ่นแผ่นรองซับและผ้าอ้อนสัตว์เลี้ยงโดยเฉพาะ ด้วยเทคโนโลยีซีลสุญญากาศ 2 ชั้น และเซนเซอร์เปิดฝาอัตโนมัติ ช่วยให้บ้านของคุณสะอาดและไร้กลิ่นรบกวน',
-    features: [
-      'Infrared Motion Sensor เปิดฝาใน 0.3 วินาที',
-      'ระบบ Double Odor Shield ป้องกันกลิ่นเล็ดลอด',
-      'ถุงขยะ Continuous Refill ใช้งานได้นาน 1-2 เดือน',
-      'วัสดุเคลือบสารยับยั้งแบคทีเรีย',
-      'ชาร์จไฟผ่าน USB-C ใช้งานได้ยาวนาน'
-    ],
+    id: "tiramisu-board",
+    name: "Duit Tiramisu Board",
+    price: 1750,
+    image: "https://duit.kr/web/product/big/tiramisu_board.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "One, two, three- the higher you go, the more you enjoy!",
+    description: "A multi-tier scratcher board that offers vertical fun and scratching surfaces for cats, designed like a delicious tiramisu.",
+    features: ["3-tier design", "Vertical scratching", "Stable base", "Stylish design"],
     specs: [
-      { label: 'วัสดุ', value: 'Anti-Microbial ABS' },
-      { label: 'ขนาดบรรจุ', value: '20 Liters' },
-      { label: 'แบตเตอรี่', value: '2000mAh Li-ion' },
-      { label: 'สี', value: 'Pure White' }
+      { label: "Tiers", value: "3-tier" }
     ],
-    isNew: true,
-    recommendedFor: {} // All pets
+    recommendedFor: { type: "cat" }
   },
   {
-    id: 'banana-brush',
-    name: 'Banana Brush (Grooming)',
+    id: "mouse-bot",
+    name: "Duit Mouse Bot",
+    price: 1290,
+    image: "https://duit.kr/web/product/big/mouse_bot.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "A fun hunting adventure for cats",
+    description: "An interactive toy that mimics the movement of a mouse, providing cats with a fun and engaging hunting experience to keep them active.",
+    features: ["Interactive movement", "Hunting simulation", "Automatic play mode", "Durable shell"],
+    specs: [
+      { label: "Type", value: "Electronic Toy" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "the-table-plus",
+    name: "Duit The Table Plus",
+    price: 4900,
+    image: "https://duit.kr/web/product/big/the_table_plus.jpg",
+    images: [],
+    category: "eat-drink",
+    tagline: "Customized automatic dry food dispenser in your hand",
+    description: "An advanced automatic feeder that allows you to customize feeding schedules and portions via an app, ensuring your pet is always fed.",
+    features: ["App control", "Customizable schedule", "Precise portions", "Sleek design"],
+    specs: [
+      { label: "Type", value: "Automatic Feeder" },
+      { label: "Connectivity", value: "Wi-Fi / App" }
+    ],
+    isBest: true,
+    recommendedFor: { type: "dog", size: "small" }
+  },
+  {
+    id: "standing-board",
+    name: "Duit Standing Board",
+    price: 1990,
+    image: "https://duit.kr/web/product/big/standing_board.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "The successor to the All Day Board, an essential for all cats",
+    description: "A vertical standing scratcher that provides a different scratching angle for cats who prefer upright surfaces, saving your furniture.",
+    features: ["Vertical design", "Sturdy and stable", "Premium scratching surface", "Space-efficient"],
+    specs: [
+      { label: "Type", value: "Standing Scratcher" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "peanut-board",
+    name: "Duit Peanut Board",
+    price: 1850,
+    image: "https://duit.kr/web/product/big/peanut_board.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "All the fun for cats in one place",
+    description: "A peanut-shaped scratcher and lounge that offers multiple ways for cats to play, scratch, and rest in one compact unit.",
+    features: ["Unique peanut shape", "Scratcher and lounge", "Durable material", "Ergonomic for cats"],
+    specs: [
+      { label: "Shape", value: "Peanut" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "hidden-track-board",
+    name: "Duit Hidden Track Board",
+    price: 1790,
+    image: "https://duit.kr/web/product/big/hidden_track_board.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "Multi-scratcher for scratching and playing at once",
+    description: "A multi-functional scratcher that includes a hidden track for balls, combining scratching with interactive play to keep cats entertained.",
+    features: ["Hidden track with ball", "Interactive play", "Scratching surface", "Sturdy design"],
+    specs: [
+      { label: "Type", value: "Multi-scratcher" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "all-day-basket",
+    name: "Duit All Day Basket",
+    price: 1690,
+    image: "https://duit.kr/web/product/big/all_day_basket.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "A comfortable hobby space for all cats",
+    description: "A cozy basket-style bed and scratcher that provides a secure and comfortable space for cats to rest and observe their surroundings.",
+    features: ["Basket shape", "Cozy interior", "Scratching exterior", "Durable"],
+    specs: [
+      { label: "Type", value: "Basket Bed" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "dtx",
+    name: "Duit Train Express (DTX)",
+    price: 1450,
+    image: "https://duit.kr/web/product/big/dtx.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "Endlessly expandable new concept cat tunnel",
+    description: "A modular cat tunnel system that can be expanded and reconfigured to create a fun train-like path for cats to explore.",
+    features: ["Modular expansion", "Tunnel design", "Interactive play", "Easy to assemble"],
+    specs: [
+      { label: "System", value: "Modular" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "poo-poo-box-2-way",
+    name: "Duit Poo Poo Box 2 Way",
     price: 1350,
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/59cdd1240cbe3.jpg?w=1000',
-    category: 'hygiene',
-    tagline: 'Gentle Glossy Care for Healthy Fur',
-    description: 'แปรงขนซิลิโคนดีไซน์รูปกล้วยที่เป็นเอกลักษณ์ของ Duit ช่วยกำจัดขนเสียและนวดกระตุ้นการไหลเวียนโลหิตในเวลาเดียวกัน อ่อนโยนต่อผิวหนังบอบบาง ไม่ทำให้เกิดแผลหรือความเครียดขณะแปรง',
-    features: [
-      'ซิลิโคน Food-Grade นุ่มพิเศษ ไม่ดึงผิว',
-      'ปุ่มแปรง 2 ระดับ เข้าถึงขนชั้นใน (Undercoat)',
-      'ด้ามจับถนัดมือ ลดความเมื่อยล้า',
-      'ล้างน้ำทำความสะอาดได้ 100%',
-      'พกพาสะดวก ดีไซน์น่ารักและพรีเมียม'
-    ],
+    image: "https://duit.kr/web/product/big/poo_poo_box_2_way.jpg",
+    images: [],
+    category: "hygiene",
+    tagline: "Zero stress! Customized cat litter box",
+    description: "A 2-way entry litter box designed to reduce stress for cats and minimize litter tracking for owners with its smart design.",
+    features: ["2-way entry/exit", "Spacious interior", "Easy to clean", "Litter tracking prevention"],
     specs: [
-      { label: 'วัสดุ', value: 'Medical Grade Silicone' },
-      { label: 'ขนาด', value: '115 x 50 mm' },
-      { label: 'สี', value: 'Mellow Yellow' },
-      { label: 'ประเภทขน', value: 'เหมาะสำหรับขนสั้นและยาว' }
+      { label: "Type", value: "Litter Box" }
     ],
-    recommendedFor: {} // All pets
-  },
-
-  // --- OUTING ---
-  {
-    id: 'dtx-express-carrier',
-    name: 'DTX (Duit Train Express)',
-    price: 7900,
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/a3087dd65d164.jpg?w=1000',
-    category: 'daily',
-    tagline: 'The Ultimate Travel Experience for Pets',
-    description: 'กระเป๋าเดินทางสัตว์เลี้ยงระดับไฮเอนด์ที่รวมความสวยงามและความปลอดภัยเข้าด้วยกัน ได้แรงบันดาลใจจากความคล่องตัวของรถไฟด่วน มาพร้อมระบบระบายอากาศที่เหนือชั้นและน้ำหนักที่เบาเป็นพิเศษ',
-    features: [
-      'ระบบ Suspension ลดแรงสั่นสะเทือนขณะเดิน',
-      'หน้าต่างตาข่ายความเหนียวสูง ทนแรงข่วน',
-      'พื้นกระเป๋าเสริมโครงแข็ง ไม่ยุบตัวเมื่อสัตว์เลี้ยงนั่ง',
-      'ช่องเก็บของอเนกประสงค์ 4 จุด',
-      'น้ำหนักเบาเพียง 1.1 KG แต่รับน้ำหนักได้ 10 KG'
-    ],
-    specs: [
-      { label: 'วัสดุ', value: 'Polycarbonate / High-D Nylon' },
-      { label: 'ขนาด', value: '420 x 260 x 300 mm' },
-      { label: 'รับน้ำหนัก', value: 'Up to 10 KG' },
-      { label: 'การรับรอง', value: 'Airline Cabin Approved' }
-    ],
-    isNew: true,
-    recommendedFor: { size: 'small' }
+    recommendedFor: { type: "cat" }
   },
   {
-    id: 'windows-hammock',
-    name: 'Windows Hammock',
-    price: 3500,
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/a42c07212f457.jpg?w=1000',
-    category: 'furniture',
-    tagline: 'Sun-Bathing Spot for Curious Cats',
-    description: 'เปลติดกระจกที่มอบมุมมองที่ดีที่สุดในบ้านให้กับแมวของคุณ ช่วยให้พวกเขาได้อาบแดดและเฝ้ามองโลกภายนอกได้อย่างอิสระโดยไม่ต้องเสียพื้นที่ใช้สอยบนพื้นบ้าน',
-    features: [
-      'จุกดูดสุญญากาศ Industrial Grade รับน้ำหนักได้ 15 KG',
-      'โครงเหล็กพ่นสี Power Coat กันสนิม',
-      'แผ่นรองนอนผ้า Mesh ระบายอากาศได้ดี',
-      'ติดตั้งง่าย ไม่ต้องเจาะผนัง',
-      'พับเก็บได้เมื่อไม่ใช้งาน'
-    ],
+    id: "poo-poo-mat",
+    name: "Duit Poo Poo Mat",
+    price: 750,
+    image: "https://duit.kr/web/product/big/poo_poo_mat.jpg",
+    images: [],
+    category: "hygiene",
+    tagline: "A wise way to reduce desertification (litter tracking)",
+    description: "A high-quality mat designed to catch litter from cats' paws as they exit the litter box, keeping your floors clean.",
+    features: ["Litter trapping design", "Easy to clean", "2 colors/2 sizes", "Non-slip"],
     specs: [
-      { label: 'วัสดุ', value: 'Steel / Mesh / PVC' },
-      { label: 'รับน้ำหนัก', value: 'Max 15 KG' },
-      { label: 'ขนาดพื้นที่นอน', value: '550 x 350 mm' },
-      { label: 'สี', value: 'Space Gray / Cream' }
+      { label: "Sizes", value: "2 sizes" },
+      { label: "Colors", value: "2 colors" }
     ],
-    recommendedFor: { type: 'cat' }
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "kitty-tree",
+    name: "Duit Kitty Tree",
+    price: 12500,
+    image: "https://duit.kr/web/product/big/kitty_tree.jpg",
+    images: [],
+    category: "furniture",
+    tagline: "Rest, play, scratch - for up to five cats!",
+    description: "A multi-cat scratcher tree that allows up to five cats to rest, play, and scratch simultaneously, perfect for multi-cat households.",
+    features: ["Multi-cat use", "Tree structure", "Durable scratching posts", "Stable base"],
+    specs: [
+      { label: "Capacity", value: "Up to 5 cats" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "kitty-picker",
+    name: "Duit Kitty Picker",
+    price: 850,
+    image: "https://duit.kr/web/product/big/kitty_picker.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "The toy your cat picks at first sight!",
+    description: "A premium fishing rod toy for cats, designed to be irresistible and highly engaging with its lifelike movements.",
+    features: ["High engagement", "Premium materials", "Interchangeable ends", "Ergonomic handle"],
+    specs: [
+      { label: "Type", value: "Fishing Rod Toy" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "tent-station",
+    name: "Duit Tent Station",
+    price: 2450,
+    image: "https://duit.kr/web/product/big/tent_station.jpg",
+    images: [],
+    category: "furniture",
+    tagline: "Warm base camp, a pause at the end of the adventure",
+    description: "A cozy tent-style hideout for pets, providing a warm and secure base camp for rest and play after their daily adventures.",
+    features: ["Tent design", "Cozy interior", "Stylish aesthetic", "Easy to set up"],
+    specs: [
+      { label: "Type", value: "Pet Tent" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "buggie-bot",
+    name: "Duit Buggie Bot",
+    price: 1050,
+    image: "https://duit.kr/web/product/big/buggie_bot.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "Hunting skill level up!",
+    description: "An interactive bug-like toy that helps cats upgrade their hunting skills through unpredictable and fast movements.",
+    features: ["Unpredictable movement", "Hunting skill training", "Compact size", "Automatic obstacle avoidance"],
+    specs: [
+      { label: "Type", value: "Electronic Toy" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "kitty-cinema",
+    name: "Duit Kitty Cinema",
+    price: 1550,
+    image: "https://duit.kr/web/product/big/kitty_cinema.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "Mini theater that will captivate you",
+    description: "A projection and mood lamp designed for cats and their owners to enjoy together, creating a mini theater experience at home.",
+    features: ["Projection function", "Mood lamp mode", "Interactive visuals", "Compact design"],
+    specs: [
+      { label: "Type", value: "Mood Lamp / Projector" }
+    ],
+    recommendedFor: { type: "cat" }
+  },
+  {
+    id: "yummy-ball",
+    name: "Duit Yummy Ball",
+    price: 1450,
+    image: "https://duit.kr/web/product/big/yummy_ball.jpg",
+    images: [],
+    category: "play-rest",
+    tagline: "Your playful toy buddy, nose work master",
+    description: "An interactive nose work toy that encourages pets to play and find treats, fulfilling their daily activity and mental stimulation needs.",
+    features: ["Nose work training", "Treat dispensing", "Interactive play", "Durable material"],
+    specs: [
+      { label: "Type", value: "Nose Work Toy" }
+    ],
+    recommendedFor: { type: "dog" }
+  },
+  {
+    id: "custom-potty",
+    name: "Duit Custom Potty",
+    price: 1650,
+    image: "https://duit.kr/web/product/big/custom_potty.jpg",
+    images: [],
+    category: "hygiene",
+    tagline: "Customized potty space for pets",
+    description: "A customizable potty tray designed to fit your pet's needs and your home's aesthetic, making potty training easier.",
+    features: ["Customizable design", "Easy to clean", "Durable construction", "Non-slip base"],
+    specs: [
+      { label: "Type", value: "Potty Tray" }
+    ],
+    recommendedFor: { type: "dog" }
+  },
+  {
+    id: "anti-bug-light",
+    name: "Duit Anti Bug Light",
+    price: 590,
+    image: "https://duit.kr/web/product/big/anti_bug_light.jpg",
+    images: [],
+    category: "daily",
+    tagline: "Blinking LED for safe night walks",
+    description: "A bright LED light that attaches to your pet's collar, ensuring safety during night walks and helping to repel bugs.",
+    features: ["Bright LED light", "Anti-bug function", "Easy attachment", "Water-resistant"],
+    specs: [
+      { label: "Type", value: "Safety Light" }
+    ],
+    recommendedFor: { type: "dog" }
+  },
+  {
+    id: "banana-brush",
+    name: "Duit Banana Brush",
+    price: 750,
+    image: "https://duit.kr/web/product/big/banana_brush.jpg",
+    images: [],
+    category: "hygiene",
+    tagline: "Glossy care without irritation",
+    description: "A gentle brush designed for grooming and maintaining a glossy coat without irritating the pet's skin, shaped like a banana.",
+    features: ["Gentle silicone bristles", "Ergonomic banana shape", "Glossy coat care", "Easy to clean"],
+    specs: [
+      { label: "Type", value: "Grooming Brush" },
+      { label: "Material", value: "Silicone" }
+    ],
+    recommendedFor: { type: "dog" }
+  },
+  {
+    id: "floating-bathtub",
+    name: "Duit Floating Bathtub",
+    price: 1350,
+    image: "https://duit.kr/web/product/big/floating_bathtub.jpg",
+    images: [],
+    category: "hygiene",
+    tagline: "Multi-functional collapsible bathtub",
+    description: "A collapsible bathtub that is easy to store and use, perfect for bathing pets of various sizes and even for outdoor use.",
+    features: ["Collapsible design", "Space-saving", "Durable and safe", "Multi-functional"],
+    specs: [
+      { label: "Type", value: "Bathtub" }
+    ],
+    recommendedFor: { type: "dog", size: "small" }
+  },
+  {
+    id: "eraser-bin",
+    name: "Duit Eraser Bin",
+    price: 1250,
+    image: "https://duit.kr/web/product/big/eraser_bin.jpg",
+    images: [],
+    category: "hygiene",
+    tagline: "Touchless motion sensor trash can",
+    description: "A hygienic, touchless trash can with a motion sensor, ideal for disposing of pet waste and keeping odors contained.",
+    features: ["Motion sensor activation", "Touchless operation", "Odor control", "Sleek design"],
+    specs: [
+      { label: "Type", value: "Trash Can" },
+      { label: "Sensor", value: "Motion" }
+    ]
   }
 ];
 
 export const getRecommendedProducts = (profile: PetProfile | null, productsList: Product[]) => {
   if (!profile) return productsList.filter(p => p.isBest);
   
-  // Scoring system for recommendations
   return productsList.map(product => {
     let score = 0;
     if (!product.recommendedFor) return { product, score: 1 };
     
-    // Type match
     if (product.recommendedFor.type) {
       if (product.recommendedFor.type === profile.type) score += 10;
-      else score -= 100; // Hard filter for wrong type
+      else score -= 100;
     } else {
-      score += 5; // Universal products
+      score += 5;
     }
 
-    // Size match
     if (product.recommendedFor.size) {
       if (product.recommendedFor.size === profile.size) score += 8;
-      else score += 2; // Still okay, but not ideal
+      else score += 2;
     } else {
       score += 4;
     }
 
-    // New/Best boost
     if (product.isBest) score += 2;
     if (product.isNew) score += 2;
 
