@@ -53,7 +53,6 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexSansThai.variable} antialiased`}>
       <body className="bg-white text-black min-h-screen flex flex-col font-sans selection:bg-black selection:text-white overflow-x-hidden">
         <div className="grain-overlay" />
-        <AuraCursor />
         <SmoothScroll>
           <Toaster position="top-center" richColors />
           <MainLayout>

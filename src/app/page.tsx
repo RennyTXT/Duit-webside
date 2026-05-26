@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { usePetStore } from '@/store/usePetStore';
 import { Product, products as staticProducts, getRecommendedProducts } from '@/data/products';
 import { ArrowRight, ShoppingCart, Star, ShieldCheck, Truck, Utensils, Gamepad2, Armchair, Droplets, Sparkles, Heart, Loader2 } from 'lucide-react';
-import { motion, AnimatePresence, Variants, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import Image from 'next/image';
-import { useMemo, useEffect, useState, useRef } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { createClient } from '@/lib/supabase/client';
 import { useLanguageStore, translations } from '@/store/useLanguageStore';
@@ -19,19 +19,6 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const supabase = createClient();
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Idea 5: Cinematic Background Morphing
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const bgColor = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.4, 0.6, 0.8],
-    ["#ffffff", "#ffffff", "#faf7f2", "#111111", "#111111"]
-  );
 
   const heroSlides = [
     {
@@ -103,7 +90,7 @@ const Home = () => {
   };
 
   return (
-    <motion.div style={{ backgroundColor: bgColor }} className="flex flex-col transition-colors duration-1000" ref={containerRef}>
+    <div className="flex flex-col bg-white">
       
       {/* 1. CINEMATIC HERO */}
       <section className="relative h-screen w-full overflow-hidden bg-black">
@@ -187,7 +174,7 @@ const Home = () => {
       </section>
 
       {/* 3. SELECTION (Horizontal Feel) */}
-      <section className="py-40 bg-white/50 backdrop-blur-sm">
+      <section className="py-40 bg-white">
         <div className="max-w-[1440px] mx-auto px-6 md:px-20">
           <div className="flex flex-col md:flex-row justify-between items-end mb-32 gap-12">
             <div className="space-y-6">
@@ -209,7 +196,7 @@ const Home = () => {
 
       {/* 4. PERSONALIZED RECOMMENDATIONS (Interactive Reveal) */}
       {profile && personalized.length > 0 && (
-        <section className="py-40 px-6 md:px-20 bg-[#faf7f2]">
+        <section className="py-40 px-6 md:px-20 bg-cream-light/30">
           <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-24 items-start">
              <div className="lg:col-span-4 sticky top-40 space-y-8">
                 <div className="w-16 h-16 rounded-3xl bg-white flex items-center justify-center text-accent-gold shadow-sm"><Sparkles size={28} /></div>
@@ -225,7 +212,7 @@ const Home = () => {
         </section>
       )}
 
-      {/* 5. EXCLUSIVE CLUB (Dark Cinematic Transition) */}
+      {/* 5. EXCLUSIVE CLUB (Dark Section) */}
       <section className="py-60 bg-primary text-white overflow-hidden relative">
         <div className="max-w-[1440px] mx-auto px-6 md:px-20 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center relative z-10">
           <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1 }} className="space-y-16">
@@ -275,7 +262,7 @@ const Home = () => {
           ))}
         </div>
       </section>
-    </motion.div>
+    </div>
   );
 };
 
