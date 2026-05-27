@@ -18,6 +18,7 @@ const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const supabase = createClient();
 
   const heroSlides = [
@@ -42,11 +43,11 @@ const Home = () => {
   ];
 
   const categories = [
-    { name: t.shop.eatDrink, Icon: Utensils, href: '/collections/eat-drink' },
-    { name: t.shop.playRest, Icon: Gamepad2, href: '/collections/play-rest' },
-    { name: t.shop.furniture, Icon: Armchair, href: '/collections/furniture' },
-    { name: t.shop.hygiene, Icon: Droplets, href: '/collections/hygiene' },
-    { name: t.shop.daily, Icon: Sparkles, href: '/collections/daily' },
+    { name: t.shop.eatDrink, Icon: Utensils, href: '/collections/eat-drink', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/8040a424e8150.jpg?w=1440" },
+    { name: t.shop.playRest, Icon: Gamepad2, href: '/collections/play-rest', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/02c3dd1725fb7.jpg?w=1440" },
+    { name: t.shop.furniture, Icon: Armchair, href: '/collections/furniture', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/7161e1b854371.jpg?w=1440" },
+    { name: t.shop.hygiene, Icon: Droplets, href: '/collections/hygiene', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/f41249b674844.jpg?w=1440" },
+    { name: t.shop.daily, Icon: Sparkles, href: '/collections/daily', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=1440" },
   ];
 
   useEffect(() => {
@@ -80,14 +81,6 @@ const Home = () => {
   }, [products]);
 
   const personalized = useMemo(() => getRecommendedProducts(profile, products), [profile, products]);
-
-  const textRevealVariants = {
-    hidden: { y: "100%" },
-    visible: (i: number) => ({
-      y: 0,
-      transition: { delay: 0.5 + i * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] as const }
-    })
-  };
 
   return (
     <div className="flex flex-col bg-white">
@@ -183,9 +176,17 @@ const Home = () => {
               
               <div className="grid grid-cols-1 gap-2 pt-8">
                 {categories.map((cat, i) => (
-                  <Link key={cat.name} href={cat.href} className="group flex items-center justify-between py-6 border-b border-neutral-100 hover:px-4 transition-all duration-500">
-                    <h3 className="text-lg font-black uppercase tracking-tight group-hover:text-accent-gold transition-colors">{cat.name}</h3>
-                    <div className="w-8 h-8 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                  <Link 
+                    key={cat.name} 
+                    href={cat.href} 
+                    onMouseEnter={() => setActiveCategoryIndex(i)}
+                    className="group flex items-center justify-between py-6 border-b border-neutral-100 hover:px-4 transition-all duration-500"
+                  >
+                    <div className="flex items-center gap-6">
+                      <span className={`text-[10px] font-black transition-colors duration-500 ${activeCategoryIndex === i ? 'text-accent-gold' : 'text-neutral-300'}`}>0{i+1}</span>
+                      <h3 className={`text-lg font-black uppercase tracking-tight transition-colors duration-500 ${activeCategoryIndex === i ? 'text-primary' : 'text-neutral-400 group-hover:text-primary'}`}>{cat.name}</h3>
+                    </div>
+                    <div className={`w-8 h-8 rounded-full border transition-all duration-500 flex items-center justify-center ${activeCategoryIndex === i ? 'bg-primary text-white border-primary rotate-45' : 'border-neutral-100 group-hover:bg-neutral-50'}`}>
                       <ArrowRight size={14} />
                     </div>
                   </Link>
@@ -194,15 +195,40 @@ const Home = () => {
            </div>
 
            <div className="lg:col-span-7">
-              <motion.div 
-                initial={{ opacity: 0 }} 
-                whileInView={{ opacity: 1 }} 
-                viewport={{ once: true }} 
-                transition={{ duration: 1.5 }}
-                className="aspect-[4/3] rounded-[48px] overflow-hidden relative grayscale-[0.2] hover:grayscale-0 transition-all duration-1000"
-              >
-                 <Image src="https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/7161e1b854371.jpg?w=1440" alt="Exhibition" fill className="object-cover" />
-              </motion.div>
+              <div className="relative aspect-[4/3] rounded-[48px] overflow-hidden shadow-luxury">
+                 <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeCategoryIndex}
+                      initial={{ opacity: 0, scale: 1.1 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      className="absolute inset-0"
+                    >
+                       <Image 
+                        src={categories[activeCategoryIndex].image} 
+                        alt={categories[activeCategoryIndex].name} 
+                        fill 
+                        className="object-cover" 
+                       />
+                       <div className="absolute inset-0 bg-primary/5" />
+                       
+                       {/* Artifact Badge */}
+                       <div className="absolute bottom-10 right-10 flex items-center gap-4">
+                          <div className="h-px w-8 bg-white/40"></div>
+                          <span className="text-[9px] font-black uppercase tracking-[0.4em] text-white/80">Artifact 0{activeCategoryIndex + 1}</span>
+                       </div>
+                    </motion.div>
+                 </AnimatePresence>
+              </div>
+              
+              <div className="mt-8 flex justify-between items-center px-4">
+                 <div className="flex items-center gap-4">
+                    <div className="w-1.5 h-1.5 bg-accent-gold rounded-full animate-pulse" />
+                    <span className="text-[8px] font-black uppercase tracking-[0.4em] text-neutral-400 italic">Curated by Duit Design Lab</span>
+                 </div>
+                 <Link href="/shop" className="text-[8px] font-black uppercase tracking-[0.4em] text-neutral-300 hover:text-accent-gold transition-colors">Exhibition Guide</Link>
+              </div>
            </div>
         </div>
       </section>
