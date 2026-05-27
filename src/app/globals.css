@@ -13,11 +13,36 @@
   background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
 }
 
-/* Cinematic Reveal Mask */
-.reveal-mask {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
+/* Mask Reveal Animation */
+.mask-reveal {
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  mask-size: 100% 200%;
+  mask-position: 0 100%;
+  transition: mask-position 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mask-reveal:hover {
+  mask-position: 0 0;
+}
+
+/* Golden Glow Soft */
+.gold-glow-soft {
+  box-shadow: 0 0 50px rgba(197, 160, 89, 0.1);
+}
+
+/* Frosted Glass Luxury */
+.glass-luxury {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.text-spacing-luxury {
+  letter-spacing: 0.4em;
+}
+
+.parallax-container {
+  perspective: 1000px;
 }
 
 .perspective-2000 {

@@ -95,9 +95,66 @@ const Home = () => {
       {/* 1. CINEMATIC HERO */}
       <section className="relative h-screen w-full overflow-hidden bg-black">
         <AnimatePresence mode="wait">
-          <motion.div key={currentSlide} initial={{ scale: 1.1, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }} className="absolute inset-0">
-            {heroSlides[currentSlide].image && <Image src={heroSlides[currentSlide].image} alt={heroSlides[currentSlide].title} fill className="object-cover brightness-[0.4]" priority />}
+          <motion.div 
+            key={currentSlide} 
+            initial={{ scale: 1.1, opacity: 0 }} 
+            animate={{ scale: 1, opacity: 1 }} 
+            exit={{ opacity: 0 }} 
+            transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }} 
+            className="absolute inset-0"
+          >
+            {heroSlides[currentSlide].image && (
+              <Image 
+                src={heroSlides[currentSlide].image} 
+                alt={heroSlides[currentSlide].title} 
+                fill 
+                className="object-cover brightness-[0.5] contrast-[1.1]" 
+                priority 
+              />
+            )}
             <div className="absolute inset-0 flex items-center justify-center text-center px-6">
+               <div className="max-w-5xl space-y-10">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex flex-col items-center gap-6"
+                  >
+                     <span className="text-[10px] font-black uppercase tracking-[0.6em] text-accent-gold border border-accent-gold/30 px-6 py-2 rounded-full backdrop-blur-sm">
+                        {heroSlides[currentSlide].tag}
+                     </span>
+                     <h1 className="text-6xl md:text-8xl xl:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] overflow-hidden">
+                        <motion.span
+                          initial={{ y: "100%" }}
+                          animate={{ y: 0 }}
+                          transition={{ delay: 0.8, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                          className="inline-block"
+                        >
+                           {heroSlides[currentSlide].title.split('.')[0]}
+                        </motion.span>
+                        <br />
+                        <motion.span
+                          initial={{ y: "100%" }}
+                          animate={{ y: 0 }}
+                          transition={{ delay: 1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                          className="inline-block text-luxury-gradient italic pb-4"
+                        >
+                           {heroSlides[currentSlide].title.split('.')[1] || ''}
+                        </motion.span>
+                     </h1>
+                  </motion.div>
+                  
+                  <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.6 }}
+                    transition={{ delay: 1.5, duration: 2 }}
+                    className="text-white text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed tracking-wide"
+                  >
+                    {heroSlides[currentSlide].subtitle}
+                  </motion.p>
+               </div>
+            </div>
+          </motion.div>
               <div className="max-w-6xl">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }} className="flex items-center justify-center gap-4 mb-8">
                   <div className="h-[1px] w-8 bg-accent-gold/50"></div>

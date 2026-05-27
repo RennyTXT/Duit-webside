@@ -1,86 +1,55 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, useSpring, useMotionValue } from 'framer-motion';
 
-export default function AuraCursor() {
-  const [isHovered, setIsHovered] = useState(false);
-  const [cursorText, setCursorText] = useState('');
-  
-  const mouseX = useMotionValue(-100);
-  const mouseY = useMotionValue(-100);
+const AuraCursor = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
 
-  const springConfig = { damping: 25, stiffness: 250 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
+  const springConfig = { damping: 25, stiffness: 150 };
+  const x = useSpring(cursorX, springConfig);
+  const y = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    const moveMouse = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+    setIsMounted(true);
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
-    const handleHover = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const isInteractive = target.closest('button, a, input, select, .group');
-      setIsHovered(!!isInteractive);
-      
-      // Special labels
-      const hasViewLabel = target.closest('[data-cursor="view"]');
-      setCursorText(hasViewLabel ? 'VIEW' : '');
-    };
+    window.addEventListener('mousemove', moveCursor);
+    return () => window.removeEventListener('mousemove', moveCursor);
+  }, [cursorX, cursorY]);
 
-    window.addEventListener('mousemove', moveMouse);
-    window.addEventListener('mouseover', handleHover);
-
-    return () => {
-      window.removeEventListener('mousemove', moveMouse);
-      window.removeEventListener('mouseover', handleHover);
-    };
-  }, [mouseX, mouseY]);
+  if (!isMounted) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[9999] hidden lg:block">
-      {/* The Aura Ring */}
+    <>
+      {/* Primary Aura */}
       <motion.div
+        className="fixed top-0 left-0 w-[400px] h-[400px] bg-accent-gold/5 rounded-full blur-[100px] pointer-events-none z-[9998]"
         style={{
-          left: cursorX,
-          top: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
+          x: x,
+          y: y,
+          translateX: '-50%',
+          translateY: '-50%',
         }}
-        animate={{
-          width: isHovered ? 80 : 40,
-          height: isHovered ? 80 : 40,
-          backgroundColor: isHovered ? "rgba(191, 153, 91, 0.1)" : "rgba(17, 17, 17, 0.05)",
-          borderColor: isHovered ? "rgba(191, 153, 91, 0.5)" : "rgba(17, 17, 17, 0.2)",
-        }}
-        className="absolute rounded-full border border-solid flex items-center justify-center transition-colors duration-300"
-      >
-        {cursorText && (
-          <motion.span
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-[8px] font-black text-accent-gold uppercase tracking-widest"
-          >
-            {cursorText}
-          </motion.span>
-        )}
-      </motion.div>
-
-      {/* The Center Dot */}
-      <motion.div
-        style={{
-          left: cursorX,
-          top: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        animate={{
-          scale: isHovered ? 0 : 1,
-        }}
-        className="absolute w-1.5 h-1.5 bg-primary rounded-full"
       />
-    </div>
+      
+      {/* Secondary Soft Light */}
+      <motion.div
+        className="fixed top-0 left-0 w-[200px] h-[200px] bg-primary/3 rounded-full blur-[60px] pointer-events-none z-[9998]"
+        style={{
+          x: x,
+          y: y,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+      />
+    </>
   );
-}
+};
+
+export default AuraCursor;
