@@ -401,6 +401,101 @@ export default function ProductDetailView({ id }: { id: string }) {
             </div>
           </div>
         </div>
+
+        {/* --- NEW: IMMERSIVE STORYTELLING SECTION --- */}
+        <div className="mt-40 md:mt-60 space-y-40">
+           {/* Section Header */}
+           <div className="text-center space-y-8 max-w-4xl mx-auto">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="flex items-center justify-center gap-4"
+              >
+                <div className="h-px w-12 bg-accent-gold/40"></div>
+                <span className="text-[10px] font-black uppercase tracking-[0.6em] text-accent-gold">Close-up Perspective</span>
+                <div className="h-px w-12 bg-accent-gold/40"></div>
+              </motion.div>
+              <motion.h2 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-tight"
+              >
+                The Art of <span className="text-luxury-gradient italic">Craftsmanship</span>
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 0.6 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="text-lg text-secondary font-medium leading-relaxed"
+              >
+                Every angle, every curve, and every material is selected with architectural precision to ensure a lifetime of aesthetic value and unparalleled comfort.
+              </motion.p>
+           </div>
+
+           {/* Image Showcase Grid (Oversea Style) */}
+           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
+              {/* Feature 1: Large Vertical */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="md:col-span-8 aspect-[16/9] md:aspect-[4/3] relative rounded-[40px] md:rounded-[64px] overflow-hidden group shadow-luxury"
+              >
+                <Image 
+                  src={productImages[1] || productImages[0]} 
+                  alt="Detail Focus" 
+                  fill 
+                  className="object-cover transition-transform duration-[2s] group-hover:scale-105" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 flex items-end p-12">
+                   <p className="text-white text-xs font-black uppercase tracking-[0.4em]">Material Integrity</p>
+                </div>
+              </motion.div>
+
+              {/* Feature 2: Square Top */}
+              <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="md:col-span-4 aspect-square relative rounded-[40px] md:rounded-[56px] overflow-hidden shadow-luxury"
+              >
+                <Image 
+                  src={productImages[2] || productImages[0]} 
+                  alt="Detail Focus" 
+                  fill 
+                  className="object-cover" 
+                />
+              </motion.div>
+
+              {/* Feature 3: Long Horizontal Bottom */}
+              <motion.div 
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="md:col-span-12 h-[300px] md:h-[500px] relative rounded-[40px] md:rounded-[64px] overflow-hidden shadow-luxury-hover group"
+              >
+                 <Image 
+                  src={productImages[3] || productImages[0]} 
+                  alt="Atmosphere" 
+                  fill 
+                  className="object-cover brightness-90 group-hover:brightness-100 transition-all duration-1000" 
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                   <div className="bg-white/10 backdrop-blur-2xl border border-white/20 p-10 md:p-16 rounded-[48px] text-center space-y-4 max-w-lg mx-6">
+                      <Sparkles className="text-accent-gold mx-auto" size={24} />
+                      <h3 className="text-white text-2xl font-black uppercase tracking-widest leading-none">Seamless <br /> Adaptation</h3>
+                      <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest leading-relaxed">Designed to blend effortlessly into any contemporary architectural space.</p>
+                   </div>
+                </div>
+              </motion.div>
+           </div>
+        </div>
+
       </div>
     </div>
   );
