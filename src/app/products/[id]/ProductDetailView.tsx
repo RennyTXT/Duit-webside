@@ -81,21 +81,41 @@ export default function ProductDetailView({ id }: { id: string }) {
             ...(staticProd?.images || [])
           ])).filter(Boolean) as string[];
 
-          // 1. แยกรูปภาพที่ "ไม่ใช่สินค้า" ออก (เช่น icon, badge, text images)
-          const filteredGallery = allRawImages.filter(url => {
-            const isIcon = url.includes('icon') || url.includes('badge') || url.includes('logo') || url.includes('thumb/');
-            const isLabel = url.toLowerCase().includes('best') || url.toLowerCase().includes('new') || url.includes('.png');
-            // ถ้ารูปเป็น .png มักจะเป็นพวกโลโก้หรือ badge (ยกเว้นรูปหลักที่เป็นสินค้า)
-            if (url === prodData.image_url) return true; 
-            return !isIcon && !isLabel;
+          // 1. แยกรูปภาพที่เป็น "ข้อมูลสินค้า" (Infographic/Specs) 
+          const infoImages = allRawImages.filter(url => {
+            const fileName = url.split('/').pop()?.toLowerCase() || '';
+            const isLongName = fileName.length > 30;
+            const isUploadFolder = url.includes('/upload/') && !url.includes('S201801295a6ea8288a1a1'); // ยกเว้นโฟลเดอร์ icon
+            const isOptimizedLarge = url.includes('w=1920') || url.includes('w=1440');
+            return isLongName || isUploadFolder || isOptimizedLarge;
           });
 
-          // 2. แยกรูปภาพที่เป็น "ข้อมูลสินค้า" (Infographic/Specs) 
-          // ปกติรูปพวกนี้จะมีชื่อไฟล์ยาวๆ หรืออยู่ในโฟลเดอร์ upload เฉพาะ
-          const infoImages = allRawImages.filter(url => {
-            const isLongName = url.split('/').pop()?.length && (url.split('/').pop()?.length ?? 0) > 30;
-            const isLargeOptimized = url.includes('w=1920') || url.includes('upload');
-            return isLongName || isLargeOptimized;
+          // 2. แยกรูปภาพที่ "ไม่ใช่สินค้า" ออก (เช่น icon, badge, text images)
+          const filteredGallery = allRawImages.filter(url => {
+            const lowerUrl = url.toLowerCase();
+            const fileName = url.split('/').pop()?.toLowerCase() || '';
+            
+            // ตรวจสอบโฟลเดอร์และไฟล์ที่เป็น Icon/Badge แน่นอนจาก Database
+            const isIconFolder = lowerUrl.includes('s201801295a6ea8288a1a1'); // โฟลเดอร์รวมไอคอน
+            const isKnownBadge = [
+              'dd222a472259d.png', // Best badge
+              '0244432da5059.png', // New badge
+              'e0bbc5fa3473e.png', // Care icon
+              '1d79839d787c6.png', // Info icon
+              'aa760b8efcb7b.jpg', // Shield icon
+              '8ffc279c26cfc.jpg', // Truck icon
+              '66f0f11d4d4c4.png'  // Water icon
+            ].some(badge => fileName.includes(badge));
+
+            const isGenericIcon = lowerUrl.includes('icon') || lowerUrl.includes('badge') || lowerUrl.includes('logo') || lowerUrl.includes('thumb/');
+            const isLabel = fileName.includes('best') || fileName.includes('new') || fileName.includes('label') || fileName.includes('tag');
+            const isInfo = infoImages.includes(url);
+            
+            // ถ้ารูปเป็น .png มักจะเป็นพวกโลโก้หรือ badge (ยกเว้นรูปหลักที่เป็นสินค้า)
+            if (url === prodData.image_url) return true; 
+            
+            // กรองออกถ้าเข้าเงื่อนไข Icon, Badge หรือ Info
+            return !isIconFolder && !isKnownBadge && !isGenericIcon && !isLabel && !isInfo;
           });
 
           const finalProduct = { 
