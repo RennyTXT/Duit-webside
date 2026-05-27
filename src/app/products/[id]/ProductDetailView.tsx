@@ -74,16 +74,35 @@ export default function ProductDetailView({ id }: { id: string }) {
         if (prodData) {
           const staticProd = staticProducts.find(p => p.id === id);
           
-          const allImages = Array.from(new Set([
+          // ระบบคัดกรองรูปภาพอัจฉริยะ (Smart Image Filtering)
+          const allRawImages = Array.from(new Set([
             prodData.image_url,
             ...(prodData.images || []),
             ...(staticProd?.images || [])
           ])).filter(Boolean) as string[];
 
+          // 1. แยกรูปภาพที่ "ไม่ใช่สินค้า" ออก (เช่น icon, badge, text images)
+          const filteredGallery = allRawImages.filter(url => {
+            const isIcon = url.includes('icon') || url.includes('badge') || url.includes('logo') || url.includes('thumb/');
+            const isLabel = url.toLowerCase().includes('best') || url.toLowerCase().includes('new') || url.includes('.png');
+            // ถ้ารูปเป็น .png มักจะเป็นพวกโลโก้หรือ badge (ยกเว้นรูปหลักที่เป็นสินค้า)
+            if (url === prodData.image_url) return true; 
+            return !isIcon && !isLabel;
+          });
+
+          // 2. แยกรูปภาพที่เป็น "ข้อมูลสินค้า" (Infographic/Specs) 
+          // ปกติรูปพวกนี้จะมีชื่อไฟล์ยาวๆ หรืออยู่ในโฟลเดอร์ upload เฉพาะ
+          const infoImages = allRawImages.filter(url => {
+            const isLongName = url.split('/').pop()?.length && (url.split('/').pop()?.length ?? 0) > 30;
+            const isLargeOptimized = url.includes('w=1920') || url.includes('upload');
+            return isLongName || isLargeOptimized;
+          });
+
           const finalProduct = { 
             ...prodData, 
             image: prodData.image_url || staticProd?.image,
-            images: allImages.length > 0 ? allImages : (staticProd?.images || []),
+            images: filteredGallery.length > 0 ? filteredGallery : [prodData.image_url],
+            infoImages: infoImages, // เก็บไว้แสดงด้านล่าง
             features: prodData.features || staticProd?.features || [],
             specs: prodData.specs || staticProd?.specs || [],
             modelUrl: prodData.model_url || staticProd?.modelUrl 
@@ -92,7 +111,7 @@ export default function ProductDetailView({ id }: { id: string }) {
           setProduct(finalProduct);
           setOptions(optionsData || []);
           
-          if (finalProduct.modelUrl && allImages.length === 0) {
+          if (finalProduct.modelUrl && filteredGallery.length === 0) {
             setViewMode('3d');
           }
         } else {
@@ -214,19 +233,13 @@ export default function ProductDetailView({ id }: { id: string }) {
       <div className="max-w-[1800px] mx-auto px-6 md:px-12 lg:px-20 pb-40 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 xl:gap-24 items-start">
           
-          {/* LEFT: GALLERY SECTION (Redesigned) */}
+          {/* LEFT: GALLERY SECTION */}
           <div className="lg:col-span-7 flex flex-col gap-8">
             <div className="w-full">
               <div className="relative aspect-[4/5] md:aspect-square bg-white rounded-[48px] md:rounded-[64px] border border-neutral-100 shadow-luxury overflow-hidden group">
                 <AnimatePresence mode="wait">
                   {viewMode === '3d' && product.modelUrl ? (
-                    <motion.div 
-                      key="3d" 
-                      initial={{ opacity: 0 }} 
-                      animate={{ opacity: 1 }} 
-                      exit={{ opacity: 0 }} 
-                      className="w-full h-full relative cursor-grab active:cursor-grabbing"
-                    >
+                    <motion.div key="3d" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full h-full relative cursor-grab active:cursor-grabbing">
                       <Product3DViewer modelUrl={product.modelUrl} altText={localizedInfo.name} />
                       <div className="absolute top-10 right-10 pointer-events-none">
                          <div className="bg-white/50 backdrop-blur-md px-6 py-3 rounded-full border border-white/50 flex items-center gap-3">
@@ -236,43 +249,22 @@ export default function ProductDetailView({ id }: { id: string }) {
                       </div>
                     </motion.div>
                   ) : (
-                    <motion.div 
-                      key={activeImageIndex} 
-                      initial={{ opacity: 0, scale: 1.05 }} 
-                      animate={{ opacity: 1, scale: 1 }} 
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                      className="w-full h-full relative"
-                    >
-                      <Image 
-                        src={currentMainImage} 
-                        alt={localizedInfo.name} 
-                        fill 
-                        className="object-contain p-12 md:p-20 transition-transform duration-1000 group-hover:scale-105" 
-                        priority 
-                      />
+                    <motion.div key={activeImageIndex} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="w-full h-full relative">
+                      <Image src={currentMainImage} alt={localizedInfo.name} fill className="object-contain p-12 md:p-20 transition-transform duration-1000 group-hover:scale-105" priority />
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
             </div>
 
-            {/* Thumbnails moved below large image */}
             <div className="flex gap-4 overflow-x-auto no-scrollbar py-2 px-1">
               {productImages.map((url, i) => (
-                <button 
-                  key={i} 
-                  onClick={() => { setActiveImageIndex(i); setViewMode('image'); }}
-                  className={`relative w-20 h-20 md:w-24 md:h-24 rounded-3xl border transition-all duration-500 overflow-hidden shrink-0 ${activeImageIndex === i && viewMode === 'image' ? 'border-accent-gold shadow-luxury-sm scale-105' : 'border-neutral-100 opacity-60 hover:opacity-100 hover:border-neutral-200'}`}
-                >
+                <button key={i} onClick={() => { setActiveImageIndex(i); setViewMode('image'); }} className={`relative w-20 h-20 md:w-24 md:h-24 rounded-3xl border transition-all duration-500 overflow-hidden shrink-0 ${activeImageIndex === i && viewMode === 'image' ? 'border-accent-gold shadow-luxury-sm scale-105' : 'border-neutral-100 opacity-60 hover:opacity-100 hover:border-neutral-200'}`}>
                   <Image src={url} alt={`View ${i}`} fill className="object-contain p-3 bg-white" />
                 </button>
               ))}
               {product.modelUrl && (
-                <button 
-                  onClick={() => setViewMode('3d')}
-                  className={`relative w-20 h-20 md:w-24 md:h-24 rounded-3xl border transition-all duration-500 flex flex-col items-center justify-center gap-2 shrink-0 ${viewMode === '3d' ? 'border-accent-gold bg-accent-gold text-white shadow-luxury-sm' : 'border-neutral-100 bg-white text-primary/40 hover:text-primary hover:border-neutral-200'}`}
-                >
+                <button onClick={() => setViewMode('3d')} className={`relative w-20 h-20 md:w-24 md:h-24 rounded-3xl border transition-all duration-500 flex flex-col items-center justify-center gap-2 shrink-0 ${viewMode === '3d' ? 'border-accent-gold bg-accent-gold text-white shadow-luxury-sm' : 'border-neutral-100 bg-white text-primary/40 hover:text-primary hover:border-neutral-200'}`}>
                   <Rotate3D size={24} />
                   <span className="text-[8px] font-black uppercase tracking-widest">3D</span>
                 </button>
@@ -310,7 +302,6 @@ export default function ProductDetailView({ id }: { id: string }) {
               </div>
             </div>
 
-            {/* Features Preview */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {localizedInfo.features?.slice(0, 4).map((feature, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 bg-white/50 rounded-2xl border border-neutral-100/50">
@@ -322,7 +313,6 @@ export default function ProductDetailView({ id }: { id: string }) {
               ))}
             </div>
 
-            {/* Action Buttons */}
             <div className="space-y-4 pt-8">
               <button className="w-full h-20 bg-primary text-white rounded-[32px] font-black uppercase tracking-[0.3em] text-[11px] shadow-luxury flex items-center justify-center gap-4 group relative overflow-hidden active:scale-95 transition-all duration-500">
                 <div className="absolute inset-0 bg-accent-gold translate-y-full group-hover:translate-y-0 transition-transform duration-700"></div>
@@ -341,7 +331,6 @@ export default function ProductDetailView({ id }: { id: string }) {
               </div>
             </div>
 
-            {/* Detailed Description */}
             <div className="pt-12 border-t border-neutral-100 space-y-8">
               <div className="flex items-center gap-4">
                 <Sparkles className="text-accent-gold" size={18} />
@@ -350,21 +339,33 @@ export default function ProductDetailView({ id }: { id: string }) {
               <p className="text-sm md:text-base text-secondary leading-[1.8] font-medium opacity-70">
                 {localizedInfo.description}
               </p>
-              
-              {/* Specs Table */}
-              {localizedInfo.specs && localizedInfo.specs.length > 0 && (
-                <div className="bg-white/30 rounded-3xl border border-neutral-100 p-8 space-y-6">
-                  {localizedInfo.specs.map((spec, i) => (
-                    <div key={i} className="flex justify-between items-center py-4 border-b border-neutral-100 last:border-0">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">{spec.label}</span>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-primary">{spec.value}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         </div>
+
+        {/* --- DYNAMIC INFO & SPECIFICATION IMAGES --- */}
+        {product.infoImages && product.infoImages.length > 0 && (
+          <div className="mt-40 space-y-20 border-t border-neutral-100 pt-40">
+             <div className="text-center space-y-4">
+                <span className="text-[10px] font-black uppercase tracking-[0.6em] text-accent-gold">{language === 'th' ? 'รายละเอียดทางเทคนิค' : 'Technical Specifications'}</span>
+                <h2 className="text-4xl font-black uppercase tracking-tighter text-primary">{language === 'th' ? 'ข้อมูลเชิงลึกของชิ้นงาน' : 'Masterpiece Insight'}</h2>
+             </div>
+             
+             <div className="flex flex-col gap-12 max-w-5xl mx-auto">
+                {product.infoImages.map((url, i) => (
+                  <motion.div 
+                    key={i} 
+                    initial={{ opacity: 0, y: 30 }} 
+                    whileInView={{ opacity: 1, y: 0 }} 
+                    viewport={{ once: true }} 
+                    className="relative w-full rounded-[40px] overflow-hidden shadow-luxury border border-neutral-100 bg-white"
+                  >
+                     <Image src={url} alt={`Detail ${i}`} width={1920} height={1080} className="w-full h-auto object-contain" />
+                  </motion.div>
+                ))}
+             </div>
+          </div>
+        )}
 
         {/* --- IMMERSIVE STORYTELLING SECTION --- */}
         <div className="mt-40 md:mt-60 space-y-40">
@@ -377,17 +378,11 @@ export default function ProductDetailView({ id }: { id: string }) {
               <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-tight">
                 {language === 'th' ? 'ศิลปะแห่งการ' : 'The Art of'} <span className="text-luxury-gradient italic">{language === 'th' ? 'ประณีตศิลป์' : 'Craftsmanship'}</span>
               </motion.h2>
-              <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 0.6 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="text-lg text-secondary font-medium leading-relaxed">
-                {language === 'th' 
-                  ? 'ทุกองศา ทุกส่วนโค้ง และทุกวัสดุถูกคัดสรรด้วยความแม่นยำทางสถาปัตยกรรม เพื่อมอบคุณค่าด้านความงามที่ยั่งยืนและความสะดวกสบายที่ไม่มีใครเทียบได้' 
-                  : 'Every angle, every curve, and every material is selected with architectural precision to ensure a lifetime of aesthetic value and unparalleled comfort.'}
-              </motion.p>
            </div>
 
            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
               <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="md:col-span-8 aspect-[16/9] md:aspect-[4/3] relative rounded-[40px] md:rounded-[64px] overflow-hidden group shadow-luxury">
                 <Image src={productImages[1] || productImages[0]} alt="Detail Focus" fill className="object-cover transition-transform duration-[2s] group-hover:scale-105" />
-                
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 flex items-end p-12 pointer-events-none">
                    <p className="text-white text-xs font-black uppercase tracking-[0.4em]">{language === 'th' ? 'ความสมบูรณ์ของวัสดุ' : 'Material Integrity'}</p>
                 </div>
@@ -403,9 +398,6 @@ export default function ProductDetailView({ id }: { id: string }) {
                    <div className="bg-white/10 backdrop-blur-2xl border border-white/20 p-10 md:p-16 rounded-[48px] text-center space-y-4 max-w-lg mx-6">
                       <Sparkles className="text-accent-gold mx-auto" size={24} />
                       <h3 className="text-white text-2xl font-black uppercase tracking-widest leading-none">{language === 'th' ? 'ความกลมกลืน' : 'Seamless'} <br /> {language === 'th' ? 'ที่ไร้รอยต่อ' : 'Adaptation'}</h3>
-                      <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest leading-relaxed">
-                        {language === 'th' ? 'ออกแบบมาเพื่อให้กลมกลืนกับพื้นที่สถาปัตยกรรมร่วมสมัยได้อย่างง่ายดาย' : 'Designed to blend effortlessly into any contemporary architectural space.'}
-                      </p>
                    </div>
                 </div>
               </motion.div>
