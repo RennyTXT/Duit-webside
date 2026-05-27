@@ -333,6 +333,33 @@ export default function ProductDetailView({ id }: { id: string }) {
               ))}
             </div>
 
+            {/* PRODUCT OPTIONS */}
+            {options.length > 0 && (
+              <div className="space-y-6 pt-4">
+                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-400">{language === 'th' ? 'เลือกตัวเลือกเพิ่มเติม' : 'Select Masterpiece Options'}</h3>
+                <div className="flex flex-wrap gap-3">
+                  {options.map((option) => (
+                    <button
+                      key={option.id}
+                      onClick={() => toggleOption(option.id)}
+                      className={`px-6 py-4 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex flex-col items-start gap-1 ${
+                        selectedOptions.includes(option.id)
+                          ? 'border-accent-gold bg-accent-gold/5 text-primary shadow-luxury-sm'
+                          : 'border-neutral-100 bg-white text-neutral-400 hover:border-neutral-200'
+                      }`}
+                    >
+                      <span>{option.name}</span>
+                      {option.price_modifier !== 0 && (
+                        <span className="text-[9px] text-accent-gold">
+                          {option.price_modifier > 0 ? '+' : ''}฿{option.price_modifier.toLocaleString()}
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="space-y-4 pt-8">
               <button className="w-full h-20 bg-primary text-white rounded-[32px] font-black uppercase tracking-[0.3em] text-[11px] shadow-luxury flex items-center justify-center gap-4 group relative overflow-hidden active:scale-95 transition-all duration-500">
                 <div className="absolute inset-0 bg-accent-gold translate-y-full group-hover:translate-y-0 transition-transform duration-700"></div>
