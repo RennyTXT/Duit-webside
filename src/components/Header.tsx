@@ -23,6 +23,9 @@ const Header = () => {
 
   const isHomePage = pathname === '/';
   const shouldShowSolid = !isHomePage || isScrolled;
+  
+  // เนื่องจากหน้าแรกมี Frame สีขาวด้านบน ตัวหนังสือ Header ควรเป็นสีเข้มเสมอเพื่อให้มองเห็นได้ชัดเจน
+  const useDarkText = true; 
 
   useEffect(() => {
     setIsMounted(true);
@@ -51,23 +54,23 @@ const Header = () => {
         opacity: 1
       }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
-      className={`fixed top-0 w-full z-50 transition-all duration-700 ${shouldShowSolid ? 'bg-white/80 backdrop-blur-2xl shadow-luxury h-20' : 'bg-transparent h-28'}`}
+      className={`fixed top-0 w-full z-50 transition-all duration-700 ${shouldShowSolid ? 'bg-white/80 backdrop-blur-2xl shadow-luxury h-20' : 'bg-transparent h-24'}`}
     >
       <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20 h-full flex items-center">
         {/* Left: Logo */}
         <div className="flex-1">
-          <Link href="/" className={`text-2xl font-black tracking-[-0.05em] inline-block transition-all duration-700 hover:scale-105 active:scale-95 ${shouldShowSolid ? 'text-primary' : 'text-white'}`}>
-            DUIT <span className={shouldShowSolid ? 'text-accent-gold italic' : 'text-white'}>TH</span>
+          <Link href="/" className={`text-2xl font-black tracking-[-0.05em] inline-block transition-all duration-700 hover:scale-105 active:scale-95 ${useDarkText ? 'text-primary' : 'text-white'}`}>
+            DUIT <span className={useDarkText ? 'text-accent-gold italic' : 'text-primary'}>TH</span>
           </Link>
         </div>
 
         {/* Center: Desktop Navigation */}
-        <nav className={`hidden lg:flex items-center gap-10 transition-colors duration-700 ${shouldShowSolid ? 'text-secondary' : 'text-white/70'}`}>
+        <nav className={`hidden lg:flex items-center gap-10 transition-colors duration-700 ${useDarkText ? 'text-secondary' : 'text-white/70'}`}>
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
               href={link.href} 
-              className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 font-black uppercase ${language === 'th' ? 'text-[13px] tracking-normal' : 'text-[11px] tracking-[0.25em]'} ${shouldShowSolid ? 'text-secondary' : 'text-white/70'}`}
+              className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 font-black uppercase ${language === 'th' ? 'text-[13px] tracking-normal' : 'text-[11px] tracking-[0.25em]'} ${useDarkText ? 'text-secondary' : 'text-white/70'}`}
             >
               {link.name}
               <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-gold transition-all duration-500 group-hover:w-full"></span>
@@ -76,13 +79,13 @@ const Header = () => {
         </nav>
 
         {/* Right: Action Icons */}
-        <div className={`flex-1 flex items-center justify-end gap-3 md:gap-6 transition-colors duration-700 ${shouldShowSolid ? 'text-primary' : 'text-white'}`}>
+        <div className={`flex-1 flex items-center justify-end gap-3 md:gap-6 transition-colors duration-700 ${useDarkText ? 'text-primary' : 'text-white'}`}>
           <LanguageSwitcher />
           
           {/* Archive Trigger */}
           <button 
             onClick={() => setIsArchiveOpen(true)}
-            className={`p-2 rounded-full transition-all group relative ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-white/10'}`}
+            className={`p-2 rounded-full transition-all group relative ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}
           >
             <Star size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
             <AnimatePresence>
@@ -99,16 +102,16 @@ const Header = () => {
             </AnimatePresence>
           </button>
 
-          <button className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-white/10'}`}>
+          <button className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}>
             <Search size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
           </button>
-          <Link href="/pet-profile" className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-white/10'}`}>
+          <Link href="/pet-profile" className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}>
             <User size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
           </Link>
           
           {/* Mobile Menu Toggle */}
           <button 
-            className={`lg:hidden p-2 rounded-full transition-all ${shouldShowSolid ? 'hover:bg-neutral-100 text-primary' : 'hover:bg-white/10 text-white'}`}
+            className={`lg:hidden p-2 rounded-full transition-all hover:bg-neutral-100`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={22} strokeWidth={1.5} /> : <Menu size={22} strokeWidth={1.5} />}
