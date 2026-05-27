@@ -25,6 +25,8 @@ import Image from 'next/image';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useLanguageStore, translations } from '@/store/useLanguageStore';
+import { useWishlistStore } from '@/store/useWishlistStore';
+import { toast } from 'sonner';
 
 interface ProductOption {
   id: string;
@@ -41,9 +43,23 @@ export default function ProductDetailView({ id }: { id: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'image' | '3d'>('image');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false); // Default to false for better control
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
   const supabase = createClient();
+
+  const { addItem, removeItem, isInWishlist } = useWishlistStore();
+  const isArchived = product ? isInWishlist(product.id) : false;
+
+  const handleArchiveToggle = () => {
+    if (!product) return;
+    if (isArchived) {
+      removeItem(product.id);
+      toast.error('Removed from The Archive');
+    } else {
+      addItem(product);
+      toast.success('Successfully added to The Archive');
+    }
+  };
 
   useEffect(() => {
     const fetchProductAndOptions = async () => {
@@ -54,7 +70,6 @@ export default function ProductDetailView({ id }: { id: string }) {
         if (prodData) {
           const staticProd = staticProducts.find(p => p.id === id);
           
-          // Deduplicate and prioritize images
           const allImages = Array.from(new Set([
             prodData.image_url,
             ...(prodData.images || []),
@@ -302,8 +317,12 @@ export default function ProductDetailView({ id }: { id: string }) {
               </button>
               
               <div className="flex gap-4">
-                <button className="flex-grow h-16 bg-white border border-neutral-100 rounded-[28px] text-[10px] font-black uppercase tracking-widest text-primary flex items-center justify-center gap-3 hover:border-primary transition-all">
-                  <Star size={16} /> Save to Wishlist
+                <button 
+                  onClick={handleArchiveToggle}
+                  className={`flex-grow h-16 border rounded-[28px] text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all ${isArchived ? 'bg-accent-gold border-accent-gold text-white shadow-luxury' : 'bg-white border-neutral-100 text-primary hover:border-primary'}`}
+                >
+                  <Star size={16} fill={isArchived ? "currentColor" : "none"} /> 
+                  {isArchived ? 'Archived Masterpiece' : 'Save to Archive'}
                 </button>
                 <button className="w-16 h-16 bg-white border border-neutral-100 rounded-[28px] flex items-center justify-center text-primary hover:text-accent-gold hover:border-accent-gold transition-all">
                   <Info size={18} />

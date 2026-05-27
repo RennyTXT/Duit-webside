@@ -2,17 +2,21 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { User, Search, Menu, X, ChevronDown } from 'lucide-react';
+import { User, Search, Menu, X, ChevronDown, Star } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguageStore, translations } from '@/store/useLanguageStore';
+import { useWishlistStore } from '@/store/useWishlistStore';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import ArchiveSidebar from './ArchiveSidebar';
 
 const Header = () => {
   const { language } = useLanguageStore();
   const t = translations[language];
   const pathname = usePathname();
+  const { items } = useWishlistStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isArchiveOpen, setIsArchiveOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -72,6 +76,27 @@ const Header = () => {
         {/* Right: Action Icons */}
         <div className={`flex-1 flex items-center justify-end gap-3 md:gap-6 transition-colors duration-700 ${shouldShowSolid ? 'text-primary' : 'text-white'}`}>
           <LanguageSwitcher />
+          
+          {/* Archive Trigger */}
+          <button 
+            onClick={() => setIsArchiveOpen(true)}
+            className={`p-2 rounded-full transition-all group relative ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-white/10'}`}
+          >
+            <Star size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+            <AnimatePresence>
+              {items.length > 0 && (
+                <motion.span 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                  className="absolute top-0 right-0 w-4 h-4 bg-accent-gold text-white text-[8px] font-black flex items-center justify-center rounded-full shadow-sm"
+                >
+                  {items.length}
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </button>
+
           <button className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-white/10'}`}>
             <Search size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
           </button>
@@ -140,6 +165,8 @@ const Header = () => {
           </>
         )}
       </AnimatePresence>
+
+      <ArchiveSidebar isOpen={isArchiveOpen} onClose={() => setIsArchiveOpen(false)} />
     </motion.header>
   );
 };
