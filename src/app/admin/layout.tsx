@@ -81,7 +81,7 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-[#FBFBFB] flex text-primary font-sans antialiased overflow-hidden">
+    <div className="min-h-screen bg-[#FBFBFB] flex text-primary font-sans antialiased">
       {/* Sidebar */}
       <motion.aside 
         initial={false}
@@ -156,7 +156,7 @@ export default function AdminLayout({
       </motion.aside>
 
       {/* Main Content */}
-      <div className="flex-grow flex flex-col min-w-0 h-screen">
+      <div className="flex-grow flex flex-col min-w-0 min-h-screen">
         <header className="h-24 bg-white/80 backdrop-blur-xl border-b border-neutral-100 flex items-center justify-between px-10 shrink-0">
            <button 
              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
