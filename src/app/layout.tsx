@@ -1,19 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, IBM_Plex_Sans_Thai } from "next/font/google";
+import { Montserrat, IBM_Plex_Sans_Thai } from "next/font/google";
 import { Toaster } from 'sonner';
 import MainLayout from "@/components/MainLayout";
 import SmoothScroll from "@/components/SmoothScroll";
 import AuraCursor from "@/components/AuraCursor";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const montserrat = Montserrat({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
 });
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
@@ -50,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexSansThai.variable} antialiased`}>
+    <html lang="en" className={`${montserrat.variable} ${ibmPlexSansThai.variable} antialiased`}>
       <body className="bg-white text-black min-h-screen flex flex-col font-sans selection:bg-black selection:text-white overflow-x-hidden">
         <div className="grain-overlay" />
         <SmoothScroll>
