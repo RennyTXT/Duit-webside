@@ -1,22 +1,51 @@
 'use client';
 
-import { useState } from 'react';
-import { login } from '../actions/auth';
+import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Lock, Mail, Loader2, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+  const supabase = createClient();
 
-  async function handleSubmit(formData: FormData) {
-    setIsLoading(true);
-    try {
-      const result = await login(formData);
-      if (result?.error) {
-        toast.error(result.error);
-        setIsLoading(false);
+  useEffect(() => {
+    // เช็คว่าถ้า login อยู่แล้วให้ไปหน้า admin เลย
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        router.push('/admin');
       }
+    };
+    checkUser();
+  }, [router, supabase]);
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      // แปลง username เป็นรูปแบบ email ที่เรากำหนดไว้ใน Supabase
+      const email = username.includes('@') ? username : `${username}@duit.admin`;
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        toast.error('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+        setIsLoading(false);
+        return;
+      }
+
+      toast.success('ยินดีต้อนรับเข้าสู่ระบบ');
+      router.push('/admin');
     } catch (error) {
       toast.error('เกิดข้อผิดพลาดในการเชื่อมต่อ');
       setIsLoading(false);
@@ -55,7 +84,7 @@ export default function AdminLoginPage() {
           </div>
 
           {/* Form */}
-          <form action={handleSubmit} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-4">
               {/* Username Field */}
               <div className="group relative">
@@ -63,9 +92,10 @@ export default function AdminLoginPage() {
                   <Mail size={18} strokeWidth={1.5} />
                 </div>
                 <input 
-                  name="username"
                   type="text"
                   placeholder="Admin Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                   className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm font-bold focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 uppercase tracking-tight"
                 />
@@ -77,9 +107,10 @@ export default function AdminLoginPage() {
                   <Lock size={18} strokeWidth={1.5} />
                 </div>
                 <input 
-                  name="password"
                   type="password"
                   placeholder="Security Access Key"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm font-bold focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 uppercase tracking-tight"
                 />
