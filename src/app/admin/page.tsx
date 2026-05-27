@@ -4,12 +4,28 @@ import { Package, TicketPercent, TrendingUp, Users, ArrowUpRight, Plus } from 'l
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
+import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
+
 export default function AdminDashboardPage() {
+  const [productCount, setProductCount] = useState<number | null>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    async function fetchStats() {
+      const { count } = await supabase
+        .from('products')
+        .select('*', { count: 'exact', head: true });
+      setProductCount(count);
+    }
+    fetchStats();
+  }, [supabase]);
+
   const stats = [
-    { name: 'Portfolio Assets', value: '12', icon: Package, change: '+2 this month', color: 'bg-cream-light text-primary' },
+    { name: 'Portfolio Assets', value: productCount !== null ? productCount.toString() : '...', icon: Package, change: '+2 this month', color: 'bg-cream-light text-primary' },
     { name: 'Active Privileges', value: '5', icon: TicketPercent, change: 'Running stable', color: 'bg-white text-accent-gold shadow-sm' },
     { name: 'Daily Curations', value: '1,284', icon: Users, change: '+12.5%', color: 'bg-primary text-white shadow-luxury' },
-    { name: 'Estimated Value', value: '฿124k', icon: TrendingUp, change: '+8.2%', color: 'bg-cream-light text-primary' },
+    { name: 'Estimated Value', value: productCount !== null ? `฿${(productCount * 8900).toLocaleString()}` : '...', icon: TrendingUp, change: '+8.2%', color: 'bg-cream-light text-primary' },
   ];
 
   return (

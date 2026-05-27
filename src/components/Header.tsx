@@ -19,11 +19,13 @@ const Header = () => {
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
 
   const isHomePage = pathname === '/';
   const shouldShowSolid = !isHomePage || isScrolled;
 
   useEffect(() => {
+    setIsMounted(true);
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsScrolled(currentScrollY > 50);
@@ -84,7 +86,7 @@ const Header = () => {
           >
             <Star size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
             <AnimatePresence>
-              {items.length > 0 && (
+              {isMounted && items.length > 0 && (
                 <motion.span 
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}

@@ -13,8 +13,15 @@ interface ArchiveSidebarProps {
 
 export default function ArchiveSidebar({ isOpen, onClose }: ArchiveSidebarProps) {
   const { items, removeItem, clearWishlist } = useWishlistStore();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const totalPrice = items.reduce((sum, item) => sum + item.price, 0);
+
+  if (!isMounted) return null;
 
   return (
     <AnimatePresence>

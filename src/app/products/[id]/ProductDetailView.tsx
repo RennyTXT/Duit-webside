@@ -44,11 +44,12 @@ export default function ProductDetailView({ id }: { id: string }) {
   const [viewMode, setViewMode] = useState<'image' | '3d'>('image');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
   const supabase = createClient();
 
   const { addItem, removeItem, isInWishlist } = useWishlistStore();
-  const isArchived = product ? isInWishlist(product.id) : false;
+  const isArchived = (product && isMounted) ? isInWishlist(product.id) : false;
 
   const handleArchiveToggle = () => {
     if (!product) return;
@@ -62,6 +63,7 @@ export default function ProductDetailView({ id }: { id: string }) {
   };
 
   useEffect(() => {
+    setIsMounted(true);
     const fetchProductAndOptions = async () => {
       try {
         const { data: prodData } = await supabase.from('products').select('*').eq('id', id).single();

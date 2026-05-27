@@ -6,22 +6,25 @@ import { ChevronRight, Loader2 } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-
-const categoryNames: Record<string, string> = {
-  'eat-drink': 'อาหารและน้ำ',
-  'furniture': 'เฟอร์นิเจอร์',
-  'play-rest': 'เล่นและพักผ่อน',
-  'hygiene': 'สุขอนามัย',
-  'daily': 'อุปกรณ์ทั่วไป',
-  'bath': 'อาบน้ำ',
-  'travel': 'การเดินทาง'
-};
+import { useLanguageStore, translations } from '@/store/useLanguageStore';
 
 export default function CategoryView({ category }: { category: string }) {
+  const { language } = useLanguageStore();
+  const t = translations[language];
   const catKey = category;
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const supabase = createClient();
+
+  const categoryNames: Record<string, string> = {
+    'eat-drink': t.shop.eatDrink,
+    'furniture': t.shop.furniture,
+    'play-rest': t.shop.playRest,
+    'hygiene': t.shop.hygiene,
+    'daily': t.shop.daily,
+    'bath': language === 'th' ? 'อาบน้ำ' : 'Bath',
+    'travel': language === 'th' ? 'การเดินทาง' : 'Travel'
+  };
   
   useEffect(() => {
     const fetchProducts = async () => {
@@ -52,8 +55,9 @@ export default function CategoryView({ category }: { category: string }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <Loader2 className="animate-spin text-primary" size={40} />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white gap-6">
+        <div className="w-16 h-16 border-t-2 border-primary rounded-full animate-spin"></div>
+        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">Synchronizing Collection...</p>
       </div>
     );
   }
