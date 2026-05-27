@@ -1,22 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Prompt, Montserrat } from "next/font/google";
+import { Outfit, Anuphan } from "next/font/google";
 import { Toaster } from 'sonner';
 import MainLayout from "@/components/MainLayout";
 import SmoothScroll from "@/components/SmoothScroll";
 import AuraCursor from "@/components/AuraCursor";
 import "./globals.css";
 
-const prompt = Prompt({
-  weight: ['200', '300', '400', '500', '600', '700'],
-  subsets: ['thai', 'latin'],
-  variable: '--font-prompt',
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
   display: 'swap',
 });
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+const anuphan = Anuphan({
+  weight: ['200', '300', '400', '500', '600', '700'],
+  subsets: ['thai', 'latin'],
+  variable: '--font-anuphan',
   display: 'swap',
 });
 
@@ -47,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${prompt.variable} ${montserrat.variable} antialiased`}>
+    <html lang="en" className={`${outfit.variable} ${anuphan.variable} antialiased`}>
       <body className="bg-white text-black min-h-screen flex flex-col font-sans selection:bg-black selection:text-white overflow-x-hidden">
         <div className="grain-overlay" />
         <SmoothScroll>
