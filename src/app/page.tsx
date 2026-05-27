@@ -92,148 +92,135 @@ const Home = () => {
   return (
     <div className="flex flex-col bg-white">
       
-      {/* 1. CINEMATIC HERO */}
-      <section className="relative h-screen w-full overflow-hidden bg-black">
-        <AnimatePresence mode="wait">
-          <motion.div 
-            key={currentSlide} 
-            initial={{ scale: 1.1, opacity: 0 }} 
-            animate={{ scale: 1, opacity: 1 }} 
-            exit={{ opacity: 0 }} 
-            transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }} 
-            className="absolute inset-0"
-          >
-            {heroSlides[currentSlide].image && (
-              <Image 
-                src={heroSlides[currentSlide].image} 
-                alt={heroSlides[currentSlide].title} 
-                fill 
-                className="object-cover brightness-[0.5] contrast-[1.1]" 
-                priority 
-              />
-            )}
-            <div className="absolute inset-0 flex items-center justify-center text-center px-6">
-               <div className="max-w-5xl space-y-10">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-center gap-6"
-                  >
-                     <span className="text-[10px] font-black uppercase tracking-[0.6em] text-accent-gold border border-accent-gold/30 px-6 py-2 rounded-full backdrop-blur-sm">
-                        {heroSlides[currentSlide].tag}
-                     </span>
-                     <h1 className="text-6xl md:text-8xl xl:text-9xl font-black text-white uppercase tracking-tighter leading-[0.85] overflow-hidden">
-                        <motion.span
-                          initial={{ y: "100%" }}
-                          animate={{ y: 0 }}
-                          transition={{ delay: 0.8, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                          className="inline-block"
-                        >
-                           {heroSlides[currentSlide].title.split('.')[0]}
-                        </motion.span>
-                        <br />
-                        <motion.span
-                          initial={{ y: "100%" }}
-                          animate={{ y: 0 }}
-                          transition={{ delay: 1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                          className="inline-block text-luxury-gradient italic pb-4"
-                        >
-                           {heroSlides[currentSlide].title.split('.')[1] || ''}
-                        </motion.span>
-                     </h1>
-                  </motion.div>
-                  
-                  <motion.p 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.6 }}
-                    transition={{ delay: 1.5, duration: 2 }}
-                    className="text-white text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed tracking-wide"
-                  >
-                    {heroSlides[currentSlide].subtitle}
-                  </motion.p>
-                  
-                  <motion.div 
-                    initial={{ opacity: 0 }} 
-                    animate={{ opacity: 1 }} 
-                    transition={{ delay: 1.8, duration: 1.5 }} 
-                    className="flex flex-col sm:flex-row justify-center gap-8 pt-6"
-                  >
-                    <Link href="/shop" className="group relative overflow-hidden bg-white text-black px-16 py-6 font-black text-xs uppercase tracking-[0.3em] transition-all duration-700 rounded-full shadow-luxury hover:shadow-luxury-hover">
-                      <span className="relative z-10">{t.hero.discover}</span>
-                      <div className="absolute inset-0 bg-accent-gold translate-y-full group-hover:translate-y-0 transition-transform duration-700"></div>
-                    </Link>
-                  </motion.div>
-               </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-        
-        {/* Slide Numbers */}
-        <div className="absolute bottom-20 left-20 hidden lg:flex items-end gap-4">
-           <span className="text-5xl font-black text-white">0{currentSlide + 1}</span>
-           <div className="h-px w-20 bg-white/20 relative mb-3"><motion.div className="absolute left-0 top-0 h-full bg-accent-gold" initial={{ width: 0 }} animate={{ width: "100%" }} key={currentSlide} transition={{ duration: 6, ease: "linear" }} /></div>
-           <span className="text-xs font-black text-white/40 mb-2">0{heroSlides.length}</span>
+      {/* 1. CLEAN FRAMED HERO */}
+      <section className="relative h-[85vh] w-full overflow-hidden bg-white pt-24 px-6 md:px-10">
+        <div className="relative w-full h-full rounded-[40px] md:rounded-[60px] overflow-hidden shadow-luxury-sm bg-black">
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={currentSlide} 
+              initial={{ scale: 1.05, opacity: 0 }} 
+              animate={{ scale: 1, opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }} 
+              className="absolute inset-0"
+            >
+              {heroSlides[currentSlide].image && (
+                <Image 
+                  src={heroSlides[currentSlide].image} 
+                  alt={heroSlides[currentSlide].title} 
+                  fill 
+                  className="object-cover brightness-[0.6] contrast-[1.05]" 
+                  priority 
+                />
+              )}
+              <div className="absolute inset-0 flex items-center justify-center text-center px-6">
+                <div className="max-w-5xl space-y-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                      className="flex flex-col items-center gap-4"
+                    >
+                      <span className="text-[9px] font-black uppercase tracking-[0.5em] text-accent-gold/80">
+                          {heroSlides[currentSlide].tag}
+                      </span>
+                      <h1 className="text-5xl md:text-7xl xl:text-8xl font-black text-white uppercase tracking-tighter leading-[0.95]">
+                          {heroSlides[currentSlide].title.split('.')[0]}
+                          <br />
+                          <span className="text-luxury-gradient italic font-medium opacity-90">
+                            {heroSlides[currentSlide].title.split('.')[1] || ''}
+                          </span>
+                      </h1>
+                    </motion.div>
+                    
+                    <motion.p 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.5 }}
+                      transition={{ delay: 1, duration: 1.5 }}
+                      className="text-white text-sm md:text-base font-medium max-w-xl mx-auto leading-relaxed tracking-wide"
+                    >
+                      {heroSlides[currentSlide].subtitle}
+                    </motion.p>
+                    
+                    <motion.div 
+                      initial={{ opacity: 0 }} 
+                      animate={{ opacity: 1 }} 
+                      transition={{ delay: 1.3, duration: 1 }} 
+                      className="pt-4"
+                    >
+                      <Link href="/shop" className="group relative inline-flex items-center gap-4 text-white text-[10px] font-black uppercase tracking-[0.4em] border-b border-white/20 pb-2 hover:border-accent-gold transition-all duration-500">
+                        <span>{t.hero.discover}</span>
+                        <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
+                      </Link>
+                    </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Minimal Slide Indicators */}
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3">
+             {heroSlides.map((_, i) => (
+               <button 
+                key={i} 
+                onClick={() => setCurrentSlide(i)}
+                className={`h-1 transition-all duration-700 rounded-full ${currentSlide === i ? 'w-12 bg-accent-gold' : 'w-4 bg-white/20 hover:bg-white/40'}`}
+               />
+             ))}
+          </div>
         </div>
       </section>
 
-      {/* 2. ASYMMETRIC ARCHITECTURAL GRID (Category Section) */}
-      <section className="py-40 md:py-60 px-6 md:px-20 overflow-hidden">
-        <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
-           <div className="lg:col-span-5 space-y-12">
-              <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 1 }}>
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold block mb-6">Mastery of Form</span>
-                <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-primary leading-[0.85]">{t.shop.explore.split(' ')[0]} <br /> <span className="text-accent-gold italic">{t.shop.explore.split(' ')[1] || 'Essence.'}</span></h2>
-                <p className="text-lg text-secondary font-medium mt-12 max-w-md leading-relaxed opacity-70">{t.shop.categorySub}</p>
+      {/* 2. MINIMAL GRID (Category Section) */}
+      <section className="py-32 md:py-48 px-6 md:px-20 bg-white">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+           <div className="lg:col-span-5 space-y-10">
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+                <span className="text-[9px] font-black uppercase tracking-[0.4em] text-accent-gold/60 block mb-4">The Selection</span>
+                <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-[1]">{t.shop.explore.split(' ')[0]} <span className="text-accent-gold italic font-medium">{t.shop.explore.split(' ')[1] || 'Edition.'}</span></h2>
+                <p className="text-sm text-secondary font-medium mt-8 max-w-sm leading-relaxed opacity-50">{t.shop.categorySub}</p>
               </motion.div>
               
-              <div className="grid grid-cols-1 gap-4 pt-12">
+              <div className="grid grid-cols-1 gap-2 pt-8">
                 {categories.map((cat, i) => (
-                  <Link key={cat.name} href={cat.href} className="group flex items-center justify-between p-8 border-b border-neutral-100 hover:bg-neutral-50 transition-all duration-700">
-                    <div className="flex items-center gap-8">
-                       <span className="text-xs font-black text-neutral-300">0{i+1}</span>
-                       <h3 className="text-2xl font-black uppercase tracking-tighter group-hover:translate-x-4 transition-transform duration-700">{cat.name}</h3>
+                  <Link key={cat.name} href={cat.href} className="group flex items-center justify-between py-6 border-b border-neutral-100 hover:px-4 transition-all duration-500">
+                    <h3 className="text-lg font-black uppercase tracking-tight group-hover:text-accent-gold transition-colors">{cat.name}</h3>
+                    <div className="w-8 h-8 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                      <ArrowRight size={14} />
                     </div>
-                    <ArrowRight size={24} className="opacity-0 group-hover:opacity-100 -translate-x-10 group-hover:translate-x-0 transition-all duration-700" />
                   </Link>
                 ))}
               </div>
            </div>
 
-           <div className="lg:col-span-7 relative h-[600px] md:h-[900px]">
+           <div className="lg:col-span-7">
               <motion.div 
-                initial={{ scale: 1.2, opacity: 0 }} 
-                whileInView={{ scale: 1, opacity: 1 }} 
+                initial={{ opacity: 0 }} 
+                whileInView={{ opacity: 1 }} 
                 viewport={{ once: true }} 
-                transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0 rounded-[80px] overflow-hidden shadow-luxury"
+                transition={{ duration: 1.5 }}
+                className="aspect-[4/3] rounded-[48px] overflow-hidden relative grayscale-[0.2] hover:grayscale-0 transition-all duration-1000"
               >
                  <Image src="https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/7161e1b854371.jpg?w=1440" alt="Exhibition" fill className="object-cover" />
-                 <div className="absolute inset-0 bg-primary/10 mix-blend-overlay" />
               </motion.div>
-              
-              <div className="absolute -bottom-20 -left-20 bg-accent-gold p-20 rounded-[60px] hidden xl:block shadow-luxury gold-glow-soft">
-                 <Sparkles className="text-white mb-8" size={40} />
-                 <h4 className="text-white text-2xl font-black uppercase tracking-tighter leading-none">The <br /> Precision <br /> Standard.</h4>
-              </div>
            </div>
         </div>
       </section>
 
-      {/* 3. CURATED MASTERPIECES (Best Sellers) */}
-      <section className="bg-neutral-50 py-40 md:py-60 px-6 md:px-20 rounded-[100px]">
-        <div className="max-w-[1600px] mx-auto space-y-24">
-           <div className="flex flex-col md:flex-row md:items-end justify-between gap-12">
-              <div className="space-y-6">
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">Seasonal Collection</span>
-                <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-primary leading-[0.85]">{t.shop.freshArrivals.split(' ')[0]} <br /> <span className="text-luxury-gradient italic">{t.shop.freshArrivals.split(' ')[1] || 'Edition.'}</span></h2>
+      {/* 3. CURATED MASTERPIECES */}
+      <section className="bg-[#FBFBFA] py-32 md:py-48 px-6 md:px-20 rounded-[60px] md:rounded-[80px]">
+        <div className="max-w-[1440px] mx-auto space-y-20">
+           <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
+              <div className="space-y-4">
+                <span className="text-[9px] font-black uppercase tracking-[0.4em] text-accent-gold/60">New Arrivals</span>
+                <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-[1]">{t.shop.freshArrivals.split(' ')[0]} <span className="text-luxury-gradient italic font-medium">{t.shop.freshArrivals.split(' ')[1] || 'Series.'}</span></h2>
               </div>
-              <Link href="/shop" className="text-[10px] font-black uppercase tracking-[0.3em] text-primary hover:text-accent-gold transition-colors flex items-center gap-4 group">
-                {t.shop.viewAll} <div className="w-12 h-px bg-primary group-hover:w-20 transition-all group-hover:bg-accent-gold" />
+              <Link href="/shop" className="text-[9px] font-black uppercase tracking-[0.3em] text-primary/40 hover:text-accent-gold transition-colors pb-1 border-b border-neutral-200">
+                {t.shop.viewAll}
               </Link>
            </div>
 
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 xl:gap-12">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 xl:gap-10">
               {bestSellers.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

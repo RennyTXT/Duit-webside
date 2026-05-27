@@ -9,7 +9,7 @@
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.04;
+  opacity: 0.02; /* Reduced from 0.04 for a cleaner look */
   background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
 }
 
