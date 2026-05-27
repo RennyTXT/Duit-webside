@@ -395,7 +395,10 @@ export default function PetProfilePage() {
                                 </div>
                              </div>
                           </div>
-                          <button onClick={() => { clearProfile(); setStep(1); setImageUrl(''); }} className="flex items-center gap-3 text-red-500 font-black text-[10px] uppercase tracking-[0.2em] hover:translate-x-2 transition-all"><Trash2 size={16} /> {t.crm.resetProfile}</button>
+                          <div className="flex flex-col sm:flex-row items-center gap-6">
+                            <button onClick={() => { clearProfile(); setStep(1); setImageUrl(''); }} className="flex items-center gap-3 text-red-500 font-black text-[10px] uppercase tracking-[0.2em] hover:translate-x-2 transition-all"><Trash2 size={16} /> {t.crm.resetProfile}</button>
+                            <button onClick={handleLogout} className="flex items-center gap-3 text-neutral-400 font-black text-[10px] uppercase tracking-[0.2em] hover:text-primary transition-all"><LogOut size={16} /> Sign Out</button>
+                          </div>
                        </div>
                        <div className="space-y-8 sm:space-y-12">
                           <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight">{t.crm.bespokeCuration}</h2>

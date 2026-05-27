@@ -75,8 +75,10 @@ export default function AdminLayout({
 
   const navItems = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+    { name: 'Customers', href: '/admin/customers', icon: Users },
     { name: 'Masterpieces', href: '/admin/products', icon: Package },
     { name: 'Privileges', href: '/admin/promotions', icon: TicketPercent },
+    { name: 'Adoptions', href: '/admin/adoptions', icon: Heart },
     { name: 'TH Settings', href: '/admin/settings', icon: Settings },
   ];
 
