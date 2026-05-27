@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -22,9 +21,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  basePath: '/Duit-webside',
-  // Help GitHub Pages resolve paths correctly by ensuring folders have trailing slashes
-  trailingSlash: true,
 };
 
 export default nextConfig;
