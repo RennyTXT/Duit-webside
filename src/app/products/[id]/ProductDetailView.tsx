@@ -55,10 +55,10 @@ export default function ProductDetailView({ id }: { id: string }) {
     if (!product) return;
     if (isArchived) {
       removeItem(product.id);
-      toast.error('Removed from The Archive');
+      toast.error(language === 'th' ? 'นำออกจากคลังสะสมแล้ว' : 'Removed from The Archive');
     } else {
       addItem(product);
-      toast.success('Successfully added to The Archive');
+      toast.success(language === 'th' ? 'บันทึกลงในคลังสะสมเรียบร้อย' : 'Successfully added to The Archive');
     }
   };
 
@@ -107,6 +107,34 @@ export default function ProductDetailView({ id }: { id: string }) {
     fetchProductAndOptions();
   }, [id, supabase]);
 
+  // ระบบแปลภาษาแบบ Dynamic (Smart Translation Fallback)
+  const localizedInfo = useMemo(() => {
+    if (!product) return null;
+    
+    // พยายามดึงข้อมูลจาก staticProducts ถ้ามีข้อมูลแปลอยู่แล้ว
+    const staticInfo = staticProducts.find(p => p.id === id);
+    
+    // ตารางจับคู่หมวดหมู่
+    const categoryMap: Record<string, {th: string, en: string}> = {
+      'eat-drink': { th: t.shop.eatDrink, en: 'Eat & Drink' },
+      'furniture': { th: t.shop.furniture, en: 'Furniture' },
+      'play-rest': { th: t.shop.playRest, en: 'Play & Rest' },
+      'hygiene': { th: t.shop.hygiene, en: 'Hygiene' },
+      'daily': { th: t.shop.daily, en: 'Daily Essentials' }
+    };
+
+    const catInfo = categoryMap[product.category] || { th: product.category, en: product.category };
+
+    return {
+      name: language === 'th' ? (staticInfo?.name || product.name) : (staticInfo?.name || product.name),
+      tagline: language === 'th' ? (staticInfo?.tagline || product.tagline) : (staticInfo?.tagline || product.tagline),
+      description: language === 'th' ? (staticInfo?.description || product.description) : (staticInfo?.description || product.description),
+      category: language === 'th' ? catInfo.th : catInfo.en,
+      features: product.features || [],
+      specs: product.specs || []
+    };
+  }, [product, language, id, t]);
+
   const toggleOption = (optionId: string) => {
     setSelectedOptions(prev => prev.includes(optionId) ? prev.filter(id => id !== optionId) : [...prev, optionId]);
   };
@@ -124,16 +152,20 @@ export default function ProductDetailView({ id }: { id: string }) {
         <div className="w-20 h-20 border-2 border-primary/10 rounded-full"></div>
         <div className="w-20 h-20 border-t-2 border-primary rounded-full animate-spin absolute inset-0"></div>
       </div>
-      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">Synchronizing Atelier Data...</p>
+      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">
+        {language === 'th' ? 'กำลังดึงข้อมูลงานศิลป์...' : 'Synchronizing Atelier Data...'}
+      </p>
     </div>
   );
 
-  if (!product) return (
+  if (!product || !localizedInfo) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#F9F8F6] p-10 text-center">
       <h1 className="text-8xl md:text-[12rem] font-black text-neutral-100 leading-none mb-8">404</h1>
-      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Masterpiece Not Found</p>
+      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">
+        {language === 'th' ? 'ไม่พบข้อมูลชิ้นงาน' : 'Masterpiece Not Found'}
+      </p>
       <Link href="/shop" className="mt-12 px-10 py-4 bg-primary text-white rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-accent-gold transition-all">
-        Back to Collection
+        {language === 'th' ? 'กลับไปยังคอลเลกชัน' : 'Back to Collection'}
       </Link>
     </div>
   );
@@ -143,16 +175,15 @@ export default function ProductDetailView({ id }: { id: string }) {
 
   return (
     <div className="bg-[#F9F8F6] min-h-screen relative selection:bg-accent-gold/30">
-      {/* Background Texture */}
       <div className="grain-overlay"></div>
 
       {/* Navigation Breadcrumb */}
       <nav className="max-w-[1800px] mx-auto w-full px-6 md:px-12 lg:px-20 py-12 flex items-center gap-4 text-[9px] font-black uppercase tracking-[0.4em] text-neutral-300 relative z-10">
-        <Link href="/" className="hover:text-primary transition-colors">Atelier</Link>
+        <Link href="/" className="hover:text-primary transition-colors">{language === 'th' ? 'หน้าหลัก' : 'Atelier'}</Link>
         <ChevronRight size={10} className="text-neutral-200" />
-        <Link href="/shop" className="hover:text-primary transition-colors">Collection</Link>
+        <Link href="/shop" className="hover:text-primary transition-colors">{language === 'th' ? 'คอลเลกชัน' : 'Collection'}</Link>
         <ChevronRight size={10} className="text-neutral-200" />
-        <span className="text-primary truncate">{product.name}</span>
+        <span className="text-primary truncate">{localizedInfo.name}</span>
       </nav>
 
       <div className="max-w-[1800px] mx-auto px-6 md:px-12 lg:px-20 pb-40 relative z-10">
@@ -160,7 +191,6 @@ export default function ProductDetailView({ id }: { id: string }) {
           
           {/* LEFT: GALLERY SECTION */}
           <div className="lg:col-span-7 flex flex-col-reverse md:flex-row gap-8">
-            {/* Thumbnails */}
             <div className="flex md:flex-col gap-4 overflow-x-auto md:overflow-y-auto no-scrollbar md:max-h-[700px] py-2">
               {productImages.map((url, i) => (
                 <button 
@@ -182,7 +212,6 @@ export default function ProductDetailView({ id }: { id: string }) {
               )}
             </div>
 
-            {/* Main Viewport */}
             <div className="flex-grow">
               <div className="relative aspect-[4/5] md:aspect-square bg-white rounded-[48px] md:rounded-[64px] border border-neutral-100 shadow-luxury overflow-hidden group">
                 <AnimatePresence mode="wait">
@@ -194,11 +223,11 @@ export default function ProductDetailView({ id }: { id: string }) {
                       exit={{ opacity: 0 }} 
                       className="w-full h-full relative cursor-grab active:cursor-grabbing"
                     >
-                      <Product3DViewer modelUrl={product.modelUrl} altText={product.name} />
+                      <Product3DViewer modelUrl={product.modelUrl} altText={localizedInfo.name} />
                       <div className="absolute top-10 right-10 pointer-events-none">
                          <div className="bg-white/50 backdrop-blur-md px-6 py-3 rounded-full border border-white/50 flex items-center gap-3">
                             <Rotate3D className="text-accent-gold animate-spin-slow" size={18} />
-                            <span className="text-[9px] font-black uppercase tracking-widest text-primary">Interactive 360°</span>
+                            <span className="text-[9px] font-black uppercase tracking-widest text-primary">{language === 'th' ? 'หมุนได้ 360°' : 'Interactive 360°'}</span>
                          </div>
                       </div>
                     </motion.div>
@@ -213,7 +242,7 @@ export default function ProductDetailView({ id }: { id: string }) {
                     >
                       <Image 
                         src={currentMainImage} 
-                        alt={product.name} 
+                        alt={localizedInfo.name} 
                         fill 
                         className="object-contain p-12 md:p-20 transition-transform duration-1000 group-hover:scale-105" 
                         priority 
@@ -221,24 +250,12 @@ export default function ProductDetailView({ id }: { id: string }) {
                     </motion.div>
                   )}
                 </AnimatePresence>
-
-                {/* View Controls */}
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 bg-white/40 backdrop-blur-xl border border-white/40 rounded-full shadow-luxury opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                   <button onClick={() => setViewMode('image')} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${viewMode === 'image' ? 'bg-primary text-white' : 'text-primary/40 hover:text-primary hover:bg-white/50'}`}>
-                      <ImageIcon size={18} />
-                   </button>
-                   <div className="w-[1px] h-4 bg-primary/10"></div>
-                   <button onClick={() => { /* Open Fullscreen Logic */ }} className="w-10 h-10 rounded-full flex items-center justify-center text-primary/40 hover:text-primary hover:bg-white/50 transition-all">
-                      <Maximize2 size={18} />
-                   </button>
-                </div>
               </div>
             </div>
           </div>
 
           {/* RIGHT: PRODUCT INFO SECTION */}
           <div className="lg:col-span-5 space-y-12">
-            {/* Essential Info */}
             <div className="space-y-8">
               <div className="flex flex-wrap items-center gap-4">
                 {product.isNew && (
@@ -247,15 +264,15 @@ export default function ProductDetailView({ id }: { id: string }) {
                 {product.isBest && (
                   <span className="bg-accent-gold text-white text-[8px] font-black px-5 py-2 rounded-full uppercase tracking-[0.3em] shadow-luxury-sm">Masterpiece</span>
                 )}
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">{product.category}</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">{localizedInfo.category}</span>
               </div>
 
               <div className="space-y-4">
                 <h1 className="text-5xl md:text-6xl xl:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-primary break-words">
-                  {product.name}
+                  {localizedInfo.name}
                 </h1>
                 <p className="text-sm md:text-base font-black text-accent-gold uppercase tracking-[0.5em] italic opacity-80">
-                  {product.tagline}
+                  {localizedInfo.tagline}
                 </p>
               </div>
 
@@ -263,13 +280,13 @@ export default function ProductDetailView({ id }: { id: string }) {
                 <span className="text-5xl md:text-6xl font-black text-primary tracking-tighter">
                   ฿{totalPrice.toLocaleString()}
                 </span>
-                <span className="text-[10px] font-bold text-neutral-300 uppercase tracking-widest">Inclusive of taxes</span>
+                <span className="text-[10px] font-bold text-neutral-300 uppercase tracking-widest">{language === 'th' ? 'รวมภาษีมูลค่าเพิ่มแล้ว' : 'Inclusive of taxes'}</span>
               </div>
             </div>
 
             {/* Features Preview */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {product.features?.slice(0, 4).map((feature, i) => (
+              {localizedInfo.features?.slice(0, 4).map((feature, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 bg-white/50 rounded-2xl border border-neutral-100/50">
                   <div className="w-8 h-8 rounded-full bg-accent-gold/10 flex items-center justify-center text-accent-gold shrink-0">
                     <CheckCircle2 size={14} />
@@ -279,42 +296,11 @@ export default function ProductDetailView({ id }: { id: string }) {
               ))}
             </div>
 
-            {/* Options Selection */}
-            {options.length > 0 && (
-              <div className="space-y-6 pt-12 border-t border-neutral-100">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <Box className="text-accent-gold" size={18} />
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em]">Configuration</h3>
-                  </div>
-                  <span className="text-[9px] font-bold text-neutral-300 uppercase tracking-widest">Selection Required</span>
-                </div>
-                
-                <div className="grid grid-cols-1 gap-3">
-                  {options.map((opt) => (
-                    <button 
-                      key={opt.id} 
-                      onClick={() => toggleOption(opt.id)}
-                      className={`group relative flex items-center justify-between p-6 rounded-3xl border transition-all duration-500 ${selectedOptions.includes(opt.id) ? 'border-primary bg-primary text-white shadow-luxury scale-[1.01]' : 'border-neutral-100 bg-white hover:border-accent-gold hover:shadow-luxury-sm'}`}
-                    >
-                      <div className="flex items-center gap-5">
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${selectedOptions.includes(opt.id) ? 'border-white bg-white' : 'border-neutral-200 group-hover:border-accent-gold'}`}>
-                          {selectedOptions.includes(opt.id) && <div className="w-2.5 h-2.5 bg-primary rounded-full animate-scale-up" />}
-                        </div>
-                        <span className="text-[11px] font-black uppercase tracking-widest">{opt.name}</span>
-                      </div>
-                      <span className={`text-[10px] font-black ${selectedOptions.includes(opt.id) ? 'text-accent-gold' : 'text-primary/40'}`}>+ ฿{opt.price_modifier.toLocaleString()}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Action Buttons */}
             <div className="space-y-4 pt-8">
               <button className="w-full h-20 bg-primary text-white rounded-[32px] font-black uppercase tracking-[0.3em] text-[11px] shadow-luxury flex items-center justify-center gap-4 group relative overflow-hidden active:scale-95 transition-all duration-500">
                 <div className="absolute inset-0 bg-accent-gold translate-y-full group-hover:translate-y-0 transition-transform duration-700"></div>
-                <span className="relative z-10">Inquire to Order</span>
+                <span className="relative z-10">{language === 'th' ? 'สอบถามข้อมูลการสั่งซื้อ' : 'Inquire to Order'}</span>
                 <ArrowRight size={18} className="relative z-10 transition-transform group-hover:translate-x-2" />
               </button>
               
@@ -324,10 +310,7 @@ export default function ProductDetailView({ id }: { id: string }) {
                   className={`flex-grow h-16 border rounded-[28px] text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all ${isArchived ? 'bg-accent-gold border-accent-gold text-white shadow-luxury' : 'bg-white border-neutral-100 text-primary hover:border-primary'}`}
                 >
                   <Star size={16} fill={isArchived ? "currentColor" : "none"} /> 
-                  {isArchived ? 'Archived Masterpiece' : 'Save to Archive'}
-                </button>
-                <button className="w-16 h-16 bg-white border border-neutral-100 rounded-[28px] flex items-center justify-center text-primary hover:text-accent-gold hover:border-accent-gold transition-all">
-                  <Info size={18} />
+                  {isArchived ? (language === 'th' ? 'บันทึกในคลังแล้ว' : 'Archived Masterpiece') : (language === 'th' ? 'บันทึกลงในคลัง' : 'Save to Archive')}
                 </button>
               </div>
             </div>
@@ -336,16 +319,16 @@ export default function ProductDetailView({ id }: { id: string }) {
             <div className="pt-12 border-t border-neutral-100 space-y-8">
               <div className="flex items-center gap-4">
                 <Sparkles className="text-accent-gold" size={18} />
-                <h3 className="text-[10px] font-black uppercase tracking-[0.4em]">Philosophy & Material</h3>
+                <h3 className="text-[10px] font-black uppercase tracking-[0.4em]">{language === 'th' ? 'ปรัชญาและวัสดุ' : 'Philosophy & Material'}</h3>
               </div>
               <p className="text-sm md:text-base text-secondary leading-[1.8] font-medium opacity-70">
-                {product.description}
+                {localizedInfo.description}
               </p>
               
               {/* Specs Table */}
-              {product.specs && product.specs.length > 0 && (
+              {localizedInfo.specs && localizedInfo.specs.length > 0 && (
                 <div className="bg-white/30 rounded-3xl border border-neutral-100 p-8 space-y-6">
-                  {product.specs.map((spec, i) => (
+                  {localizedInfo.specs.map((spec, i) => (
                     <div key={i} className="flex justify-between items-center py-4 border-b border-neutral-100 last:border-0">
                       <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">{spec.label}</span>
                       <span className="text-[10px] font-black uppercase tracking-widest text-primary">{spec.value}</span>
@@ -354,148 +337,53 @@ export default function ProductDetailView({ id }: { id: string }) {
                 </div>
               )}
             </div>
-
-            {/* Service & Concierge */}
-            <div className="pt-12 border-t border-neutral-100 grid grid-cols-1 md:grid-cols-3 gap-8">
-               <div className="space-y-3">
-                  <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-accent-gold shadow-sm"><ShieldCheck size={18} /></div>
-                  <h4 className="text-[9px] font-black uppercase tracking-widest">Quality Assurance</h4>
-                  <p className="text-[8px] text-neutral-400 font-bold uppercase tracking-tight">One-year structural warranty</p>
-               </div>
-               <div className="space-y-3">
-                  <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-accent-gold shadow-sm"><Truck size={18} /></div>
-                  <h4 className="text-[9px] font-black uppercase tracking-widest">Global Logistics</h4>
-                  <p className="text-[8px] text-neutral-400 font-bold uppercase tracking-tight">White-glove delivery service</p>
-               </div>
-               <div className="space-y-3">
-                  <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-accent-gold shadow-sm"><MessageCircle size={18} /></div>
-                  <h4 className="text-[9px] font-black uppercase tracking-widest">Artisan Support</h4>
-                  <p className="text-[8px] text-neutral-400 font-bold uppercase tracking-tight">Direct access to curation team</p>
-               </div>
-            </div>
-
-            {/* Contact Concierge */}
-            <div className="bg-primary text-white p-10 md:p-14 rounded-[56px] shadow-luxury relative overflow-hidden group/concierge mt-12">
-               <div className="absolute top-0 right-0 w-80 h-80 bg-accent-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover/concierge:scale-125 transition-transform duration-[2s]"></div>
-               <div className="relative z-10 space-y-10">
-                  <div className="flex items-center gap-4">
-                    <div className="h-[1px] w-8 bg-accent-gold/40"></div>
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">Official Curation</h3>
-                  </div>
-                  <div className="space-y-4">
-                    <p className="text-xl md:text-2xl font-black uppercase tracking-tighter leading-tight">
-                      Bespoke Consulting <br /> & Global Heritage
-                    </p>
-                    <p className="text-sm font-medium text-neutral-400 leading-relaxed max-w-sm">
-                      Our curators provide personalized guidance for integrating Duit artifacts into your architectural space.
-                    </p>
-                  </div>
-                  <a href="https://line.me" target="_blank" className="flex items-center justify-between bg-white text-black p-6 rounded-[32px] hover:bg-accent-gold hover:text-white transition-all duration-700 group/btn">
-                     <div className="flex items-center gap-4">
-                        <MessageCircle size={20} className="text-primary group-hover/btn:text-white transition-colors" />
-                        <span className="font-black uppercase tracking-widest text-[11px]">Chat with Specialist</span>
-                     </div>
-                     <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-1" />
-                  </a>
-               </div>
-            </div>
           </div>
         </div>
 
-        {/* --- NEW: IMMERSIVE STORYTELLING SECTION --- */}
+        {/* --- IMMERSIVE STORYTELLING SECTION --- */}
         <div className="mt-40 md:mt-60 space-y-40">
-           {/* Section Header */}
            <div className="text-center space-y-8 max-w-4xl mx-auto">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="flex items-center justify-center gap-4"
-              >
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center justify-center gap-4">
                 <div className="h-px w-12 bg-accent-gold/40"></div>
-                <span className="text-[10px] font-black uppercase tracking-[0.6em] text-accent-gold">Close-up Perspective</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.6em] text-accent-gold">{language === 'th' ? 'มุมมองอย่างละเอียด' : 'Close-up Perspective'}</span>
                 <div className="h-px w-12 bg-accent-gold/40"></div>
               </motion.div>
-              <motion.h2 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-tight"
-              >
-                The Art of <span className="text-luxury-gradient italic">Craftsmanship</span>
+              <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-tight">
+                {language === 'th' ? 'ศิลปะแห่งการ' : 'The Art of'} <span className="text-luxury-gradient italic">{language === 'th' ? 'ประณีตศิลป์' : 'Craftsmanship'}</span>
               </motion.h2>
-              <motion.p 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 0.6 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="text-lg text-secondary font-medium leading-relaxed"
-              >
-                Every angle, every curve, and every material is selected with architectural precision to ensure a lifetime of aesthetic value and unparalleled comfort.
+              <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 0.6 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="text-lg text-secondary font-medium leading-relaxed">
+                {language === 'th' 
+                  ? 'ทุกองศา ทุกส่วนโค้ง และทุกวัสดุถูกคัดสรรด้วยความแม่นยำทางสถาปัตยกรรม เพื่อมอบคุณค่าด้านความงามที่ยั่งยืนและความสะดวกสบายที่ไม่มีใครเทียบได้' 
+                  : 'Every angle, every curve, and every material is selected with architectural precision to ensure a lifetime of aesthetic value and unparalleled comfort.'}
               </motion.p>
            </div>
 
-           {/* Image Showcase Grid (Oversea Style) */}
            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
-              {/* Feature 1: Large Vertical */}
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="md:col-span-8 aspect-[16/9] md:aspect-[4/3] relative rounded-[40px] md:rounded-[64px] overflow-hidden group shadow-luxury"
-              >
-                <Image 
-                  src={productImages[1] || productImages[0]} 
-                  alt="Detail Focus" 
-                  fill 
-                  className="object-cover transition-transform duration-[2s] group-hover:scale-105" 
-                />
+              <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="md:col-span-8 aspect-[16/9] md:aspect-[4/3] relative rounded-[40px] md:rounded-[64px] overflow-hidden group shadow-luxury">
+                <Image src={productImages[1] || productImages[0]} alt="Detail Focus" fill className="object-cover transition-transform duration-[2s] group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 flex items-end p-12">
-                   <p className="text-white text-xs font-black uppercase tracking-[0.4em]">Material Integrity</p>
+                   <p className="text-white text-xs font-black uppercase tracking-[0.4em]">{language === 'th' ? 'ความสมบูรณ์ของวัสดุ' : 'Material Integrity'}</p>
                 </div>
               </motion.div>
 
-              {/* Feature 2: Square Top */}
-              <motion.div 
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="md:col-span-4 aspect-square relative rounded-[40px] md:rounded-[56px] overflow-hidden shadow-luxury"
-              >
-                <Image 
-                  src={productImages[2] || productImages[0]} 
-                  alt="Detail Focus" 
-                  fill 
-                  className="object-cover" 
-                />
+              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="md:col-span-4 aspect-square relative rounded-[40px] md:rounded-[56px] overflow-hidden shadow-luxury">
+                <Image src={productImages[2] || productImages[0]} alt="Detail Focus" fill className="object-cover" />
               </motion.div>
 
-              {/* Feature 3: Long Horizontal Bottom */}
-              <motion.div 
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="md:col-span-12 h-[300px] md:h-[500px] relative rounded-[40px] md:rounded-[64px] overflow-hidden shadow-luxury-hover group"
-              >
-                 <Image 
-                  src={productImages[3] || productImages[0]} 
-                  alt="Atmosphere" 
-                  fill 
-                  className="object-cover brightness-90 group-hover:brightness-100 transition-all duration-1000" 
-                />
+              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="md:col-span-12 h-[300px] md:h-[500px] relative rounded-[40px] md:rounded-[64px] overflow-hidden shadow-luxury-hover group">
+                 <Image src={productImages[3] || productImages[0]} alt="Atmosphere" fill className="object-cover brightness-90 group-hover:brightness-100 transition-all duration-1000" />
                 <div className="absolute inset-0 flex items-center justify-center">
                    <div className="bg-white/10 backdrop-blur-2xl border border-white/20 p-10 md:p-16 rounded-[48px] text-center space-y-4 max-w-lg mx-6">
                       <Sparkles className="text-accent-gold mx-auto" size={24} />
-                      <h3 className="text-white text-2xl font-black uppercase tracking-widest leading-none">Seamless <br /> Adaptation</h3>
-                      <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest leading-relaxed">Designed to blend effortlessly into any contemporary architectural space.</p>
+                      <h3 className="text-white text-2xl font-black uppercase tracking-widest leading-none">{language === 'th' ? 'ความกลมกลืน' : 'Seamless'} <br /> {language === 'th' ? 'ที่ไร้รอยต่อ' : 'Adaptation'}</h3>
+                      <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest leading-relaxed">
+                        {language === 'th' ? 'ออกแบบมาเพื่อให้กลมกลืนกับพื้นที่สถาปัตยกรรมร่วมสมัยได้อย่างง่ายดาย' : 'Designed to blend effortlessly into any contemporary architectural space.'}
+                      </p>
                    </div>
                 </div>
               </motion.div>
            </div>
         </div>
-
       </div>
     </div>
   );
