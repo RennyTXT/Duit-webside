@@ -1,7 +1,7 @@
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 
 export async function getProducts() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('products')
     .select('*')
@@ -12,7 +12,7 @@ export async function getProducts() {
 }
 
 export async function deleteProduct(id: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.from('products').delete().eq('id', id);
 
   if (error) throw new Error(error.message);
@@ -20,7 +20,7 @@ export async function deleteProduct(id: string) {
 }
 
 export async function upsertProduct(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
   
   const id = formData.get('id') as string;
   const name = formData.get('name') as string;
