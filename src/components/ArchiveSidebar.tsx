@@ -23,6 +23,17 @@ export default function ArchiveSidebar({ isOpen, onClose }: ArchiveSidebarProps)
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   const totalPrice = items.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
 
   const getLocalizedCategory = (category: string) => {
@@ -49,7 +60,7 @@ export default function ArchiveSidebar({ isOpen, onClose }: ArchiveSidebarProps)
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/70 backdrop-blur-md z-[100]"
           />
 
           {/* Sidebar */}
@@ -59,7 +70,7 @@ export default function ArchiveSidebar({ isOpen, onClose }: ArchiveSidebarProps)
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full max-w-[450px] bg-white shadow-2xl z-[101] flex flex-col"
+            className="fixed right-0 top-0 h-full w-full max-w-[450px] bg-white shadow-[-20px_0_80px_rgba(0,0,0,0.1)] z-[101] flex flex-col border-l border-neutral-100"
           >
             {/* Header */}
             <div className="p-8 md:p-10 border-b border-neutral-100 flex items-center justify-between bg-white relative z-10">
