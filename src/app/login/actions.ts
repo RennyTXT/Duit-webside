@@ -27,24 +27,36 @@ export async function login(formData: FormData) {
 export async function signup(formData: FormData) {
   const supabase = await createClient()
 
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+  const fullName = formData.get('fullname') as string
+
+  if (!email || !password) {
+    redirect('/register?error=Email and password are required')
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
     options: {
       data: {
-        full_name: formData.get('fullname') as string,
+        full_name: fullName,
       }
     }
-  }
-
-  const { error } = await supabase.auth.signUp(data)
+  })
 
   if (error) {
-    redirect('/register?error=Could not create user')
+    console.error('Signup Error:', error.message)
+    redirect(`/register?error=${encodeURIComponent(error.message)}`)
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/pet-profile')
+  if (data?.session) {
+    revalidatePath('/', 'layout')
+    redirect('/pet-profile')
+  } else {
+    // If no session, it means email confirmation is likely required
+    redirect('/login?error=Registration successful! Please check your email to confirm your account before logging in.')
+  }
 }
 
 export async function logout() {

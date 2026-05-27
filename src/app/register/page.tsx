@@ -1,8 +1,11 @@
 import { signup } from '../login/actions'
 import Link from 'next/link'
-import { ArrowRight, Lock, Mail, User } from 'lucide-react'
+import { ArrowRight, Lock, Mail, User, AlertCircle } from 'lucide-react'
 
-export default function RegisterPage() {
+export default async function RegisterPage(props: { searchParams: Promise<{ error?: string }> }) {
+  const searchParams = await props.searchParams;
+  const error = searchParams?.error;
+
   return (
     <div className="min-h-screen bg-[#faf7f2] flex items-center justify-center pt-20 px-4 sm:px-6">
       <div className="max-w-md w-full bg-white rounded-[32px] sm:rounded-[40px] p-8 sm:p-12 shadow-luxury border border-neutral-100 relative overflow-hidden">
@@ -12,6 +15,13 @@ export default function RegisterPage() {
             <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-primary">Register</h1>
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-accent-gold">Join the Duit Lifestyle</p>
           </div>
+
+          {error && (
+            <div className="bg-red-50 text-red-500 p-4 rounded-2xl flex items-start gap-3 text-sm font-medium border border-red-100">
+              <AlertCircle size={18} className="shrink-0 mt-0.5" />
+              <p>{error}</p>
+            </div>
+          )}
 
           <form className="space-y-6">
             <div className="space-y-4">
