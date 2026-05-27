@@ -10,7 +10,9 @@ import {
   Settings, 
   Menu,
   X,
-  ExternalLink
+  ExternalLink,
+  Users,
+  Heart
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
