@@ -17,7 +17,19 @@ export const useWishlistStore = create<WishlistState>()(
       addItem: (product) => {
         const currentItems = get().items;
         if (!currentItems.find((item) => item.id === product.id)) {
-          set({ items: [...currentItems, product] });
+          // เก็บเฉพาะข้อมูลที่จำเป็นเพื่อลดขนาด LocalStorage และป้องกันบัคข้อมูลไม่ครบ
+          const normalizedProduct: Product = {
+            id: product.id,
+            name: product.name,
+            price: Number(product.price) || 0,
+            image: product.image || (product as any).image_url || "/placeholder-product.png",
+            category: product.category,
+            tagline: product.tagline || '',
+            description: '', // ไม่จำเป็นต้องเก็บในคลัง
+            features: [],
+            specs: []
+          };
+          set({ items: [...currentItems, normalizedProduct] });
         }
       },
       removeItem: (productId) => {
