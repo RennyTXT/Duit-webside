@@ -1,7 +1,8 @@
 import { products as staticProducts } from '@/data/products';
 import ProductDetailView from './ProductDetailView';
 
-// Fixed build error for static export: Separation of Concern
+export const dynamicParams = true;
+
 export function generateStaticParams() {
   return staticProducts.map((product) => ({
     id: product.id,
