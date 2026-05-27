@@ -35,12 +35,12 @@ export async function updateSession(request: NextRequest) {
   if (
     !user &&
     request.nextUrl.pathname.startsWith('/admin') &&
-    request.nextUrl.pathname !== '/admin/login'
+    !request.nextUrl.pathname.includes('/admin/login')
   ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone()
-    url.pathname = '/admin/login'
-    return NextResponse.redirect(url)
+    // ใช้ URL constructor เพื่อสร้าง redirect URL ที่ถูกต้องตาม basePath
+    const redirectUrl = request.nextUrl.clone()
+    redirectUrl.pathname = '/admin/login'
+    return NextResponse.redirect(redirectUrl)
   }
 
   return supabaseResponse
