@@ -91,7 +91,7 @@
   --shadow-luxury: var(--shadow-luxury);
   --shadow-luxury-hover: var(--shadow-luxury-hover);
 
-  --font-sans: var(--font-montserrat), var(--font-thai), "Montserrat", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-assistant), var(--font-thai), "Assistant", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   
   --animate-gradient-x: gradient-x 15s ease infinite;
   --animate-pulse-gold: pulse-gold 3s ease-in-out infinite;
