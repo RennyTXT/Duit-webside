@@ -104,7 +104,7 @@ export default function ShopPage() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-6xl md:text-8xl lg:text-[100px] font-black tracking-[-0.04em] text-primary uppercase leading-none"
+            className="text-4xl sm:text-6xl md:text-8xl lg:text-[100px] font-black tracking-[-0.04em] text-primary uppercase leading-none"
           >
             {activeCategory === 'all' ? (language === 'th' ? 'คอลเลกชัน' : 'The Collection') : currentCategoryName}
           </motion.h1>

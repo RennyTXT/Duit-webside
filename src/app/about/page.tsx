@@ -87,32 +87,32 @@ export default function AboutPage() {
       {/* 2. Asymmetric Storytelling Section */}
       <section className="py-40 md:py-60 px-6 md:px-20">
         <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-32 items-center">
-           <div className="lg:col-span-5 space-y-16">
+           <div className="lg:col-span-5 space-y-12 md:space-y-16">
               <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
                 <div className="flex items-center gap-4 mb-8">
                    <div className="h-px w-12 bg-accent-gold"></div>
                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">Philosophy 01</span>
                 </div>
-                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-tight text-primary">
+                <h2 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter leading-tight text-primary">
                   {language === 'th' ? 'ออกแบบเพื่อคุณและ' : 'Designed for You'} <br /> <span className="italic text-accent-gold">{language === 'th' ? 'เพื่อนคนสำคัญ' : '& Your Pets.'}</span>
                 </h2>
-                <p className="mt-12 text-lg text-secondary font-medium leading-relaxed opacity-70">
+                <p className="mt-8 md:mt-12 text-base md:text-lg text-secondary font-medium leading-relaxed opacity-70">
                   {language === 'th' 
                     ? 'หัวใจสำคัญของ Duit คือการสร้างสภาพแวดล้อมที่กลมกลืน ซึ่งความต้องการของทั้งเจ้าของและสัตว์เลี้ยงได้รับการตอบสนองผ่านงานดีไซน์ที่ผ่านการคิดค้นมาอย่างถี่ถ้วน' 
                     : 'The core philosophy of Duit focuses on creating a harmonious living environment where the needs of both the owner and the pet are met through thoughtful design.'}
                 </p>
               </motion.div>
               
-              <div className="grid grid-cols-2 gap-8">
-                 <div className="p-10 rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
-                    <Layout className="text-accent-gold" size={24} />
-                    <h4 className="font-black uppercase text-xs tracking-widest">Duit Design Lab</h4>
-                    <p className="text-[10px] font-bold text-neutral-400">Headquarters in Seoul, Korea</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+                 <div className="p-8 md:p-10 rounded-[32px] md:rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
+                    <Layout className="text-accent-gold" size={20} md:size={24} />
+                    <h4 className="font-black uppercase text-[10px] md:text-xs tracking-widest">Duit Design Lab</h4>
+                    <p className="text-[9px] md:text-[10px] font-bold text-neutral-400">Headquarters in Seoul, Korea</p>
                  </div>
-                 <div className="p-10 rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
-                    <PenTool className="text-accent-gold" size={24} />
-                    <h4 className="font-black uppercase text-xs tracking-widest">Hand-Crafted</h4>
-                    <p className="text-[10px] font-bold text-neutral-400">Precision in Every Line</p>
+                 <div className="p-8 md:p-10 rounded-[32px] md:rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
+                    <PenTool className="text-accent-gold" size={20} md:size={24} />
+                    <h4 className="font-black uppercase text-[10px] md:text-xs tracking-widest">Hand-Crafted</h4>
+                    <p className="text-[9px] md:text-[10px] font-bold text-neutral-400">Precision in Every Line</p>
                  </div>
               </div>
            </div>

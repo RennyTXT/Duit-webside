@@ -59,7 +59,7 @@ const Header = () => {
       <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20 h-full flex items-center">
         {/* Left: Logo */}
         <div className="flex-1">
-          <Link href="/" className={`text-2xl font-black tracking-[-0.05em] inline-block transition-all duration-700 hover:scale-105 active:scale-95 ${useDarkText ? 'text-primary' : 'text-white'}`}>
+          <Link href="/" className={`text-xl sm:text-2xl font-black tracking-[-0.05em] inline-block transition-all duration-700 hover:scale-105 active:scale-95 ${useDarkText ? 'text-primary' : 'text-white'}`}>
             DUIT <span className={useDarkText ? 'text-accent-gold italic' : 'text-primary'}>TH</span>
           </Link>
         </div>

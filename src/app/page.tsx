@@ -286,7 +286,7 @@ const Home = () => {
                <div className="space-y-12 text-white">
                   <div className="space-y-6">
                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.shop.privateCircle}</span>
-                    <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">{t.shop.exclusiveClub.split(' ')[0]} <br /> <span className="text-accent-gold italic">{t.shop.exclusiveClub.split(' ')[1]}</span></h2>
+                    <h2 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">{t.shop.exclusiveClub.split(' ')[0]} <br /> <span className="text-accent-gold italic">{t.shop.exclusiveClub.split(' ')[1]}</span></h2>
                   </div>
                   <p className="text-xl font-medium opacity-60 leading-relaxed max-w-md">{t.shop.membershipSub}</p>
                   <Link href="/pet-profile" className="inline-flex items-center gap-6 px-12 py-6 bg-white text-black rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-accent-gold hover:text-white transition-all duration-700 shadow-luxury group">
@@ -315,6 +315,12 @@ const Home = () => {
             </div>
          </div>
       </section>
+    </div>
+  );
+};
+
+export default Home;
+on>
     </div>
   );
 };

@@ -132,22 +132,22 @@ export default function DuitCarePage() {
                  <div className="space-y-12 text-center lg:text-left">
                     <div className="space-y-6">
                        <span className="text-accent-gold text-[10px] font-black tracking-[0.4em] uppercase">Elite Program</span>
-                       <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]">
+                       <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]">
                           Duit Care+ <br />
                           <span className="text-accent-gold italic">Privileges.</span>
                        </h2>
                     </div>
-                    <p className="text-xl text-neutral-400 font-medium leading-relaxed opacity-80">
+                    <p className="text-lg sm:text-xl text-neutral-400 font-medium leading-relaxed opacity-80 max-w-xl mx-auto lg:mx-0">
                        As a distinguished member of the Duit circle, you and {profile.name} are granted unprecedented access to our latest innovations and bespoke services.
                     </p>
-                    <div className="flex flex-wrap justify-center lg:justify-start gap-8">
-                       <div className="bg-white/5 border border-white/10 px-10 py-6 rounded-[32px] backdrop-blur-md">
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-accent-gold block mb-3">Privilege 01</span>
-                          <span className="text-2xl font-black tracking-tight">10% COMPLIMENTARY</span>
+                    <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-4 sm:gap-8">
+                       <div className="bg-white/5 border border-white/10 px-8 sm:px-10 py-5 sm:py-6 rounded-[24px] sm:rounded-[32px] backdrop-blur-md">
+                          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-accent-gold block mb-2 sm:mb-3">Privilege 01</span>
+                          <span className="text-xl sm:text-2xl font-black tracking-tight">10% COMPLIMENTARY</span>
                        </div>
-                       <div className="bg-white/5 border border-white/10 px-10 py-6 rounded-[32px] backdrop-blur-md">
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-accent-gold block mb-3">Privilege 02</span>
-                          <span className="text-2xl font-black tracking-tight">GLOBAL CONCIERGE</span>
+                       <div className="bg-white/5 border border-white/10 px-8 sm:px-10 py-5 sm:py-6 rounded-[24px] sm:rounded-[32px] backdrop-blur-md">
+                          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-accent-gold block mb-2 sm:mb-3">Privilege 02</span>
+                          <span className="text-xl sm:text-2xl font-black tracking-tight">GLOBAL CONCIERGE</span>
                        </div>
                     </div>
                  </div>

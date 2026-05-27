@@ -70,9 +70,9 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
     >
       <Link href={`/products/${product.id}`} className="block h-full">
         <div className={`relative overflow-hidden bg-white border border-neutral-100 group-hover:border-primary/10 transition-all duration-700 shadow-luxury hover:shadow-luxury-hover
-          ${isCompact ? 'rounded-[32px] p-5' : 'rounded-[48px] mb-10'}
+          ${isCompact ? 'rounded-[24px] md:rounded-[32px] p-4 md:p-5' : 'rounded-[32px] md:rounded-[48px] mb-6 md:mb-10'}
         `}>
-          <div className={`relative overflow-hidden bg-cream-light ${isCompact ? 'rounded-[24px] aspect-square' : 'rounded-[36px] aspect-[4/5] m-4'}`}>
+          <div className={`relative overflow-hidden bg-cream-light ${isCompact ? 'rounded-[20px] md:rounded-[24px] aspect-square' : 'rounded-[24px] md:rounded-[36px] aspect-[4/5] m-3 md:m-4'}`}>
             
             {isMounted ? (
               <ParallaxImage src={productImage} alt={product.name} containerRef={containerRef} />
