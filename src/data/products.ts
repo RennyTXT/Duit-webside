@@ -26,6 +26,7 @@ export interface Product {
   specs: ProductSpecification[];
   isNew?: boolean;
   isBest?: boolean;
+  infoImages?: string[];
   modelUrl?: string;
   recommendedFor?: {
     type?: PetType;
