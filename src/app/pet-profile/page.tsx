@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { usePetStore, PetType, PetSize } from '@/store/usePetStore';
 import { useRouter } from 'next/navigation';
-import { Trash2, Dog, Cat, Sparkles, ChevronRight, Loader2, Award, QrCode, ShieldCheck, Gift, Clock, CreditCard, Star, MapPin, Camera, Upload, X } from 'lucide-react';
+import { Trash2, Dog, Cat, Sparkles, ChevronRight, Loader2, Award, QrCode, ShieldCheck, Gift, Clock, CreditCard, Star, MapPin, Camera, Upload, X, LogOut } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { dogBreeds, catBreeds } from '@/data/breeds';
 import { products as staticProducts, Product } from '@/data/products';
