@@ -4,12 +4,12 @@ import { ArrowRight, Lock, Mail } from 'lucide-react'
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-[#faf7f2] flex items-center justify-center pt-20 px-6">
-      <div className="max-w-md w-full bg-white rounded-[40px] p-12 shadow-luxury border border-neutral-100 relative overflow-hidden">
+    <div className="min-h-screen bg-[#faf7f2] flex items-center justify-center pt-20 px-4 sm:px-6">
+      <div className="max-w-md w-full bg-white rounded-[32px] sm:rounded-[40px] p-8 sm:p-12 shadow-luxury border border-neutral-100 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-accent-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div className="relative z-10 space-y-10">
+        <div className="relative z-10 space-y-8 sm:space-y-10">
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-black uppercase tracking-tighter text-primary">Login</h1>
+            <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-primary">Login</h1>
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-accent-gold">Access the Inner Circle</p>
           </div>
 

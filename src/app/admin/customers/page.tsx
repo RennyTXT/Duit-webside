@@ -11,17 +11,17 @@ export default async function CustomersPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
+    <div className="space-y-6 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-black uppercase tracking-tighter">Customer Management</h1>
-          <p className="text-neutral-500 font-medium">Manage your registered users and tiers.</p>
+          <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tighter">Customer Management</h1>
+          <p className="text-sm sm:text-base text-neutral-500 font-medium mt-1">Manage your registered users and tiers.</p>
         </div>
       </div>
 
-      <div className="bg-white rounded-3xl p-8 shadow-sm border border-neutral-100">
-        <div className="flex items-center justify-between mb-8">
-          <div className="relative w-72">
+      <div className="bg-white rounded-[24px] sm:rounded-3xl p-6 sm:p-8 shadow-sm border border-neutral-100">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between mb-6 sm:mb-8 gap-4">
+          <div className="relative w-full sm:w-72">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" size={18} />
             <input 
               type="text" 

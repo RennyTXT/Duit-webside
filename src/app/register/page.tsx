@@ -4,12 +4,12 @@ import { ArrowRight, Lock, Mail, User } from 'lucide-react'
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-screen bg-[#faf7f2] flex items-center justify-center pt-20 px-6">
-      <div className="max-w-md w-full bg-white rounded-[40px] p-12 shadow-luxury border border-neutral-100 relative overflow-hidden">
+    <div className="min-h-screen bg-[#faf7f2] flex items-center justify-center pt-20 px-4 sm:px-6">
+      <div className="max-w-md w-full bg-white rounded-[32px] sm:rounded-[40px] p-8 sm:p-12 shadow-luxury border border-neutral-100 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-40 h-40 bg-accent-gold/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-        <div className="relative z-10 space-y-10">
+        <div className="relative z-10 space-y-8 sm:space-y-10">
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-black uppercase tracking-tighter text-primary">Register</h1>
+            <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-primary">Register</h1>
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-accent-gold">Join the Duit Lifestyle</p>
           </div>
 
