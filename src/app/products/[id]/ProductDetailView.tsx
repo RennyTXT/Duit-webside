@@ -17,10 +17,11 @@ import {
   Info,
   CheckCircle2,
   Box,
-  Maximize2
+  Maximize2,
+  ShoppingCart
 } from 'lucide-react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -43,10 +44,11 @@ export default function ProductDetailView({ id }: { id: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'image' | '3d'>('image');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
   const supabase = createClient();
+
+  const { scrollY } = useScroll();
+  const showStickyBar = useTransform(scrollY, [600, 700], [0, 1]);
 
   const { addItem, removeItem, isInWishlist } = useWishlistStore();
   const isArchived = (product && isMounted) ? isInWishlist(product.id) : false;
@@ -107,14 +109,10 @@ export default function ProductDetailView({ id }: { id: string }) {
     fetchProductAndOptions();
   }, [id, supabase]);
 
-  // ระบบแปลภาษาแบบ Dynamic (Smart Translation Fallback)
   const localizedInfo = useMemo(() => {
     if (!product) return null;
-    
-    // พยายามดึงข้อมูลจาก staticProducts ถ้ามีข้อมูลแปลอยู่แล้ว
     const staticInfo = staticProducts.find(p => p.id === id);
     
-    // ตารางจับคู่หมวดหมู่
     const categoryMap: Record<string, {th: string, en: string}> = {
       'eat-drink': { th: t.shop.eatDrink, en: 'Eat & Drink' },
       'furniture': { th: t.shop.furniture, en: 'Furniture' },
@@ -176,6 +174,33 @@ export default function ProductDetailView({ id }: { id: string }) {
   return (
     <div className="bg-[#F9F8F6] min-h-screen relative selection:bg-accent-gold/30">
       <div className="grain-overlay"></div>
+
+      {/* 1. STICKY ACTION BAR */}
+      <motion.div 
+        style={{ opacity: showStickyBar }}
+        className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-2xl border-b border-neutral-100 z-[60] h-20 hidden md:flex items-center shadow-luxury-sm"
+      >
+        <div className="max-w-[1800px] mx-auto w-full px-12 lg:px-20 flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-neutral-100 bg-white p-1">
+              <Image src={productImages[0]} alt={localizedInfo.name} fill className="object-contain" />
+            </div>
+            <div>
+              <h4 className="text-[11px] font-black uppercase tracking-tight text-primary">{localizedInfo.name}</h4>
+              <p className="text-[10px] font-black text-accent-gold">฿{totalPrice.toLocaleString()}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-6">
+             <button onClick={handleArchiveToggle} className={`p-3 rounded-full border transition-all ${isArchived ? 'bg-accent-gold border-accent-gold text-white' : 'border-neutral-100 text-primary hover:border-primary'}`}>
+                <Star size={16} fill={isArchived ? "currentColor" : "none"} />
+             </button>
+             <button className="bg-primary text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-accent-gold transition-all shadow-luxury flex items-center gap-3 group">
+                {language === 'th' ? 'สอบถามข้อมูล' : 'Inquire Now'}
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+             </button>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Navigation Breadcrumb */}
       <nav className="max-w-[1800px] mx-auto w-full px-6 md:px-12 lg:px-20 py-12 flex items-center gap-4 text-[9px] font-black uppercase tracking-[0.4em] text-neutral-300 relative z-10">
@@ -340,7 +365,7 @@ export default function ProductDetailView({ id }: { id: string }) {
           </div>
         </div>
 
-        {/* --- IMMERSIVE STORYTELLING SECTION --- */}
+        {/* --- 2. INTERACTIVE IMAGE HOTSPOTS SECTION --- */}
         <div className="mt-40 md:mt-60 space-y-40">
            <div className="text-center space-y-8 max-w-4xl mx-auto">
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center justify-center gap-4">
@@ -359,9 +384,35 @@ export default function ProductDetailView({ id }: { id: string }) {
            </div>
 
            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10">
+              {/* Main Hotspot Image */}
               <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="md:col-span-8 aspect-[16/9] md:aspect-[4/3] relative rounded-[40px] md:rounded-[64px] overflow-hidden group shadow-luxury">
                 <Image src={productImages[1] || productImages[0]} alt="Detail Focus" fill className="object-cover transition-transform duration-[2s] group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 flex items-end p-12">
+                
+                {/* Hotspot 1 */}
+                <div className="absolute top-[30%] left-[40%] group/h1">
+                   <div className="w-6 h-6 bg-accent-gold/40 rounded-full animate-ping absolute inset-0"></div>
+                   <div className="w-6 h-6 bg-white rounded-full relative z-10 flex items-center justify-center cursor-pointer shadow-luxury">
+                      <div className="w-2 h-2 bg-accent-gold rounded-full"></div>
+                   </div>
+                   <div className="absolute left-10 top-1/2 -translate-y-1/2 w-48 bg-white/80 backdrop-blur-xl p-4 rounded-2xl border border-white/50 opacity-0 group-hover/h1:opacity-100 transition-all duration-500 translate-x-4 group-hover/h1:translate-x-0 shadow-luxury pointer-events-none">
+                      <p className="text-[9px] font-black uppercase text-accent-gold mb-1">Architecture</p>
+                      <p className="text-[11px] font-bold text-primary leading-tight">{language === 'th' ? 'โครงสร้างที่แข็งแรงและสง่างาม' : 'Robust & Elegant structure designed for durability.'}</p>
+                   </div>
+                </div>
+
+                {/* Hotspot 2 */}
+                <div className="absolute bottom-[25%] right-[30%] group/h2">
+                   <div className="w-6 h-6 bg-accent-gold/40 rounded-full animate-ping absolute inset-0"></div>
+                   <div className="w-6 h-6 bg-white rounded-full relative z-10 flex items-center justify-center cursor-pointer shadow-luxury">
+                      <div className="w-2 h-2 bg-accent-gold rounded-full"></div>
+                   </div>
+                   <div className="absolute right-10 top-1/2 -translate-y-1/2 w-48 bg-white/80 backdrop-blur-xl p-4 rounded-2xl border border-white/50 opacity-0 group-hover/h2:opacity-100 transition-all duration-500 -translate-x-4 group-hover/h2:translate-x-0 shadow-luxury pointer-events-none text-right">
+                      <p className="text-[9px] font-black uppercase text-accent-gold mb-1">Material</p>
+                      <p className="text-[11px] font-bold text-primary leading-tight">{language === 'th' ? 'วัสดุเกรดพรีเมียมสัมผัสนุ่ม' : 'Medical-grade premium material with soft touch.'}</p>
+                   </div>
+                </div>
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 flex items-end p-12 pointer-events-none">
                    <p className="text-white text-xs font-black uppercase tracking-[0.4em]">{language === 'th' ? 'ความสมบูรณ์ของวัสดุ' : 'Material Integrity'}</p>
                 </div>
               </motion.div>
