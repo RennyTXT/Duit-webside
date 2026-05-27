@@ -320,9 +320,3 @@ const Home = () => {
 };
 
 export default Home;
-on>
-    </div>
-  );
-};
-
-export default Home;

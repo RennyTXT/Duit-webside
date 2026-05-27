@@ -105,12 +105,12 @@ export default function AboutPage() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
                  <div className="p-8 md:p-10 rounded-[32px] md:rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
-                    <Layout className="text-accent-gold" size={20} md:size={24} />
+                    <Layout className="text-accent-gold" size={24} />
                     <h4 className="font-black uppercase text-[10px] md:text-xs tracking-widest">Duit Design Lab</h4>
                     <p className="text-[9px] md:text-[10px] font-bold text-neutral-400">Headquarters in Seoul, Korea</p>
                  </div>
                  <div className="p-8 md:p-10 rounded-[32px] md:rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
-                    <PenTool className="text-accent-gold" size={20} md:size={24} />
+                    <PenTool className="text-accent-gold" size={24} />
                     <h4 className="font-black uppercase text-[10px] md:text-xs tracking-widest">Hand-Crafted</h4>
                     <p className="text-[9px] md:text-[10px] font-bold text-neutral-400">Precision in Every Line</p>
                  </div>
