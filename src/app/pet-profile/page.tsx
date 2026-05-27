@@ -147,6 +147,15 @@ export default function PetProfilePage() {
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [aiInsights, setAiInsights] = useState<{title: string, reason: string, products: Product[]} | null>(null);
 
+  const supabase = createClient();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast.success('Signed out successfully');
+    router.push('/');
+    router.refresh();
+  };
+
   const breeds = type === 'dog' ? dogBreeds : type === 'cat' ? catBreeds : [];
 
   const themeColors = useMemo(() => {
