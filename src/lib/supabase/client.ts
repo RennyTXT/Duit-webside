@@ -8,11 +8,5 @@ export function createClient() {
     throw new Error('Supabase URL and Anon Key are required');
   }
 
-  return createSupabaseClient(supabaseUrl, supabaseAnonKey, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true
-    }
-  });
+  return createSupabaseClient(supabaseUrl, supabaseAnonKey);
 }
