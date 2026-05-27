@@ -94,20 +94,20 @@ export default function AboutPage() {
                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">Philosophy 01</span>
                 </div>
                 <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-tight text-primary">
-                  {language === 'th' ? 'ความงามที่ไร้' : 'Enduring'} <br /> <span className="italic text-accent-gold">{language === 'th' ? 'กาลเวลา' : 'Aesthetics.'}</span>
+                  {language === 'th' ? 'ออกแบบเพื่อคุณและ' : 'Designed for You'} <br /> <span className="italic text-accent-gold">{language === 'th' ? 'เพื่อนคนสำคัญ' : '& Your Pets.'}</span>
                 </h2>
                 <p className="mt-12 text-lg text-secondary font-medium leading-relaxed opacity-70">
                   {language === 'th' 
-                    ? 'เราไม่ได้มองเฟอร์นิเจอร์สัตว์เลี้ยงเป็นเพียงอุปกรณ์ แต่เรามองว่าเป็นส่วนหนึ่งของงานสถาปัตยกรรมภายในบ้าน ดีไซน์ของเราจึงเน้นความเรียบง่ายที่ทรงพลัง' 
-                    : 'We do not perceive pet furniture as mere equipment; we view it as an extension of home architecture. Our designs embrace a minimal yet powerful presence.'}
+                    ? 'หัวใจสำคัญของ Duit คือการสร้างสภาพแวดล้อมที่กลมกลืน ซึ่งความต้องการของทั้งเจ้าของและสัตว์เลี้ยงได้รับการตอบสนองผ่านงานดีไซน์ที่ผ่านการคิดค้นมาอย่างถี่ถ้วน' 
+                    : 'The core philosophy of Duit focuses on creating a harmonious living environment where the needs of both the owner and the pet are met through thoughtful design.'}
                 </p>
               </motion.div>
               
               <div className="grid grid-cols-2 gap-8">
                  <div className="p-10 rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
                     <Layout className="text-accent-gold" size={24} />
-                    <h4 className="font-black uppercase text-xs tracking-widest">Seoul Studio</h4>
-                    <p className="text-[10px] font-bold text-neutral-400">Headquarters of Innovation</p>
+                    <h4 className="font-black uppercase text-xs tracking-widest">Duit Design Lab</h4>
+                    <p className="text-[10px] font-bold text-neutral-400">Headquarters in Seoul, Korea</p>
                  </div>
                  <div className="p-10 rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
                     <PenTool className="text-accent-gold" size={24} />

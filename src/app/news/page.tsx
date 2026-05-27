@@ -10,27 +10,27 @@ import { useLanguageStore, translations } from '@/store/useLanguageStore';
 const newsItems = [
   {
     id: 1,
-    title: 'Duit Design Lab เปิดตัวอย่างเป็นทางการในประเทศไทย',
-    excerpt: 'นำที่สุดของงานดีไซน์อุปกรณ์สัตว์เลี้ยงจากเกาหลีมาสู่ใจกลางคนรักสัตว์เลี้ยงชาวไทย พร้อมเปิดตัวคอลเลกชันปี 2026',
+    title: 'Duit The Table Plus: ยกระดับประสบการณ์การดูแลสัตว์เลี้ยงผ่าน App Update 2026',
+    excerpt: 'สัมผัสวิวัฒนาการล่าสุดของแอปพลิเคชัน Duit The Table Plus ที่ออกแบบมาเพื่อการควบคุมที่แม่นยำและไร้รอยต่อ มอบความสะดวกสบายสูงสุดให้คุณและสัตว์เลี้ยงที่คุณรัก',
     date: '20 MAY 2026',
-    category: 'BRAND NEWS',
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=800'
+    category: 'INNOVATION',
+    image: 'https://cdn.imweb.me/upload/S201801295a6ea8288a1a1/aab92744b8a85.jpg?w=800'
   },
   {
     id: 2,
-    title: 'ทำไมการจำลองแบบ 3D ถึงสำคัญต่อเจ้าของสัตว์เลี้ยง',
-    excerpt: 'สำรวจระบบ 3D Product Viewer ใหม่ของเรา และวิธีที่ช่วยให้คุณเลือกสิ่งที่เหมาะสมที่สุดสำหรับบ้านของคุณได้อย่างแม่นยำ',
-    date: '15 MAY 2026',
-    category: 'INNOVATION',
-    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/02c3dd1725fb7.jpg?w=800'
+    title: 'Duit at Interzoo 2024: เผยแพร่งานดีไซน์เกาหลีสู่เวทีระดับโลก ณ ประเทศเยอรมนี',
+    excerpt: 'ความสำเร็จครั้งสำคัญของ Duit ในงานนิทรรศการสัตว์เลี้ยงที่ใหญ่ที่สุดในโลก นำเสนอปรัชญา "Designed for Better Living" ให้กับคนรักสัตว์เลี้ยงทั่วโลกได้รับชม',
+    date: '24 MAY 2024',
+    category: 'GLOBAL EVENT',
+    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=800'
   },
   {
     id: 3,
-    title: 'The Table Plus: นิยามใหม่ของการให้อาหารที่แม่นยำ',
-    excerpt: 'เจาะลึกเครื่องให้อาหารอัตโนมัติรุ่นล่าสุดของเราและประโยชน์ต่อสุขภาพสำหรับสัตว์เลี้ยงที่คุณรักในระยะยาว',
-    date: '10 MAY 2026',
+    title: 'Duit X Megazoo 2024: ก้าวต่อไปของนวัตกรรมอุปกรณ์สัตว์เลี้ยงยุคใหม่',
+    excerpt: 'เจาะลึกภาพบรรยากาศการเปิดตัวผลิตภัณฑ์ใหม่ล่าสุดของ Duit ในงาน Megazoo ณ KINTEX ที่ได้รับความสนใจอย่างล้นหลามจากเหล่านักสะสมและผู้เชี่ยวชาญ',
+    date: '15 NOV 2024',
     category: 'PRODUCTS',
-    image: 'https://cdn.imweb.me/upload/S201801295a6ea8288a1a1/aab92744b8a85.jpg?w=800'
+    image: 'https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/02c3dd1725fb7.jpg?w=800'
   }
 ];
 
