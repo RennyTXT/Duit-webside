@@ -97,7 +97,7 @@ export default function AdminLoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm font-bold focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 uppercase tracking-tight"
+                  className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm font-bold focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 tracking-tight"
                 />
               </div>
 
@@ -112,7 +112,7 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm font-bold focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 uppercase tracking-tight"
+                  className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm font-bold focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 tracking-tight"
                 />
               </div>
             </div>
