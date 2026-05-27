@@ -11,6 +11,7 @@ import { useLanguageStore, translations } from '@/store/useLanguageStore';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'sonner';
+import { createClient } from '@/lib/supabase/client';
 
 // --- REFINED LUXURY 3D CARD COMPONENT ---
 const LuxuryCard = ({ profile, tier, points, t }: { profile: any, tier: string, points: number, t: any }) => {
