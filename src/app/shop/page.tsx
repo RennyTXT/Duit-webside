@@ -171,18 +171,18 @@ export default function ShopPage() {
             {/* Toolbar */}
             <div className="flex flex-wrap justify-between items-center mb-16 pb-8 border-b border-neutral-100 gap-8">
                <div className="space-y-1">
-                 <p className="text-[11px] font-black uppercase tracking-widest text-neutral-300">{language === 'th' ? 'แคตตาล็อก' : 'Catalog'}</p>
+                 <p className={`text-[11px] font-black uppercase tracking-widest text-neutral-300 ${language === 'th' ? 'font-black' : ''}`}>{language === 'th' ? 'แคตตาล็อก' : 'Catalog'}</p>
                  <p className="text-sm font-bold text-primary">
                    {language === 'th' ? 'แสดง' : 'Showing'} <span className="font-black text-accent-gold">{filteredProducts.length}</span> {language === 'th' ? 'ผลงานชิ้นเอก' : 'Masterpieces'}
                  </p>
                </div>
                <div className="flex items-center gap-10">
                   <div className="flex items-center gap-6">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400">{language === 'th' ? 'เรียงตาม' : 'Sort By'}</span>
+                    <span className={`text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 ${language === 'th' ? 'font-black' : ''}`}>{language === 'th' ? 'เรียงตาม' : 'Sort By'}</span>
                     <select 
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      className="bg-transparent border-none text-[12px] font-black uppercase tracking-widest outline-none cursor-pointer hover:text-accent-gold transition-colors"
+                      className={`bg-transparent border-none text-[12px] font-black uppercase tracking-widest outline-none cursor-pointer hover:text-accent-gold transition-colors ${language === 'th' ? 'font-black' : ''}`}
                     >
                       <option value="newest">{language === 'th' ? 'มาใหม่ล่าสุด' : 'Latest Arrivals'}</option>
                       <option value="price-low">{language === 'th' ? 'ราคา: ต่ำ - สูง' : 'Price: Low - High'}</option>
