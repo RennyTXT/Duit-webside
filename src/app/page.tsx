@@ -58,13 +58,13 @@ const Home = () => {
       tag: "Hygiene"
     },
     {
-      image: "https://duit.kr/web/product/big/window_hammock.jpg",
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/a326694e82e6c.jpg?w=1440",
       title: "Window Hammock",
       subtitle: "A wider world, wider enjoyment.",
       tag: "Relax"
     },
     {
-      image: "https://duit.kr/web/product/big/the_table_plus.jpg",
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/90807b55f1f45.jpg?w=1440",
       title: "The Table Plus",
       subtitle: "Customized automatic feeding in your hand.",
       tag: "Technology"
@@ -82,7 +82,7 @@ const Home = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
+    }, 10000);
     return () => clearInterval(timer);
   }, [heroSlides.length]);
 
