@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { User, Search, Menu, X, ChevronDown, Star } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -60,8 +61,15 @@ const Header = () => {
         <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20 h-full flex items-center">
           {/* Left: Logo */}
           <div className="flex-1">
-            <Link href="/" className={`text-xl sm:text-2xl font-black tracking-[-0.05em] inline-block transition-all duration-700 hover:scale-105 active:scale-95 ${useDarkText ? 'text-primary' : 'text-white'}`}>
-              DUIT <span className={useDarkText ? 'text-accent-gold italic' : 'text-primary'}>TH</span>
+            <Link href="/" className="inline-block transition-all duration-700 hover:scale-105 active:scale-95">
+              <Image 
+                src="/logo.jpg" 
+                alt="DUIT Logo" 
+                width={60} 
+                height={60} 
+                className="object-contain"
+                priority
+              />
             </Link>
           </div>
 
