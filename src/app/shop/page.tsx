@@ -17,6 +17,8 @@ export default function ShopPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
   const supabase = createClient();
 
   const categoryList = [
@@ -27,6 +29,11 @@ export default function ShopPage() {
     { id: 'hygiene', name: t.shop.hygiene, color: 'neutral' },
     { id: 'daily', name: t.shop.daily, color: 'neutral' }
   ];
+
+  useEffect(() => {
+    // Reset to page 1 when category changes
+    setCurrentPage(1);
+  }, [activeCategory]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -54,6 +61,16 @@ export default function ShopPage() {
   const filteredProducts = activeCategory === 'all' 
     ? products 
     : products.filter(p => p.category === activeCategory);
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  };
 
   const categories = categoryList.map(cat => ({
     ...cat,
@@ -200,27 +217,65 @@ export default function ShopPage() {
                   <p className="text-[10px] uppercase tracking-[0.4em]">{t.shop.curating}</p>
                </div>
             ) : (
-              <motion.div 
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-y-20 gap-x-12"
-              >
-                <AnimatePresence mode="popLayout">
-                  {filteredProducts.map((product: Product) => (
-                    <motion.div
-                      layout
-                      key={product.id}
-                      variants={itemVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit={{ opacity: 0, scale: 0.95 }}
-                    >
-                      <ProductCard product={product} />
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </motion.div>
+              <>
+                <motion.div 
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-y-20 gap-x-12"
+                >
+                  <AnimatePresence mode="popLayout">
+                    {paginatedProducts.map((product: Product) => (
+                      <motion.div
+                        layout
+                        key={product.id}
+                        variants={itemVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit={{ opacity: 0, scale: 0.95 }}
+                      >
+                        <ProductCard product={product} />
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                  <div className="mt-32 pt-12 border-t border-neutral-50 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400">
+                      {language === 'th' ? 'หน้า' : 'Page'} <span className="text-primary">{currentPage}</span> {language === 'th' ? 'จาก' : 'of'} <span className="text-primary">{totalPages}</span>
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <button 
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="px-6 py-3 text-[10px] uppercase tracking-[0.2em] border border-neutral-100 rounded-sm hover:bg-neutral-50 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                      >
+                        {language === 'th' ? 'ก่อนหน้า' : 'Previous'}
+                      </button>
+                      <div className="flex gap-1">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                          <button
+                            key={page}
+                            onClick={() => handlePageChange(page)}
+                            className={`w-10 h-10 text-[10px] rounded-sm transition-all ${currentPage === page ? 'bg-primary text-white' : 'hover:bg-neutral-50 text-secondary'}`}
+                          >
+                            {page}
+                          </button>
+                        ))}
+                      </div>
+                      <button 
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="px-6 py-3 text-[10px] uppercase tracking-[0.2em] border border-neutral-100 rounded-sm hover:bg-neutral-50 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                      >
+                        {language === 'th' ? 'ถัดไป' : 'Next'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
