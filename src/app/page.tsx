@@ -22,52 +22,52 @@ const Home = () => {
 
   const heroSlides = [
     {
-      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_1.jpg",
-      title: "The Table Series",
-      subtitle: "Smart dry food dispenser for your companion.",
-      tag: "Edition 01"
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=1440",
+      title: "Edition 01",
+      subtitle: "The evolution of Duit design language.",
+      tag: "New Collection"
     },
     {
-      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_2.jpg",
-      title: "All Day Board",
-      subtitle: "The ultimate scratcher and rest station.",
-      tag: "Essential"
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/02c3dd1725fb7.jpg?w=1440",
+      title: "The Essential",
+      subtitle: "Curated for the modern companion.",
+      tag: "Best Seller"
     },
     {
-      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_3.jpg",
-      title: "Tent Station",
-      subtitle: "A private sanctuary for peaceful rest.",
-      tag: "Living Series"
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/189a556efbbf8.jpg?w=1440",
+      title: "Living Series",
+      subtitle: "Seamlessly blending into your home.",
+      tag: "Heritage"
     },
     {
-      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_4.jpg",
-      title: "Tiramisu Board",
-      subtitle: "Vertical play and rest in a compact form.",
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/8040a424e8150.jpg?w=1440",
+      title: "Dining Culture",
+      subtitle: "Elevating the daily ritual of eating.",
+      tag: "Eat & Drink"
+    },
+    {
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/7161e1b854371.jpg?w=1440",
+      title: "Pure Form",
+      subtitle: "Furniture designed with architectural precision.",
       tag: "Atelier"
     },
     {
-      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_5.jpg",
-      title: "Kitty Picker",
-      subtitle: "Interactive play redefined with design.",
-      tag: "Interactive"
-    },
-    {
-      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_6.jpg",
-      title: "Buggie Bot",
-      subtitle: "Unleash the hunting instinct safely.",
-      tag: "Technology"
-    },
-    {
-      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_10.jpg",
-      title: "DTX Express",
-      subtitle: "Dynamic movement and exploration.",
-      tag: "Movement"
-    },
-    {
-      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_15.jpg",
-      title: "Eraser Bin",
-      subtitle: "Advanced hygiene for a cleaner home.",
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/f41249b674844.jpg?w=1440",
+      title: "Quiet Hygiene",
+      subtitle: "Clean solutions for a harmonious life.",
       tag: "Hygiene"
+    },
+    {
+      image: "https://duit.kr/web/product/big/window_hammock.jpg",
+      title: "Window Hammock",
+      subtitle: "A wider world, wider enjoyment.",
+      tag: "Relax"
+    },
+    {
+      image: "https://duit.kr/web/product/big/the_table_plus.jpg",
+      title: "The Table Plus",
+      subtitle: "Customized automatic feeding in your hand.",
+      tag: "Technology"
     }
   ];
 
