@@ -22,34 +22,52 @@ const Home = () => {
 
   const heroSlides = [
     {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=1440",
-      title: t.hero.slide1Title,
-      subtitle: t.hero.slide1Sub,
+      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_1.jpg",
+      title: "The Table Series",
+      subtitle: "Smart dry food dispenser for your companion.",
       tag: "Edition 01"
     },
     {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/02c3dd1725fb7.jpg?w=1440",
-      title: t.hero.slide2Title,
-      subtitle: t.hero.slide2Sub,
+      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_2.jpg",
+      title: "All Day Board",
+      subtitle: "The ultimate scratcher and rest station.",
       tag: "Essential"
     },
     {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/189a556efbbf8.jpg?w=1440",
-      title: t.hero.slide3Title,
-      subtitle: t.hero.slide3Sub,
+      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_3.jpg",
+      title: "Tent Station",
+      subtitle: "A private sanctuary for peaceful rest.",
       tag: "Living Series"
     },
     {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/7161e1b854371.jpg?w=1440",
-      title: "Clean. Pure. Minimal.",
-      subtitle: "Experience the quiet beauty of Duit design.",
-      tag: "Design Lab"
+      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_4.jpg",
+      title: "Tiramisu Board",
+      subtitle: "Vertical play and rest in a compact form.",
+      tag: "Atelier"
     },
     {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/f41249b674844.jpg?w=1440",
-      title: "For Your Companion",
-      subtitle: "Thoughtfully crafted furniture for the modern pet.",
-      tag: "Atelier"
+      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_5.jpg",
+      title: "Kitty Picker",
+      subtitle: "Interactive play redefined with design.",
+      tag: "Interactive"
+    },
+    {
+      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_6.jpg",
+      title: "Buggie Bot",
+      subtitle: "Unleash the hunting instinct safely.",
+      tag: "Technology"
+    },
+    {
+      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_10.jpg",
+      title: "DTX Express",
+      subtitle: "Dynamic movement and exploration.",
+      tag: "Movement"
+    },
+    {
+      image: "https://cdn-optimized.imweb.me/upload/S202108059969667447961/069667447961_15.jpg",
+      title: "Eraser Bin",
+      subtitle: "Advanced hygiene for a cleaner home.",
+      tag: "Hygiene"
     }
   ];
 
@@ -147,12 +165,12 @@ const Home = () => {
         </div>
 
         {/* Dot Indicators */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
            {heroSlides.map((_, i) => (
              <button 
               key={i} 
               onClick={() => setCurrentSlide(i)}
-              className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${currentSlide === i ? 'bg-primary w-4' : 'bg-neutral-300 hover:bg-neutral-400'}`}
+              className={`w-3 h-3 rounded-full transition-all duration-500 ${currentSlide === i ? 'bg-primary w-10' : 'bg-neutral-300 hover:bg-neutral-400 shadow-sm'}`}
              />
            ))}
         </div>
