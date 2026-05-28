@@ -14,10 +14,10 @@ export default async function AdoptionsPage() {
     <div className="space-y-6 sm:space-y-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tighter">Adoption Spotlight</h1>
+          <h1 className="text-2xl sm:text-3xl uppercase tracking-tighter">Adoption Spotlight</h1>
           <p className="text-sm sm:text-base text-neutral-500 font-medium mt-1">Manage pets looking for their forever homes.</p>
         </div>
-        <button className="w-full sm:w-auto bg-primary text-white px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-accent-gold transition-colors shadow-luxury">
+        <button className="w-full sm:w-auto bg-primary text-white px-6 py-3 rounded-full text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-accent-gold transition-colors shadow-luxury">
           <Plus size={16} /> New Listing
         </button>
       </div>
@@ -37,7 +37,7 @@ export default async function AdoptionsPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-neutral-100 text-[10px] font-black uppercase tracking-widest text-neutral-400">
+              <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-widest text-neutral-400">
                 <th className="pb-4 pl-4">Pet Name</th>
                 <th className="pb-4">Type/Breed</th>
                 <th className="pb-4">Age/Gender</th>
@@ -56,7 +56,7 @@ export default async function AdoptionsPage() {
               ) : (
                 adoptions.map((pet) => (
                   <tr key={pet.id} className="border-b border-neutral-50 hover:bg-neutral-50/50 transition-colors">
-                    <td className="py-4 pl-4 font-bold text-sm">
+                    <td className="py-4 pl-4 text-sm">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-cream-light overflow-hidden relative">
                            {/* Assuming image_url exists, else placeholder */}
@@ -69,7 +69,7 @@ export default async function AdoptionsPage() {
                     <td className="py-4 text-sm text-neutral-500 capitalize">{pet.age} • {pet.gender}</td>
                     <td className="py-4 text-sm font-medium text-primary">{pet.shelter_name}</td>
                     <td className="py-4">
-                      <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
+                      <span className={`px-3 py-1 rounded-full text-[10px]  uppercase tracking-widest ${
                         pet.status === 'available' ? 'bg-green-100 text-green-600' : 'bg-neutral-100 text-neutral-500'
                       }`}>
                         {pet.status}

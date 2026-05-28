@@ -189,7 +189,7 @@ export default function ProductDetailView({ id }: { id: string }) {
         <div className="w-20 h-20 border-2 border-primary/10 rounded-full"></div>
         <div className="w-20 h-20 border-t-2 border-primary rounded-full animate-spin absolute inset-0"></div>
       </div>
-      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">
+      <p className="text-[10px] uppercase tracking-[0.4em] text-neutral-300">
         {language === 'th' ? 'กำลังดึงข้อมูลงานศิลป์...' : 'Synchronizing Atelier Data...'}
       </p>
     </div>
@@ -197,11 +197,11 @@ export default function ProductDetailView({ id }: { id: string }) {
 
   if (!product || !localizedInfo) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#F9F8F6] p-10 text-center">
-      <h1 className="text-8xl md:text-[12rem] font-black text-neutral-100 leading-none mb-8">404</h1>
-      <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">
+      <h1 className="text-8xl md:text-[12rem] text-neutral-100 leading-none mb-8">404</h1>
+      <p className="text-[10px] uppercase tracking-[0.4em] text-primary">
         {language === 'th' ? 'ไม่พบข้อมูลชิ้นงาน' : 'Masterpiece Not Found'}
       </p>
-      <Link href="/shop" className="mt-12 px-10 py-4 bg-primary text-white rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-accent-gold transition-all">
+      <Link href="/shop" className="mt-12 px-10 py-4 bg-primary text-white rounded-full text-[10px] uppercase tracking-widest hover:bg-accent-gold transition-all">
         {language === 'th' ? 'กลับไปยังคอลเลกชัน' : 'Back to Collection'}
       </Link>
     </div>
@@ -225,15 +225,15 @@ export default function ProductDetailView({ id }: { id: string }) {
               <Image src={productImages[0]} alt={localizedInfo.name} fill className="object-contain" />
             </div>
             <div>
-              <h4 className="text-[11px] font-black uppercase tracking-tight text-primary">{localizedInfo.name}</h4>
-              <p className="text-[10px] font-black text-accent-gold">฿{totalPrice.toLocaleString()}</p>
+              <h4 className="text-[11px] uppercase tracking-tight text-primary">{localizedInfo.name}</h4>
+              <p className="text-[10px] text-accent-gold">฿{totalPrice.toLocaleString()}</p>
             </div>
           </div>
           <div className="flex items-center gap-6">
              <button onClick={handleArchiveToggle} className={`p-3 rounded-full border transition-all ${isArchived ? 'bg-accent-gold border-accent-gold text-white' : 'border-neutral-100 text-primary hover:border-primary'}`}>
                 <Star size={16} fill={isArchived ? "currentColor" : "none"} />
              </button>
-             <button className="bg-primary text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-accent-gold transition-all shadow-luxury flex items-center gap-3 group">
+             <button className="bg-primary text-white px-8 py-3 rounded-full text-[10px] uppercase tracking-widest hover:bg-accent-gold transition-all shadow-luxury flex items-center gap-3 group">
                 {language === 'th' ? 'สอบถามข้อมูล' : 'Inquire Now'}
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
              </button>
@@ -242,7 +242,7 @@ export default function ProductDetailView({ id }: { id: string }) {
       </motion.div>
 
       {/* Navigation Breadcrumb */}
-      <nav className="max-w-[1800px] mx-auto w-full px-6 md:px-12 lg:px-20 py-12 flex items-center gap-4 text-[9px] font-black uppercase tracking-[0.4em] text-neutral-300 relative z-10">
+      <nav className="max-w-[1800px] mx-auto w-full px-6 md:px-12 lg:px-20 py-12 flex items-center gap-4 text-[9px] uppercase tracking-[0.4em] text-neutral-300 relative z-10">
         <Link href="/" className="hover:text-primary transition-colors">{language === 'th' ? 'หน้าหลัก' : 'Atelier'}</Link>
         <ChevronRight size={10} className="text-neutral-200" />
         <Link href="/shop" className="hover:text-primary transition-colors">{language === 'th' ? 'คอลเลกชัน' : 'Collection'}</Link>
@@ -264,7 +264,7 @@ export default function ProductDetailView({ id }: { id: string }) {
                       <div className="absolute top-10 right-10 pointer-events-none">
                          <div className="bg-white/50 backdrop-blur-md px-6 py-3 rounded-full border border-white/50 flex items-center gap-3">
                             <Rotate3D className="text-accent-gold animate-spin-slow" size={18} />
-                            <span className="text-[9px] font-black uppercase tracking-widest text-primary">{language === 'th' ? 'หมุนได้ 360°' : 'Interactive 360°'}</span>
+                            <span className="text-[9px] uppercase tracking-widest text-primary">{language === 'th' ? 'หมุนได้ 360°' : 'Interactive 360°'}</span>
                          </div>
                       </div>
                     </motion.div>
@@ -286,7 +286,7 @@ export default function ProductDetailView({ id }: { id: string }) {
               {product.modelUrl && (
                 <button onClick={() => setViewMode('3d')} className={`relative w-20 h-20 md:w-24 md:h-24 rounded-3xl border transition-all duration-500 flex flex-col items-center justify-center gap-2 shrink-0 ${viewMode === '3d' ? 'border-accent-gold bg-accent-gold text-white shadow-luxury-sm' : 'border-neutral-100 bg-white text-primary/40 hover:text-primary hover:border-neutral-200'}`}>
                   <Rotate3D size={24} />
-                  <span className="text-[8px] font-black uppercase tracking-widest">3D</span>
+                  <span className="text-[8px] uppercase tracking-widest">3D</span>
                 </button>
               )}
             </div>
@@ -297,28 +297,28 @@ export default function ProductDetailView({ id }: { id: string }) {
             <div className="space-y-8">
               <div className="flex flex-wrap items-center gap-4">
                 {product.isNew && (
-                  <span className="bg-primary text-white text-[8px] font-black px-5 py-2 rounded-full uppercase tracking-[0.3em] shadow-luxury-sm">New Era</span>
+                  <span className="bg-primary text-white text-[8px] px-5 py-2 rounded-full uppercase tracking-[0.3em] shadow-luxury-sm">New Era</span>
                 )}
                 {product.isBest && (
-                  <span className="bg-accent-gold text-white text-[8px] font-black px-5 py-2 rounded-full uppercase tracking-[0.3em] shadow-luxury-sm">Masterpiece</span>
+                  <span className="bg-accent-gold text-white text-[8px] px-5 py-2 rounded-full uppercase tracking-[0.3em] shadow-luxury-sm">Masterpiece</span>
                 )}
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">{localizedInfo.category}</span>
+                <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-300">{localizedInfo.category}</span>
               </div>
 
               <div className="space-y-4">
-                <h1 className="text-5xl md:text-6xl xl:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-primary break-words">
+                <h1 className="text-5xl md:text-6xl xl:text-7xl uppercase tracking-tighter leading-[0.9] text-primary break-words">
                   {localizedInfo.name}
                 </h1>
-                <p className="text-sm md:text-base font-black text-accent-gold uppercase tracking-[0.5em] italic opacity-80">
+                <p className="text-sm md:text-base text-accent-gold uppercase tracking-[0.5em] italic opacity-80">
                   {localizedInfo.tagline}
                 </p>
               </div>
 
               <div className="flex items-baseline gap-4">
-                <span className="text-5xl md:text-6xl font-black text-primary tracking-tighter">
+                <span className="text-5xl md:text-6xl text-primary tracking-tighter">
                   ฿{totalPrice.toLocaleString()}
                 </span>
-                <span className="text-[10px] font-bold text-neutral-300 uppercase tracking-widest">{language === 'th' ? 'รวมภาษีมูลค่าเพิ่มแล้ว' : 'Inclusive of taxes'}</span>
+                <span className="text-[10px] text-neutral-300 uppercase tracking-widest">{language === 'th' ? 'รวมภาษีมูลค่าเพิ่มแล้ว' : 'Inclusive of taxes'}</span>
               </div>
             </div>
 
@@ -328,7 +328,7 @@ export default function ProductDetailView({ id }: { id: string }) {
                   <div className="w-8 h-8 rounded-full bg-accent-gold/10 flex items-center justify-center text-accent-gold shrink-0">
                     <CheckCircle2 size={14} />
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-primary/70">{feature}</span>
+                  <span className="text-[10px] uppercase tracking-widest text-primary/70">{feature}</span>
                 </div>
               ))}
             </div>
@@ -336,13 +336,13 @@ export default function ProductDetailView({ id }: { id: string }) {
             {/* PRODUCT OPTIONS */}
             {options.length > 0 && (
               <div className="space-y-6 pt-4">
-                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-400">{language === 'th' ? 'เลือกตัวเลือกเพิ่มเติม' : 'Select Masterpiece Options'}</h3>
+                <h3 className="text-[10px] uppercase tracking-[0.4em] text-neutral-400">{language === 'th' ? 'เลือกตัวเลือกเพิ่มเติม' : 'Select Masterpiece Options'}</h3>
                 <div className="flex flex-wrap gap-3">
                   {options.map((option) => (
                     <button
                       key={option.id}
                       onClick={() => toggleOption(option.id)}
-                      className={`px-6 py-4 rounded-2xl border text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex flex-col items-start gap-1 ${
+                      className={`px-6 py-4 rounded-2xl border text-[10px]  uppercase tracking-widest transition-all duration-300 flex flex-col items-start gap-1 ${
                         selectedOptions.includes(option.id)
                           ? 'border-accent-gold bg-accent-gold/5 text-primary shadow-luxury-sm'
                           : 'border-neutral-100 bg-white text-neutral-400 hover:border-neutral-200'
@@ -361,7 +361,7 @@ export default function ProductDetailView({ id }: { id: string }) {
             )}
 
             <div className="space-y-4 pt-8">
-              <button className="w-full h-20 bg-primary text-white rounded-[32px] font-black uppercase tracking-[0.3em] text-[11px] shadow-luxury flex items-center justify-center gap-4 group relative overflow-hidden active:scale-95 transition-all duration-500">
+              <button className="w-full h-20 bg-primary text-white rounded-[32px] uppercase tracking-[0.3em] text-[11px] shadow-luxury flex items-center justify-center gap-4 group relative overflow-hidden active:scale-95 transition-all duration-500">
                 <div className="absolute inset-0 bg-accent-gold translate-y-full group-hover:translate-y-0 transition-transform duration-700"></div>
                 <span className="relative z-10">{language === 'th' ? 'สอบถามข้อมูลการสั่งซื้อ' : 'Inquire to Order'}</span>
                 <ArrowRight size={18} className="relative z-10 transition-transform group-hover:translate-x-2" />
@@ -370,7 +370,7 @@ export default function ProductDetailView({ id }: { id: string }) {
               <div className="flex gap-4">
                 <button 
                   onClick={handleArchiveToggle}
-                  className={`flex-grow h-16 border rounded-[28px] text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all ${isArchived ? 'bg-accent-gold border-accent-gold text-white shadow-luxury' : 'bg-white border-neutral-100 text-primary hover:border-primary'}`}
+                  className={`flex-grow h-16 border rounded-[28px] text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 transition-all ${isArchived ? 'bg-accent-gold border-accent-gold text-white shadow-luxury' : 'bg-white border-neutral-100 text-primary hover:border-primary'}`}
                 >
                   <Star size={16} fill={isArchived ? "currentColor" : "none"} /> 
                   {isArchived ? (language === 'th' ? 'บันทึกในคลังแล้ว' : 'Archived Masterpiece') : (language === 'th' ? 'บันทึกลงในคลัง' : 'Save to Archive')}
@@ -381,7 +381,7 @@ export default function ProductDetailView({ id }: { id: string }) {
             <div className="pt-12 border-t border-neutral-100 space-y-8">
               <div className="flex items-center gap-4">
                 <Sparkles className="text-accent-gold" size={18} />
-                <h3 className="text-[10px] font-black uppercase tracking-[0.4em]">{language === 'th' ? 'ปรัชญาและวัสดุ' : 'Philosophy & Material'}</h3>
+                <h3 className="text-[10px] uppercase tracking-[0.4em]">{language === 'th' ? 'ปรัชญาและวัสดุ' : 'Philosophy & Material'}</h3>
               </div>
               <p className="text-sm md:text-base text-secondary leading-[1.8] font-medium opacity-70">
                 {localizedInfo.description}
@@ -394,8 +394,8 @@ export default function ProductDetailView({ id }: { id: string }) {
         {product.infoImages && product.infoImages.length > 0 && (
           <div className="mt-40 space-y-20 border-t border-neutral-100 pt-40">
              <div className="text-center space-y-4">
-                <span className="text-[10px] font-black uppercase tracking-[0.6em] text-accent-gold">{language === 'th' ? 'รายละเอียดทางเทคนิค' : 'Technical Specifications'}</span>
-                <h2 className="text-4xl font-black uppercase tracking-tighter text-primary">{language === 'th' ? 'ข้อมูลเชิงลึกของชิ้นงาน' : 'Masterpiece Insight'}</h2>
+                <span className="text-[10px] uppercase tracking-[0.6em] text-accent-gold">{language === 'th' ? 'รายละเอียดทางเทคนิค' : 'Technical Specifications'}</span>
+                <h2 className="text-4xl uppercase tracking-tighter text-primary">{language === 'th' ? 'ข้อมูลเชิงลึกของชิ้นงาน' : 'Masterpiece Insight'}</h2>
              </div>
              
              <div className="flex flex-col gap-12 max-w-5xl mx-auto">
@@ -419,10 +419,10 @@ export default function ProductDetailView({ id }: { id: string }) {
            <div className="text-center space-y-8 max-w-4xl mx-auto">
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center justify-center gap-4">
                 <div className="h-px w-12 bg-accent-gold/40"></div>
-                <span className="text-[10px] font-black uppercase tracking-[0.6em] text-accent-gold">{language === 'th' ? 'มุมมองอย่างละเอียด' : 'Close-up Perspective'}</span>
+                <span className="text-[10px] uppercase tracking-[0.6em] text-accent-gold">{language === 'th' ? 'มุมมองอย่างละเอียด' : 'Close-up Perspective'}</span>
                 <div className="h-px w-12 bg-accent-gold/40"></div>
               </motion.div>
-              <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-tight">
+              <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-4xl md:text-6xl uppercase tracking-tighter text-primary leading-tight">
                 {language === 'th' ? 'ศิลปะแห่งการ' : 'The Art of'} <span className="text-luxury-gradient italic">{language === 'th' ? 'ประณีตศิลป์' : 'Craftsmanship'}</span>
               </motion.h2>
            </div>
@@ -431,7 +431,7 @@ export default function ProductDetailView({ id }: { id: string }) {
               <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="md:col-span-8 aspect-[16/9] md:aspect-[4/3] relative rounded-[40px] md:rounded-[64px] overflow-hidden group shadow-luxury">
                 <Image src={productImages[1] || productImages[0]} alt="Detail Focus" fill className="object-cover transition-transform duration-[2s] group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 flex items-end p-12 pointer-events-none">
-                   <p className="text-white text-xs font-black uppercase tracking-[0.4em]">{language === 'th' ? 'ความสมบูรณ์ของวัสดุ' : 'Material Integrity'}</p>
+                   <p className="text-white text-xs uppercase tracking-[0.4em]">{language === 'th' ? 'ความสมบูรณ์ของวัสดุ' : 'Material Integrity'}</p>
                 </div>
               </motion.div>
 
@@ -444,7 +444,7 @@ export default function ProductDetailView({ id }: { id: string }) {
                 <div className="absolute inset-0 flex items-center justify-center">
                    <div className="bg-white/10 backdrop-blur-2xl border border-white/20 p-10 md:p-16 rounded-[48px] text-center space-y-4 max-w-lg mx-6">
                       <Sparkles className="text-accent-gold mx-auto" size={24} />
-                      <h3 className="text-white text-2xl font-black uppercase tracking-widest leading-none">{language === 'th' ? 'ความกลมกลืน' : 'Seamless'} <br /> {language === 'th' ? 'ที่ไร้รอยต่อ' : 'Adaptation'}</h3>
+                      <h3 className="text-white text-2xl uppercase tracking-widest leading-none">{language === 'th' ? 'ความกลมกลืน' : 'Seamless'} <br /> {language === 'th' ? 'ที่ไร้รอยต่อ' : 'Adaptation'}</h3>
                    </div>
                 </div>
               </motion.div>

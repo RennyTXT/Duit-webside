@@ -5,8 +5,8 @@ export default function ShippingPage() {
     <div className="bg-white min-h-screen pt-20 pb-32">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center py-24 space-y-6">
-          <span className="inline-block px-4 py-1.5 bg-accent/10 text-accent text-[10px] font-black tracking-ultra rounded-full uppercase">Logistics</span>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-tight">Shipping Policy</h1>
+          <span className="inline-block px-4 py-1.5 bg-accent/10 text-accent text-[10px] tracking-ultra rounded-full uppercase">Logistics</span>
+          <h1 className="text-5xl md:text-7xl tracking-tighter uppercase leading-tight">Shipping Policy</h1>
           <p className="max-w-2xl mx-auto text-lg text-secondary font-medium leading-relaxed">
             เรามุ่งมั่นที่จะส่งมอบนวัตกรรมความสุขให้ถึงหน้าบ้านคุณอย่างรวดเร็วและปลอดภัยที่สุด
           </p>
@@ -24,7 +24,7 @@ export default function ShippingPage() {
                    <item.icon size={24} />
                 </div>
                 <div className="space-y-2">
-                   <h3 className="text-lg font-bold text-primary uppercase">{item.title}</h3>
+                   <h3 className="text-lg text-primary uppercase">{item.title}</h3>
                    <p className="text-sm text-secondary leading-relaxed font-medium">{item.desc}</p>
                 </div>
              </div>
@@ -33,7 +33,7 @@ export default function ShippingPage() {
 
         <div className="prose prose-neutral max-w-none space-y-16">
            <section className="space-y-6">
-              <h2 className="text-2xl font-black uppercase flex items-center gap-3">
+              <h2 className="text-2xl uppercase flex items-center gap-3">
                  <Package className="text-accent" size={24} /> ขั้นตอนการจัดส่ง
               </h2>
               <div className="space-y-4 text-secondary font-medium leading-relaxed">
@@ -45,7 +45,7 @@ export default function ShippingPage() {
            </section>
 
            <section className="space-y-6 pt-16 border-t border-neutral-100">
-              <h2 className="text-2xl font-black uppercase flex items-center gap-3">
+              <h2 className="text-2xl uppercase flex items-center gap-3">
                  <RefreshCcw className="text-accent" size={24} /> การเปลี่ยนหรือคืนสินค้า
               </h2>
               <div className="space-y-4 text-secondary font-medium leading-relaxed">

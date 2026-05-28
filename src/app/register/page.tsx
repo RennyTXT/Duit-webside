@@ -12,8 +12,8 @@ export default async function RegisterPage(props: { searchParams: Promise<{ erro
         <div className="absolute top-0 left-0 w-40 h-40 bg-accent-gold/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         <div className="relative z-10 space-y-8 sm:space-y-10">
           <div className="text-center space-y-4">
-            <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-primary">Register</h1>
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-accent-gold">Join the Duit Lifestyle</p>
+            <h1 className="text-3xl sm:text-4xl uppercase tracking-tighter text-primary">Register</h1>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-accent-gold">Join the Duit Lifestyle</p>
           </div>
 
           {error && (
@@ -62,13 +62,13 @@ export default async function RegisterPage(props: { searchParams: Promise<{ erro
 
             <button 
               formAction={signup}
-              className="w-full h-16 bg-primary text-white rounded-full font-black uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-4 hover:bg-accent-gold transition-colors shadow-luxury group"
+              className="w-full h-16 bg-primary text-white rounded-full uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-4 hover:bg-accent-gold transition-colors shadow-luxury group"
             >
               Create Account <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </form>
 
-          <div className="text-center text-[10px] font-black uppercase tracking-widest text-neutral-400">
+          <div className="text-center text-[10px] uppercase tracking-widest text-neutral-400">
             Already have an account? <Link href="/login" className="text-accent-gold hover:text-primary transition-colors border-b border-accent-gold/30 hover:border-primary pb-1 ml-2">Sign In</Link>
           </div>
         </div>

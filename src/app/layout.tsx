@@ -73,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${anuphan.variable} ${greycliff.variable} antialiased`}>
+    <html lang="en" className={`${greycliff.variable} ${outfit.variable} ${anuphan.variable} antialiased`}>
       <body className="bg-white text-black min-h-screen flex flex-col font-sans selection:bg-black selection:text-white overflow-x-hidden">
         <div className="grain-overlay" />
         <Toaster position="top-center" richColors />

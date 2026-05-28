@@ -76,11 +76,11 @@ export default function AdminPromotionsPage() {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
              <div className="h-[1px] w-8 bg-accent-gold/40"></div>
-             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">Campaign Management</span>
+             <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">Campaign Management</span>
           </div>
-          <h1 className="text-5xl font-black tracking-[-0.04em] uppercase text-primary">Privileges</h1>
+          <h1 className="text-5xl tracking-[-0.04em] uppercase text-primary">Privileges</h1>
         </div>
-        <button className="flex items-center gap-4 bg-primary text-white px-8 py-5 rounded-[24px] font-black uppercase tracking-[0.2em] text-[10px] shadow-luxury hover:bg-accent-gold transition-all duration-500 active:scale-95 group">
+        <button className="flex items-center gap-4 bg-primary text-white px-8 py-5 rounded-[24px] uppercase tracking-[0.2em] text-[10px] shadow-luxury hover:bg-accent-gold transition-all duration-500 active:scale-95 group">
            <Plus size={18} className="group-hover:rotate-90 transition-transform duration-500" />
            <span>Create Privilege</span>
         </button>
@@ -100,8 +100,8 @@ export default function AdminPromotionsPage() {
                 <stat.icon size={32} strokeWidth={1.5} />
              </div>
              <div className="space-y-1">
-                <p className="text-[10px] font-black text-neutral-300 uppercase tracking-widest">{stat.name}</p>
-                <h3 className="text-3xl font-black text-primary">{stat.value}</h3>
+                <p className="text-[10px] text-neutral-300 uppercase tracking-widest">{stat.name}</p>
+                <h3 className="text-3xl text-primary">{stat.value}</h3>
              </div>
           </motion.div>
         ))}
@@ -116,7 +116,7 @@ export default function AdminPromotionsPage() {
                 <button 
                   key={s}
                   onClick={() => setFilter(s.toLowerCase())}
-                  className={`whitespace-nowrap px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${filter === s.toLowerCase() ? 'bg-primary text-white shadow-md' : 'bg-white text-neutral-400 border border-neutral-100 hover:border-primary/20'}`}
+                  className={`whitespace-nowrap px-6 py-3 rounded-2xl text-[10px] uppercase tracking-widest transition-all duration-500 ${filter === s.toLowerCase() ? 'bg-primary text-white shadow-md' : 'bg-white text-neutral-400 border border-neutral-100 hover:border-primary/20'}`}
                 >
                   {s}
                 </button>
@@ -128,7 +128,7 @@ export default function AdminPromotionsPage() {
                  <input 
                    type="text" 
                    placeholder="Search Privilege..."
-                   className="w-full lg:w-72 bg-white border border-neutral-100 rounded-2xl pl-14 pr-6 py-4 text-[11px] font-bold outline-none focus:border-accent-gold transition-colors"
+                   className="w-full lg:w-72 bg-white border border-neutral-100 rounded-2xl pl-14 pr-6 py-4 text-[11px] outline-none focus:border-accent-gold transition-colors"
                  />
               </div>
               <button className="w-14 h-14 bg-white border border-neutral-100 rounded-2xl flex items-center justify-center text-primary hover:bg-neutral-50 transition-colors">
@@ -141,7 +141,7 @@ export default function AdminPromotionsPage() {
         <div className="overflow-x-auto">
            <table className="w-full text-left">
               <thead>
-                <tr className="text-[10px] font-black text-neutral-300 uppercase tracking-[0.3em] border-b border-neutral-50 bg-neutral-50/30">
+                <tr className="text-[10px] text-neutral-300 uppercase tracking-[0.3em] border-b border-neutral-50 bg-neutral-50/30">
                   <th className="px-10 py-8">Privilege Details</th>
                   <th className="px-10 py-8 text-center">Benefit</th>
                   <th className="px-10 py-8 text-center">Usage</th>
@@ -158,21 +158,21 @@ export default function AdminPromotionsPage() {
                             <TicketPercent size={24} strokeWidth={1.5} />
                          </div>
                          <div className="space-y-1">
-                            <p className="font-black text-primary text-sm uppercase tracking-tight group-hover:text-accent-gold transition-colors">{promo.name}</p>
+                            <p className="text-primary text-sm uppercase tracking-tight group-hover:text-accent-gold transition-colors">{promo.name}</p>
                             <div className="flex items-center gap-3">
-                               <span className="text-[9px] font-black text-neutral-300 uppercase tracking-widest">{promo.id}</span>
+                               <span className="text-[9px] text-neutral-300 uppercase tracking-widest">{promo.id}</span>
                                <span className="w-1 h-1 rounded-full bg-neutral-200"></span>
-                               <span className="text-[9px] font-black text-accent-gold uppercase tracking-widest">{promo.type}</span>
+                               <span className="text-[9px] text-accent-gold uppercase tracking-widest">{promo.type}</span>
                             </div>
                          </div>
                       </div>
                     </td>
-                    <td className="px-10 py-10 text-center font-black text-sm text-primary">
+                    <td className="px-10 py-10 text-center text-sm text-primary">
                        {promo.value}
                     </td>
                     <td className="px-10 py-10 text-center">
                        <div className="space-y-2 max-w-[120px] mx-auto">
-                          <div className="flex justify-between text-[9px] font-black uppercase tracking-tighter">
+                          <div className="flex justify-between text-[9px] uppercase tracking-tighter">
                              <span>Redeemed</span>
                              <span className="text-primary">{promo.usage.split('/')[0]}</span>
                           </div>
@@ -185,7 +185,7 @@ export default function AdminPromotionsPage() {
                        </div>
                     </td>
                     <td className="px-10 py-10 text-center">
-                       <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest border ${
+                       <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[9px]  uppercase tracking-widest border ${
                          promo.status === 'Active' ? 'bg-green-50 text-green-600 border-green-100' :
                          promo.status === 'Expiring Soon' ? 'bg-amber-50 text-amber-600 border-amber-100 animate-pulse' :
                          'bg-neutral-50 text-neutral-400 border-neutral-100'
@@ -215,7 +215,7 @@ export default function AdminPromotionsPage() {
         {/* Footer Info */}
         <div className="p-10 bg-neutral-50/50 border-t border-neutral-50 flex items-center gap-4">
            <AlertCircle size={16} className="text-neutral-300" />
-           <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Only authorized Atelier directors can modify global privilege parameters.</p>
+           <p className="text-[10px] text-neutral-400 uppercase tracking-widest">Only authorized Atelier directors can modify global privilege parameters.</p>
         </div>
       </div>
     </div>

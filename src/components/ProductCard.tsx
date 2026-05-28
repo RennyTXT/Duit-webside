@@ -85,13 +85,13 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
             {/* Badges */}
             <div className="absolute top-6 left-6 flex flex-col gap-3 z-10">
               {product.isNew && (
-                <div className="bg-primary text-white text-[8px] font-black px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-[0.2em] border border-white/10">New</div>
+                <div className="bg-primary text-white text-[8px] px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-[0.2em] border border-white/10">New</div>
               )}
               {product.isBest && (
-                <div className="bg-white/90 backdrop-blur-md text-primary text-[8px] font-black px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-[0.2em] border border-neutral-100">Essential</div>
+                <div className="bg-white/90 backdrop-blur-md text-primary text-[8px] px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-[0.2em] border border-neutral-100">Essential</div>
               )}
               {product.modelUrl && (
-                <div className="bg-accent-gold text-white text-[8px] font-black px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-[0.2em] border border-white/10 flex items-center gap-2">
+                <div className="bg-accent-gold text-white text-[8px] px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-[0.2em] border border-white/10 flex items-center gap-2">
                   <div className="w-1 h-1 bg-white rounded-full animate-pulse"></div>
                   3D View
                 </div>
@@ -101,7 +101,7 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
             {/* Hover Overlay - Only for non-compact */}
             {!isCompact && (
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-700 flex items-center justify-center backdrop-blur-[3px]">
-                <div className="bg-white text-black px-10 py-5 rounded-full font-black text-[10px] uppercase tracking-[0.2em] transform translate-y-12 group-hover:translate-y-0 transition-all duration-700 shadow-2xl flex items-center gap-3">
+                <div className="bg-white text-black px-10 py-5 rounded-full text-[10px] uppercase tracking-[0.2em] transform translate-y-12 group-hover:translate-y-0 transition-all duration-700 shadow-2xl flex items-center gap-3">
                   Discover Details <ArrowUpRight size={14} />
                 </div>
               </div>
@@ -111,8 +111,8 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
           {isCompact && (
             <div className="mt-8 space-y-3 px-2">
                <div className="flex justify-between items-start">
-                  <h3 className="text-xs font-black text-primary group-hover:text-accent-gold transition-colors uppercase leading-tight line-clamp-1 tracking-wider">{product.name}</h3>
-                  <span className="text-xs font-bold text-primary">฿{product.price.toLocaleString()}</span>
+                  <h3 className="text-xs text-primary group-hover:text-accent-gold transition-colors uppercase leading-tight line-clamp-1 tracking-wider">{product.name}</h3>
+                  <span className="text-xs text-primary">฿{product.price.toLocaleString()}</span>
                </div>
                <p className="text-[10px] text-secondary font-medium line-clamp-1 opacity-60 italic tracking-wide">{product.tagline}</p>
             </div>
@@ -122,9 +122,9 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
         {!isCompact && (
           <div className="px-6 space-y-3">
             <div className="flex justify-between items-center">
-              <h3 className="text-lg font-black text-primary group-hover:text-accent-gold transition-colors truncate uppercase tracking-tight">{product.name}</h3>
+              <h3 className="text-lg text-primary group-hover:text-accent-gold transition-colors truncate uppercase tracking-tight">{product.name}</h3>
               <div className="flex items-center gap-3">
-                <span className="text-sm font-black text-primary bg-cream-light px-4 py-1.5 rounded-xl border border-neutral-100">฿{product.price.toLocaleString()}</span>
+                <span className="text-sm text-primary bg-cream-light px-4 py-1.5 rounded-xl border border-neutral-100">฿{product.price.toLocaleString()}</span>
                 <div className="w-8 h-8 rounded-full border border-neutral-100 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm">
                    <ChevronRight size={16} strokeWidth={3} />
                 </div>

@@ -114,10 +114,10 @@ const Home = () => {
                       transition={{ delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                       className="flex flex-col items-center gap-4"
                     >
-                      <span className="text-[9px] font-black uppercase tracking-[0.5em] text-accent-gold/80">
+                      <span className="text-[9px] uppercase tracking-[0.5em] text-accent-gold/80">
                           {heroSlides[currentSlide].tag}
                       </span>
-                      <h1 className="text-5xl md:text-7xl xl:text-8xl font-black text-white uppercase tracking-tighter leading-[0.95]">
+                      <h1 className="text-5xl md:text-7xl xl:text-8xl text-white uppercase tracking-tighter leading-[0.95]">
                           {heroSlides[currentSlide].title.split('.')[0]}
                           <br />
                           <span className="text-luxury-gradient italic font-medium opacity-90">
@@ -141,7 +141,7 @@ const Home = () => {
                       transition={{ delay: 1.3, duration: 1 }} 
                       className="pt-4"
                     >
-                      <Link href="/shop" className="group relative inline-flex items-center gap-4 text-white text-[10px] font-black uppercase tracking-[0.4em] border-b border-white/20 pb-2 hover:border-accent-gold transition-all duration-500">
+                      <Link href="/shop" className="group relative inline-flex items-center gap-4 text-white text-[10px] uppercase tracking-[0.4em] border-b border-white/20 pb-2 hover:border-accent-gold transition-all duration-500">
                         <span>{t.hero.discover}</span>
                         <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
                       </Link>
@@ -169,8 +169,8 @@ const Home = () => {
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
            <div className="lg:col-span-5 space-y-10">
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-                <span className="text-[9px] font-black uppercase tracking-[0.4em] text-accent-gold/60 block mb-4">The Selection</span>
-                <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-[1]">{t.shop.explore.split(' ')[0]} <span className="text-accent-gold italic font-medium">{t.shop.explore.split(' ')[1] || 'Edition.'}</span></h2>
+                <span className="text-[9px] uppercase tracking-[0.4em] text-accent-gold/60 block mb-4">The Selection</span>
+                <h2 className="text-5xl md:text-6xl uppercase tracking-tighter text-primary leading-[1]">{t.shop.explore.split(' ')[0]} <span className="text-accent-gold italic font-medium">{t.shop.explore.split(' ')[1] || 'Edition.'}</span></h2>
                 <p className="text-sm text-secondary font-medium mt-8 max-w-sm leading-relaxed opacity-50">{t.shop.categorySub}</p>
               </motion.div>
               
@@ -183,8 +183,8 @@ const Home = () => {
                     className="group flex items-center justify-between py-6 border-b border-neutral-100 hover:px-4 transition-all duration-500"
                   >
                     <div className="flex items-center gap-6">
-                      <span className={`text-[10px] font-black transition-colors duration-500 ${activeCategoryIndex === i ? 'text-accent-gold' : 'text-neutral-300'}`}>0{i+1}</span>
-                      <h3 className={`text-lg font-black uppercase tracking-tight transition-colors duration-500 ${activeCategoryIndex === i ? 'text-primary' : 'text-neutral-400 group-hover:text-primary'}`}>{cat.name}</h3>
+                      <span className={`text-[10px] transition-colors duration-500 ${activeCategoryIndex === i ? 'text-accent-gold' : 'text-neutral-300'}`}>0{i+1}</span>
+                      <h3 className={`text-lg uppercase tracking-tight transition-colors duration-500 ${activeCategoryIndex === i ? 'text-primary' : 'text-neutral-400 group-hover:text-primary'}`}>{cat.name}</h3>
                     </div>
                     <div className={`w-8 h-8 rounded-full border transition-all duration-500 flex items-center justify-center ${activeCategoryIndex === i ? 'bg-primary text-white border-primary rotate-45' : 'border-neutral-100 group-hover:bg-neutral-50'}`}>
                       <ArrowRight size={14} />
@@ -216,7 +216,7 @@ const Home = () => {
                        {/* Artifact Badge */}
                        <div className="absolute bottom-10 right-10 flex items-center gap-4">
                           <div className="h-px w-8 bg-white/40"></div>
-                          <span className="text-[9px] font-black uppercase tracking-[0.4em] text-white/80">Artifact 0{activeCategoryIndex + 1}</span>
+                          <span className="text-[9px] uppercase tracking-[0.4em] text-white/80">Artifact 0{activeCategoryIndex + 1}</span>
                        </div>
                     </motion.div>
                  </AnimatePresence>
@@ -225,9 +225,9 @@ const Home = () => {
               <div className="mt-8 flex justify-between items-center px-4">
                  <div className="flex items-center gap-4">
                     <div className="w-1.5 h-1.5 bg-accent-gold rounded-full animate-pulse" />
-                    <span className="text-[8px] font-black uppercase tracking-[0.4em] text-neutral-400 italic">Curated by Duit Design Lab</span>
+                    <span className="text-[8px] uppercase tracking-[0.4em] text-neutral-400 italic">Curated by Duit Design Lab</span>
                  </div>
-                 <Link href="/shop" className="text-[8px] font-black uppercase tracking-[0.4em] text-neutral-300 hover:text-accent-gold transition-colors">Exhibition Guide</Link>
+                 <Link href="/shop" className="text-[8px] uppercase tracking-[0.4em] text-neutral-300 hover:text-accent-gold transition-colors">Exhibition Guide</Link>
               </div>
            </div>
         </div>
@@ -238,10 +238,10 @@ const Home = () => {
         <div className="max-w-[1440px] mx-auto space-y-20">
            <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
               <div className="space-y-4">
-                <span className="text-[9px] font-black uppercase tracking-[0.4em] text-accent-gold/60">New Arrivals</span>
-                <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-[1]">{t.shop.freshArrivals.split(' ')[0]} <span className="text-luxury-gradient italic font-medium">{t.shop.freshArrivals.split(' ')[1] || 'Series.'}</span></h2>
+                <span className="text-[9px] uppercase tracking-[0.4em] text-accent-gold/60">New Arrivals</span>
+                <h2 className="text-5xl md:text-6xl uppercase tracking-tighter text-primary leading-[1]">{t.shop.freshArrivals.split(' ')[0]} <span className="text-luxury-gradient italic font-medium">{t.shop.freshArrivals.split(' ')[1] || 'Series.'}</span></h2>
               </div>
-              <Link href="/shop" className="text-[9px] font-black uppercase tracking-[0.3em] text-primary/40 hover:text-accent-gold transition-colors pb-1 border-b border-neutral-200">
+              <Link href="/shop" className="text-[9px] uppercase tracking-[0.3em] text-primary/40 hover:text-accent-gold transition-colors pb-1 border-b border-neutral-200">
                 {t.shop.viewAll}
               </Link>
            </div>
@@ -259,19 +259,19 @@ const Home = () => {
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-40 bg-gradient-to-b from-transparent to-accent-gold/40" />
          
          <div className="max-w-4xl mx-auto space-y-16">
-            <span className="text-[10px] font-black uppercase tracking-[0.6em] text-accent-gold block">Ethos of Duit</span>
-            <p className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-primary leading-[1.1]">
+            <span className="text-[10px] uppercase tracking-[0.6em] text-accent-gold block">Ethos of Duit</span>
+            <p className="text-4xl md:text-6xl uppercase tracking-tighter text-primary leading-[1.1]">
               "Redefining the boundaries of pet living through <span className="text-luxury-gradient italic">architectural precision</span> and enduring aesthetic value."
             </p>
             <div className="flex justify-center gap-12">
                <div className="text-center space-y-2">
-                  <div className="text-4xl font-black">2016</div>
-                  <div className="text-[8px] font-black uppercase tracking-widest text-neutral-400 italic">Established Seoul</div>
+                  <div className="text-4xl">2016</div>
+                  <div className="text-[8px] uppercase tracking-widest text-neutral-400 italic">Established Seoul</div>
                </div>
                <div className="w-px h-12 bg-neutral-200 mt-2" />
                <div className="text-center space-y-2">
-                  <div className="text-4xl font-black">120+</div>
-                  <div className="text-[8px] font-black uppercase tracking-widest text-neutral-400 italic">Patented Designs</div>
+                  <div className="text-4xl">120+</div>
+                  <div className="text-[8px] uppercase tracking-widest text-neutral-400 italic">Patented Designs</div>
                </div>
             </div>
          </div>
@@ -285,11 +285,11 @@ const Home = () => {
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                <div className="space-y-12 text-white">
                   <div className="space-y-6">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.shop.privateCircle}</span>
-                    <h2 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">{t.shop.exclusiveClub.split(' ')[0]} <br /> <span className="text-accent-gold italic">{t.shop.exclusiveClub.split(' ')[1]}</span></h2>
+                    <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">{t.shop.privateCircle}</span>
+                    <h2 className="text-4xl sm:text-6xl md:text-8xl uppercase tracking-tighter leading-none">{t.shop.exclusiveClub.split(' ')[0]} <br /> <span className="text-accent-gold italic">{t.shop.exclusiveClub.split(' ')[1]}</span></h2>
                   </div>
                   <p className="text-xl font-medium opacity-60 leading-relaxed max-w-md">{t.shop.membershipSub}</p>
-                  <Link href="/pet-profile" className="inline-flex items-center gap-6 px-12 py-6 bg-white text-black rounded-full font-black text-xs uppercase tracking-[0.3em] hover:bg-accent-gold hover:text-white transition-all duration-700 shadow-luxury group">
+                  <Link href="/pet-profile" className="inline-flex items-center gap-6 px-12 py-6 bg-white text-black rounded-full text-xs uppercase tracking-[0.3em] hover:bg-accent-gold hover:text-white transition-all duration-700 shadow-luxury group">
                      Explore Benefits <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
                   </Link>
                </div>
@@ -306,8 +306,8 @@ const Home = () => {
                      <div className="flex justify-between items-start h-full flex-col relative z-10">
                         <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center"><Star className="text-accent-gold" size={24} fill="currentColor" /></div>
                         <div className="space-y-2">
-                           <div className="text-[8px] font-black uppercase tracking-widest text-accent-gold/60">Duit Care+ Archive</div>
-                           <div className="text-2xl font-black text-white tracking-widest uppercase">Member Card</div>
+                           <div className="text-[8px] uppercase tracking-widest text-accent-gold/60">Duit Care+ Archive</div>
+                           <div className="text-2xl text-white tracking-widest uppercase">Member Card</div>
                         </div>
                      </div>
                   </motion.div>

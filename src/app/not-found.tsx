@@ -23,9 +23,9 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white p-6 text-center">
-      <h1 className="text-[120px] font-black text-neutral-100 leading-none">404</h1>
+      <h1 className="text-[120px] text-neutral-100 leading-none">404</h1>
       <div className="space-y-4 -mt-8">
-        <h2 className="text-2xl font-black uppercase tracking-widest text-primary">Masterpiece Not Found</h2>
+        <h2 className="text-2xl uppercase tracking-widest text-primary">Masterpiece Not Found</h2>
         <p className="text-neutral-400 max-w-md mx-auto text-sm">
           The item you are looking for might be part of a new collection. 
           Please try again later or return to our gallery.
@@ -33,7 +33,7 @@ export default function NotFound() {
       </div>
       <button 
         onClick={() => window.location.href = '/Duit-webside/'}
-        className="mt-12 px-12 py-4 bg-primary text-white rounded-full font-black uppercase tracking-widest text-[10px] hover:bg-accent-gold transition-colors"
+        className="mt-12 px-12 py-4 bg-primary text-white rounded-full uppercase tracking-widest text-[10px] hover:bg-accent-gold transition-colors"
       >
         Return to Gallery
       </button>

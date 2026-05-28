@@ -53,11 +53,11 @@ export default function AboutPage() {
               initial={{ opacity: 0, letterSpacing: "1em" }}
               animate={{ opacity: 1, letterSpacing: "0.5em" }}
               transition={{ duration: 1.5 }}
-              className="block text-[10px] font-black uppercase text-accent-gold mb-12"
+              className="block text-[10px] uppercase text-accent-gold mb-12"
             >
               {language === 'th' ? 'สถาบันการออกแบบระดับสากล' : 'THE GLOBAL DESIGN ATELIER'}
             </motion.span>
-            <h1 className="text-6xl md:text-[140px] font-black leading-[0.8] tracking-tighter uppercase text-primary">
+            <h1 className="text-6xl md:text-[140px] leading-[0.8] tracking-tighter uppercase text-primary">
               Design <br /> <span className="text-accent-gold italic">Integrity.</span>
             </h1>
             <motion.p 
@@ -79,7 +79,7 @@ export default function AboutPage() {
           transition={{ duration: 2, repeat: Infinity }}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
         >
-          <span className="text-[8px] font-black uppercase tracking-[0.4em] text-neutral-300">SCROLL STORY</span>
+          <span className="text-[8px] uppercase tracking-[0.4em] text-neutral-300">SCROLL STORY</span>
           <div className="w-[1px] h-12 bg-gradient-to-b from-neutral-200 to-transparent"></div>
         </motion.div>
       </section>
@@ -91,9 +91,9 @@ export default function AboutPage() {
               <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
                 <div className="flex items-center gap-4 mb-8">
                    <div className="h-px w-12 bg-accent-gold"></div>
-                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">Philosophy 01</span>
+                   <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">Philosophy 01</span>
                 </div>
-                <h2 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter leading-tight text-primary">
+                <h2 className="text-4xl sm:text-5xl md:text-7xl uppercase tracking-tighter leading-tight text-primary">
                   {language === 'th' ? 'ออกแบบเพื่อคุณและ' : 'Designed for You'} <br /> <span className="italic text-accent-gold">{language === 'th' ? 'เพื่อนคนสำคัญ' : '& Your Pets.'}</span>
                 </h2>
                 <p className="mt-8 md:mt-12 text-base md:text-lg text-secondary font-medium leading-relaxed opacity-70">
@@ -106,13 +106,13 @@ export default function AboutPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
                  <div className="p-8 md:p-10 rounded-[32px] md:rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
                     <Layout className="text-accent-gold" size={24} />
-                    <h4 className="font-black uppercase text-[10px] md:text-xs tracking-widest">Duit Design Lab</h4>
-                    <p className="text-[9px] md:text-[10px] font-bold text-neutral-400">Headquarters in Seoul, Korea</p>
+                    <h4 className="uppercase text-[10px] md:text-xs tracking-widest">Duit Design Lab</h4>
+                    <p className="text-[9px] md:text-[10px] text-neutral-400">Headquarters in Seoul, Korea</p>
                  </div>
                  <div className="p-8 md:p-10 rounded-[32px] md:rounded-[40px] bg-neutral-50 border border-neutral-100 space-y-4">
                     <PenTool className="text-accent-gold" size={24} />
-                    <h4 className="font-black uppercase text-[10px] md:text-xs tracking-widest">Hand-Crafted</h4>
-                    <p className="text-[9px] md:text-[10px] font-bold text-neutral-400">Precision in Every Line</p>
+                    <h4 className="uppercase text-[10px] md:text-xs tracking-widest">Hand-Crafted</h4>
+                    <p className="text-[9px] md:text-[10px] text-neutral-400">Precision in Every Line</p>
                  </div>
               </div>
            </div>
@@ -148,8 +148,8 @@ export default function AboutPage() {
           </div>
           <div className="order-1 lg:order-2 space-y-16">
              <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-accent-gold mb-8 block">Quality 02</span>
-                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-12">
+                <span className="text-[10px] uppercase tracking-[0.5em] text-accent-gold mb-8 block">Quality 02</span>
+                <h2 className="text-5xl md:text-7xl uppercase tracking-tighter leading-none mb-12">
                    Medical <br /> <span className="text-accent-gold italic">Grade.</span>
                 </h2>
                 <p className="text-xl text-neutral-400 font-medium leading-relaxed opacity-80">
@@ -161,7 +161,7 @@ export default function AboutPage() {
                    {['BPA Free', 'Food Safe Cert', 'Eco-Conscious Packaging'].map((item) => (
                      <div key={item} className="flex items-center gap-6 group">
                         <CheckCircle2 className="text-accent-gold opacity-40 group-hover:opacity-100 transition-opacity" size={20} />
-                        <span className="text-xs font-black uppercase tracking-[0.2em]">{item}</span>
+                        <span className="text-xs uppercase tracking-[0.2em]">{item}</span>
                      </div>
                    ))}
                 </div>
@@ -175,7 +175,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-6 relative z-10 space-y-16">
            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}>
               <Globe className="text-accent-gold mx-auto mb-12" size={64} strokeWidth={1} />
-              <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-primary leading-none">
+              <h2 className="text-6xl md:text-8xl uppercase tracking-tighter text-primary leading-none">
                  Global <br /> <span className="text-accent-gold italic">Visionary.</span>
               </h2>
            </motion.div>
@@ -185,11 +185,11 @@ export default function AboutPage() {
                 : 'From our origins in Seoul to our heartbeat in Thailand, Duit is committed to elevating pet living globally.'}
            </p>
            <Link href="/shop" className="group relative inline-flex items-center gap-6 px-16 py-8 rounded-full border border-neutral-100 bg-white shadow-luxury hover:bg-primary hover:text-white transition-all duration-700 active:scale-95">
-              <span className="text-[10px] font-black uppercase tracking-[0.3em]">{t.hero.discover}</span>
+              <span className="text-[10px] uppercase tracking-[0.3em]">{t.hero.discover}</span>
               <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
            </Link>
         </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full text-neutral-50/50 pointer-events-none select-none -z-10 font-black text-[30vw] uppercase opacity-20">SEOUL</div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full text-neutral-50/50 pointer-events-none select-none -z-10 text-[30vw] uppercase opacity-20">SEOUL</div>
       </section>
     </div>
   );

@@ -77,9 +77,9 @@ export default function ArchiveSidebar({ isOpen, onClose }: ArchiveSidebarProps)
               <div className="space-y-1">
                  <div className="flex items-center gap-3">
                     <Star className="text-accent-gold" size={14} fill="currentColor" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">The Archive</span>
+                    <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">The Archive</span>
                  </div>
-                 <h2 className="text-2xl font-black uppercase tracking-tighter text-primary">
+                 <h2 className="text-2xl uppercase tracking-tighter text-primary">
                    {language === 'th' ? 'คอลเลกชันส่วนตัว' : 'Your Curation'}
                  </h2>
               </div>
@@ -98,7 +98,7 @@ export default function ArchiveSidebar({ isOpen, onClose }: ArchiveSidebarProps)
                    <div className="w-24 h-24 rounded-full border-2 border-dashed border-neutral-200 flex items-center justify-center">
                       <Star size={32} className="text-neutral-300" />
                    </div>
-                   <p className="text-[11px] font-black uppercase tracking-widest leading-loose text-neutral-400">
+                   <p className="text-[11px] uppercase tracking-widest leading-loose text-neutral-400">
                      {language === 'th' ? 'ยังไม่มีรายการที่เลือกไว้' : 'Your private collection \n is empty'}
                    </p>
                 </div>
@@ -123,12 +123,12 @@ export default function ArchiveSidebar({ isOpen, onClose }: ArchiveSidebarProps)
 
                       <div className="flex-grow flex flex-col justify-center space-y-1 min-w-0">
                         <Link href={`/products/${item.id}`} onClick={onClose} className="group/title">
-                          <h3 className="text-[11px] font-black uppercase tracking-wider truncate group-hover/title:text-accent-gold transition-colors">{item.name}</h3>
+                          <h3 className="text-[11px] uppercase tracking-wider truncate group-hover/title:text-accent-gold transition-colors">{item.name}</h3>
                         </Link>
-                        <p className="text-[9px] font-bold text-neutral-400 uppercase tracking-widest">
+                        <p className="text-[9px] text-neutral-400 uppercase tracking-widest">
                           {getLocalizedCategory(item.category)}
                         </p>
-                        <div className="text-[13px] font-black text-primary pt-1">
+                        <div className="text-[13px] text-primary pt-1">
                           ฿{(Number(item.price) || 0).toLocaleString()}
                         </div>
                       </div>
@@ -149,20 +149,20 @@ export default function ArchiveSidebar({ isOpen, onClose }: ArchiveSidebarProps)
             {items.length > 0 && (
               <div className="p-8 md:p-10 bg-white border-t border-neutral-100 space-y-8 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]">
                 <div className="flex items-end justify-between">
-                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400">
+                   <span className="text-[10px] uppercase tracking-[0.3em] text-neutral-400">
                      {language === 'th' ? 'มูลค่ารวมโดยประมาณ' : 'Total Valuation'}
                    </span>
-                   <span className="text-3xl font-black tracking-tighter text-primary">฿{totalPrice.toLocaleString()}</span>
+                   <span className="text-3xl tracking-tighter text-primary">฿{totalPrice.toLocaleString()}</span>
                 </div>
 
                 <div className="space-y-4">
-                  <button className="w-full h-18 bg-primary text-white rounded-[24px] font-black uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-4 group hover:bg-accent-gold transition-all shadow-luxury active:scale-[0.98]">
+                  <button className="w-full h-18 bg-primary text-white rounded-[24px] uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-4 group hover:bg-accent-gold transition-all shadow-luxury active:scale-[0.98]">
                     <span>{language === 'th' ? 'สอบถามข้อมูลทั้งหมด' : 'Inquire Collection'}</span>
                     <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </button>
                   <button 
                     onClick={clearWishlist}
-                    className="w-full text-center py-2 text-[9px] font-black uppercase tracking-widest text-neutral-300 hover:text-red-500 transition-colors"
+                    className="w-full text-center py-2 text-[9px] uppercase tracking-widest text-neutral-300 hover:text-red-500 transition-colors"
                   >
                     {language === 'th' ? 'ล้างคอลเลกชันทั้งหมด' : 'Dissolve All Artifacts'}
                   </button>

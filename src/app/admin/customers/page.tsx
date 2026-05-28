@@ -14,7 +14,7 @@ export default async function CustomersPage() {
     <div className="space-y-6 sm:space-y-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tighter">Customer Management</h1>
+          <h1 className="text-2xl sm:text-3xl uppercase tracking-tighter">Customer Management</h1>
           <p className="text-sm sm:text-base text-neutral-500 font-medium mt-1">Manage your registered users and tiers.</p>
         </div>
       </div>
@@ -34,7 +34,7 @@ export default async function CustomersPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-neutral-100 text-[10px] font-black uppercase tracking-widest text-neutral-400">
+              <tr className="border-b border-neutral-100 text-[10px] uppercase tracking-widest text-neutral-400">
                 <th className="pb-4 pl-4">Customer</th>
                 <th className="pb-4">Email</th>
                 <th className="pb-4">Tier</th>
@@ -53,9 +53,9 @@ export default async function CustomersPage() {
               ) : (
                 customers.map((customer) => (
                   <tr key={customer.id} className="border-b border-neutral-50 hover:bg-neutral-50/50 transition-colors">
-                    <td className="py-4 pl-4 font-bold text-sm">
+                    <td className="py-4 pl-4 text-sm">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-cream-light flex items-center justify-center text-accent-gold font-black text-xs">
+                        <div className="w-8 h-8 rounded-full bg-cream-light flex items-center justify-center text-accent-gold text-xs">
                           {customer.full_name ? customer.full_name.charAt(0).toUpperCase() : 'U'}
                         </div>
                         {customer.full_name || 'Unknown User'}
@@ -63,7 +63,7 @@ export default async function CustomersPage() {
                     </td>
                     <td className="py-4 text-sm text-neutral-500">{customer.email}</td>
                     <td className="py-4">
-                      <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
+                      <span className={`px-3 py-1 rounded-full text-[10px]  uppercase tracking-widest ${
                         customer.tier === 'Platinum Elite' ? 'bg-primary text-white' : 
                         customer.tier === 'Gold' ? 'bg-accent-gold/10 text-accent-gold' : 
                         'bg-neutral-100 text-neutral-500'
@@ -71,7 +71,7 @@ export default async function CustomersPage() {
                         {customer.tier}
                       </span>
                     </td>
-                    <td className="py-4 font-black text-accent-gold">{customer.duit_coins}</td>
+                    <td className="py-4 text-accent-gold">{customer.duit_coins}</td>
                     <td className="py-4 text-sm text-neutral-400">{new Date(customer.created_at).toLocaleDateString()}</td>
                     <td className="py-4 text-right">
                       <button className="p-2 hover:bg-neutral-100 rounded-full transition-colors">

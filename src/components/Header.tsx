@@ -61,7 +61,7 @@ const Header = () => {
           {/* Left: Logo */}
           <div className="flex-1">
             <Link href="/" className="inline-block transition-all duration-700 hover:scale-105 active:scale-95">
-              <span className="font-greycliff text-3xl font-black lowercase tracking-[-0.02em] text-primary">
+              <span className="font-greycliff text-3xl lowercase tracking-[-0.02em] text-primary">
                 duit
               </span>
             </Link>
@@ -73,7 +73,7 @@ const Header = () => {
               <Link 
                 key={link.name} 
                 href={link.href} 
-                className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 uppercase ${language === 'th' ? 'text-[18px] font-light tracking-normal' : 'text-[11px] font-black tracking-[0.25em]'} ${useDarkText ? 'text-secondary' : 'text-white/70'}`}
+                className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 uppercase ${language === 'th' ? 'text-[18px] font-light tracking-normal' : 'text-[11px] tracking-[0.25em]'} ${useDarkText ? 'text-secondary' : 'text-white/70'}`}
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-gold transition-all duration-500 group-hover:w-full"></span>
@@ -97,7 +97,7 @@ const Header = () => {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
-                    className="absolute top-0 right-0 w-4 h-4 bg-accent-gold text-white text-[8px] font-black flex items-center justify-center rounded-full shadow-sm"
+                    className="absolute top-0 right-0 w-4 h-4 bg-accent-gold text-white text-[8px] flex items-center justify-center rounded-full shadow-sm"
                   >
                     {items.length}
                   </motion.span>
@@ -142,7 +142,7 @@ const Header = () => {
               className="fixed right-0 top-0 h-full w-[85%] max-w-[400px] bg-white z-[101] lg:hidden shadow-luxury flex flex-col border-l border-neutral-100"
             >
               <div className="p-8 flex justify-between items-center border-b border-neutral-50">
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.common.directory}</span>
+                <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">{t.common.directory}</span>
                 <button onClick={() => setIsMobileMenuOpen(false)} className="w-12 h-12 bg-neutral-50 rounded-full flex items-center justify-center hover:bg-neutral-100 transition-colors">
                   <X size={20} strokeWidth={1} />
                 </button>
@@ -152,7 +152,7 @@ const Header = () => {
                   <Link 
                     key={link.name} 
                     href={link.href} 
-                    className="text-2xl font-black uppercase tracking-tighter text-primary hover:text-accent-gold p-4 rounded-3xl hover:bg-cream-light transition-all flex items-center justify-between group"
+                    className="text-2xl uppercase tracking-tighter text-primary hover:text-accent-gold p-4 rounded-3xl hover:bg-cream-light transition-all flex items-center justify-between group"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span>{link.name}</span>
@@ -167,7 +167,7 @@ const Header = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center"><User size={20} strokeWidth={1.5} /></div>
-                  <span className="font-black uppercase tracking-[0.2em] text-xs">{t.common.petPortfolio}</span>
+                  <span className="uppercase tracking-[0.2em] text-xs">{t.common.petPortfolio}</span>
                 </Link>
               </div>
             </motion.div>

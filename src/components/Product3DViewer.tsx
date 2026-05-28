@@ -41,7 +41,7 @@ const Product3DViewer = ({ modelUrl, altText, posterUrl }: Product3DViewerProps)
         ar-modes="webxr scene-viewer quick-look"
       >
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-4 px-6 w-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity z-20">
-          <div className="bg-white/90 backdrop-blur px-6 py-3 rounded-full shadow-luxury border border-neutral-100 flex items-center gap-4 text-[9px] font-black uppercase tracking-widest text-primary">
+          <div className="bg-white/90 backdrop-blur px-6 py-3 rounded-full shadow-luxury border border-neutral-100 flex items-center gap-4 text-[9px] uppercase tracking-widest text-primary">
             <span>Hold to Rotate</span>
             <div className="w-px h-3 bg-neutral-200"></div>
             <span>Scroll to Zoom</span>
@@ -49,7 +49,7 @@ const Product3DViewer = ({ modelUrl, altText, posterUrl }: Product3DViewerProps)
           
           <button 
             slot="ar-button" 
-            className="bg-accent-gold text-white px-8 py-3 rounded-full shadow-luxury text-[9px] font-black uppercase tracking-widest hover:bg-primary transition-all active:scale-95"
+            className="bg-accent-gold text-white px-8 py-3 rounded-full shadow-luxury text-[9px] uppercase tracking-widest hover:bg-primary transition-all active:scale-95"
           >
             Launch AR
           </button>
@@ -58,7 +58,7 @@ const Product3DViewer = ({ modelUrl, altText, posterUrl }: Product3DViewerProps)
       </model-viewer>
       
       <div className="absolute top-6 left-6 z-20">
-        <span className="bg-primary text-white text-[9px] font-black uppercase tracking-ultra px-4 py-1.5 shadow-xl rounded-sm">
+        <span className="bg-primary text-white text-[9px] uppercase tracking-ultra px-4 py-1.5 shadow-xl rounded-sm">
           Interactive 3D
         </span>
       </div>

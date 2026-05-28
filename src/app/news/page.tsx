@@ -61,11 +61,11 @@ export default function NewsPage() {
               <motion.span 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="text-[10px] font-black uppercase tracking-[0.5em] text-accent-gold block"
+                className="text-[10px] uppercase tracking-[0.5em] text-accent-gold block"
               >
                 {language === 'th' ? 'สารานุกรมแห่งการอยู่อาศัย' : 'THE LIVING ARCHIVE'}
               </motion.span>
-              <h1 className="text-6xl md:text-[120px] font-black tracking-tighter uppercase leading-[0.8] text-primary">
+              <h1 className="text-6xl md:text-[120px] tracking-tighter uppercase leading-[0.8] text-primary">
                 Duit <br /> <span className="text-accent-gold italic">Journal.</span>
               </h1>
            </div>
@@ -86,12 +86,12 @@ export default function NewsPage() {
               </div>
               <div className="lg:col-span-5 space-y-10">
                  <div className="flex items-center gap-6">
-                    <span className="px-4 py-1.5 bg-primary text-white text-[9px] font-black uppercase tracking-widest rounded-full">{newsItems[0].category}</span>
-                    <span className="text-[10px] font-bold text-neutral-300 uppercase tracking-widest">{newsItems[0].date}</span>
+                    <span className="px-4 py-1.5 bg-primary text-white text-[9px] uppercase tracking-widest rounded-full">{newsItems[0].category}</span>
+                    <span className="text-[10px] text-neutral-300 uppercase tracking-widest">{newsItems[0].date}</span>
                  </div>
-                 <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight leading-tight group-hover:text-accent-gold transition-colors">{newsItems[0].title}</h2>
+                 <h2 className="text-4xl md:text-5xl uppercase tracking-tight leading-tight group-hover:text-accent-gold transition-colors">{newsItems[0].title}</h2>
                  <p className="text-lg text-secondary font-medium opacity-60 leading-relaxed">{newsItems[0].excerpt}</p>
-                 <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.3em] group-hover:gap-8 transition-all">
+                 <div className="flex items-center gap-4 text-xs uppercase tracking-[0.3em] group-hover:gap-8 transition-all">
                     READ ARTICLE <ChevronRight size={16} strokeWidth={3} />
                  </div>
               </div>
@@ -112,14 +112,14 @@ export default function NewsPage() {
                 <div className="aspect-[4/3] rounded-[48px] overflow-hidden relative shadow-luxury group-hover:shadow-luxury-hover transition-all duration-1000">
                    <Image src={news.image} alt={news.title} fill className="object-cover group-hover:scale-110 transition-transform duration-[2s]" />
                    <div className="absolute top-8 left-8">
-                      <span className="bg-white/90 backdrop-blur-md px-5 py-2 rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg">{news.category}</span>
+                      <span className="bg-white/90 backdrop-blur-md px-5 py-2 rounded-full text-[9px] uppercase tracking-widest shadow-lg">{news.category}</span>
                    </div>
                 </div>
                 <div className="space-y-6">
-                   <div className="flex items-center gap-4 text-[10px] font-bold text-neutral-300 uppercase tracking-widest">
+                   <div className="flex items-center gap-4 text-[10px] text-neutral-300 uppercase tracking-widest">
                       <Clock size={12} /> {news.date}
                    </div>
-                   <h3 className="text-3xl font-black uppercase tracking-tight leading-tight group-hover:text-accent-gold transition-colors">{news.title}</h3>
+                   <h3 className="text-3xl uppercase tracking-tight leading-tight group-hover:text-accent-gold transition-colors">{news.title}</h3>
                    <p className="text-base text-secondary font-medium opacity-60 leading-relaxed line-clamp-3">{news.excerpt}</p>
                    <div className="w-12 h-12 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
                       <ArrowRight size={18} />
@@ -134,8 +134,8 @@ export default function NewsPage() {
           <div className="absolute -top-40 -right-40 w-96 h-96 bg-accent-gold/5 rounded-full blur-[100px]"></div>
           <div className="max-w-3xl mx-auto text-center space-y-16 relative z-10">
             <div className="space-y-6">
-              <span className="text-[10px] font-black uppercase tracking-[0.5em] text-accent-gold">SUBSCRIBE</span>
-              <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none text-primary">Join the Atelier <br /> <span className="text-accent-gold italic">Circle.</span></h2>
+              <span className="text-[10px] uppercase tracking-[0.5em] text-accent-gold">SUBSCRIBE</span>
+              <h2 className="text-5xl md:text-7xl tracking-tighter uppercase leading-none text-primary">Join the Atelier <br /> <span className="text-accent-gold italic">Circle.</span></h2>
               <p className="text-lg text-secondary font-medium opacity-60 leading-relaxed px-4">
                 {language === 'th' 
                   ? 'รับข่าวสารเกี่ยวกับนวัตกรรมและสิทธิประโยชน์พิเศษสำหรับสมาชิก Duit Care+ ส่งตรงถึงคุณ' 
@@ -143,12 +143,12 @@ export default function NewsPage() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 px-4">
-              <input type="email" placeholder="Email designation..." className="flex-grow h-20 bg-white border border-neutral-200 rounded-full px-10 text-sm font-bold outline-none focus:border-accent-gold focus:ring-4 ring-accent-gold/5 transition-all" />
-              <button className="bg-primary text-white px-12 h-20 rounded-full text-xs font-black uppercase tracking-[0.3em] hover:bg-accent-gold transition-all active:scale-95 shadow-luxury">
+              <input type="email" placeholder="Email designation..." className="flex-grow h-20 bg-white border border-neutral-200 rounded-full px-10 text-sm outline-none focus:border-accent-gold focus:ring-4 ring-accent-gold/5 transition-all" />
+              <button className="bg-primary text-white px-12 h-20 rounded-full text-xs uppercase tracking-[0.3em] hover:bg-accent-gold transition-all active:scale-95 shadow-luxury">
                 Subscribe
               </button>
             </div>
-            <div className="pt-8 flex justify-center items-center gap-12 text-[8px] font-black uppercase tracking-[0.4em] text-neutral-300">
+            <div className="pt-8 flex justify-center items-center gap-12 text-[8px] uppercase tracking-[0.4em] text-neutral-300">
                <span className="flex items-center gap-2"><Sparkles size={10} /> Limited Access</span>
                <span className="flex items-center gap-2"><TrendingUp size={10} /> Design Insights</span>
             </div>

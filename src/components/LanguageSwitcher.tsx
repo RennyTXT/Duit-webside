@@ -27,7 +27,7 @@ export const LanguageSwitcher = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -10, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[10px] font-black uppercase tracking-widest text-inherit absolute"
+            className="text-[10px] uppercase tracking-widest text-inherit absolute"
           >
             {language === 'th' ? 'TH' : 'EN'}
           </motion.span>

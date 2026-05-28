@@ -63,7 +63,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 mb-24">
           <div className="lg:col-span-5 space-y-12">
             <Link href="/" className="inline-block hover:scale-105 transition-transform duration-500">
-              <span className="font-greycliff text-4xl font-black lowercase tracking-[-0.02em] text-white">
+              <span className="font-greycliff text-4xl lowercase tracking-[-0.02em] text-white">
                 duit
               </span>
             </Link>
@@ -87,8 +87,8 @@ const Footer = () => {
           
           <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-12">
             <div className="space-y-8">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.footer.directory}</h4>
-              <ul className="space-y-5 text-xs font-black uppercase tracking-widest text-neutral-400">
+              <h4 className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">{t.footer.directory}</h4>
+              <ul className="space-y-5 text-xs uppercase tracking-widest text-neutral-400">
                 <li><Link href="/shop" className="hover:text-white transition-colors">{t.shop.allProducts}</Link></li>
                 <li><Link href="/duit-care" className="hover:text-white transition-colors">{t.nav.care}</Link></li>
                 <li><Link href="/news" className="hover:text-white transition-colors">{t.nav.journal}</Link></li>
@@ -97,8 +97,8 @@ const Footer = () => {
             </div>
 
             <div className="space-y-8">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.footer.support}</h4>
-              <ul className="space-y-5 text-xs font-black uppercase tracking-widest text-neutral-400">
+              <h4 className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">{t.footer.support}</h4>
+              <ul className="space-y-5 text-xs uppercase tracking-widest text-neutral-400">
                 <li><Link href="/faq" className="hover:text-white transition-colors">{t.footer.assistance}</Link></li>
                 <li><Link href="/shipping" className="hover:text-white transition-colors">{t.footer.logistics}</Link></li>
                 <li><Link href="/contact" className="hover:text-white transition-colors">{t.footer.concierge}</Link></li>
@@ -107,7 +107,7 @@ const Footer = () => {
             </div>
 
             <div className="space-y-8 col-span-2 md:col-span-1">
-              <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">{t.footer.atelier}</h4>
+              <h4 className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">{t.footer.atelier}</h4>
               <div className="space-y-6 text-xs font-medium text-neutral-400 leading-relaxed">
                 <div className="flex gap-4">
                   <MapPin size={16} className="text-accent-gold shrink-0" />
@@ -122,7 +122,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] font-black uppercase tracking-[0.3em] text-neutral-500">
+        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[9px] uppercase tracking-[0.3em] text-neutral-500">
           <div className="flex items-center gap-4">
             <span>© 2026 {settings?.atelier_name || "DUIT TH THAILAND"}</span>
             <span className="w-1 h-1 rounded-full bg-white/10"></span>

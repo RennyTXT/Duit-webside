@@ -43,13 +43,13 @@ export default function DuitCarePage() {
             <Heart size={40} strokeWidth={1} className="fill-accent-gold/10" />
           </div>
           <div className="space-y-6">
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">Exclusivity</span>
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight">The Inner Circle</h1>
+            <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">Exclusivity</span>
+            <h1 className="text-4xl md:text-5xl uppercase tracking-tight">The Inner Circle</h1>
             <p className="text-secondary font-medium leading-relaxed max-w-sm mx-auto opacity-70">Experience personalized care and elite benefits designed for the most discerning pet owners.</p>
           </div>
           <Link href="/pet-profile" className="group relative inline-block w-full bg-primary text-white py-6 rounded-full overflow-hidden transition-all shadow-luxury">
             <div className="absolute inset-0 bg-accent-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-            <span className="relative z-10 font-black uppercase tracking-[0.2em] text-xs">Initialize Profile</span>
+            <span className="relative z-10 uppercase tracking-[0.2em] text-xs">Initialize Profile</span>
           </Link>
         </div>
       </div>
@@ -78,22 +78,22 @@ export default function DuitCarePage() {
             <div className="flex-grow text-center md:text-left space-y-8">
               <div className="space-y-4">
                 <div className="flex flex-wrap justify-center md:justify-start items-center gap-6">
-                  <h1 className="text-5xl md:text-7xl font-black uppercase tracking-[-0.04em] text-primary leading-none">{profile.name}</h1>
-                  <span className="bg-primary text-white text-[9px] font-black px-5 py-2 rounded-full uppercase tracking-[0.2em] shadow-lg border border-white/10">Platinum Elite</span>
+                  <h1 className="text-5xl md:text-7xl uppercase tracking-[-0.04em] text-primary leading-none">{profile.name}</h1>
+                  <span className="bg-primary text-white text-[9px] px-5 py-2 rounded-full uppercase tracking-[0.2em] shadow-lg border border-white/10">Platinum Elite</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-4">
                    <div className="h-[1px] w-8 bg-accent-gold"></div>
-                   <p className="text-accent-gold font-black uppercase tracking-[0.3em] text-xs">
+                   <p className="text-accent-gold uppercase tracking-[0.3em] text-xs">
                     {profile.breed || 'Signature Breed'} • {profile.size} Class
                    </p>
                 </div>
               </div>
               
               <div className="flex flex-wrap justify-center md:justify-start gap-6">
-                <Link href="/pet-profile" className="flex items-center gap-3 bg-white border border-neutral-100 hover:border-primary px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm">
+                <Link href="/pet-profile" className="flex items-center gap-3 bg-white border border-neutral-100 hover:border-primary px-8 py-4 rounded-2xl text-[10px] uppercase tracking-widest transition-all shadow-sm">
                   <Settings size={14} /> Profile Settings
                 </Link>
-                <div className="flex items-center gap-3 bg-white/50 border border-white/50 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest text-neutral-400">
+                <div className="flex items-center gap-3 bg-white/50 border border-white/50 px-8 py-4 rounded-2xl text-[10px] uppercase tracking-widest text-neutral-400">
                   <Star size={14} fill="currentColor" className="text-accent-gold" /> Member Since 2025
                 </div>
               </div>
@@ -107,10 +107,10 @@ export default function DuitCarePage() {
         <div className="max-w-[1440px] mx-auto w-full px-6 md:px-12 lg:px-20">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8 text-center md:text-left">
             <div className="space-y-4">
-              <span className="text-[10px] font-black text-accent-gold uppercase tracking-[0.4em]">Personalized Portfolio</span>
-              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">Curated for {profile.name}</h2>
+              <span className="text-[10px] text-accent-gold uppercase tracking-[0.4em]">Personalized Portfolio</span>
+              <h2 className="text-4xl md:text-5xl uppercase tracking-tight">Curated for {profile.name}</h2>
             </div>
-            <Link href="/shop" className="text-primary font-black text-[10px] uppercase tracking-[0.3em] border-b-2 border-primary pb-2 hover:text-accent-gold hover:border-accent-gold transition-colors">
+            <Link href="/shop" className="text-primary text-[10px] uppercase tracking-[0.3em] border-b-2 border-primary pb-2 hover:text-accent-gold hover:border-accent-gold transition-colors">
               Discover All Masterpieces
             </Link>
           </div>
@@ -131,8 +131,8 @@ export default function DuitCarePage() {
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
                  <div className="space-y-12 text-center lg:text-left">
                     <div className="space-y-6">
-                       <span className="text-accent-gold text-[10px] font-black tracking-[0.4em] uppercase">Elite Program</span>
-                       <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]">
+                       <span className="text-accent-gold text-[10px] tracking-[0.4em] uppercase">Elite Program</span>
+                       <h2 className="text-4xl sm:text-5xl md:text-7xl tracking-tighter uppercase leading-[0.9]">
                           Duit Care+ <br />
                           <span className="text-accent-gold italic">Privileges.</span>
                        </h2>
@@ -142,12 +142,12 @@ export default function DuitCarePage() {
                     </p>
                     <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-4 sm:gap-8">
                        <div className="bg-white/5 border border-white/10 px-8 sm:px-10 py-5 sm:py-6 rounded-[24px] sm:rounded-[32px] backdrop-blur-md">
-                          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-accent-gold block mb-2 sm:mb-3">Privilege 01</span>
-                          <span className="text-xl sm:text-2xl font-black tracking-tight">10% COMPLIMENTARY</span>
+                          <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-accent-gold block mb-2 sm:mb-3">Privilege 01</span>
+                          <span className="text-xl sm:text-2xl tracking-tight">10% COMPLIMENTARY</span>
                        </div>
                        <div className="bg-white/5 border border-white/10 px-8 sm:px-10 py-5 sm:py-6 rounded-[24px] sm:rounded-[32px] backdrop-blur-md">
-                          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-accent-gold block mb-2 sm:mb-3">Privilege 02</span>
-                          <span className="text-xl sm:text-2xl font-black tracking-tight">GLOBAL CONCIERGE</span>
+                          <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-accent-gold block mb-2 sm:mb-3">Privilege 02</span>
+                          <span className="text-xl sm:text-2xl tracking-tight">GLOBAL CONCIERGE</span>
                        </div>
                     </div>
                  </div>
@@ -160,7 +160,7 @@ export default function DuitCarePage() {
                     ].map((benefit, i) => (
                       <div key={i} className="bg-white/5 border border-white/10 p-10 rounded-[48px] text-center space-y-6 hover:bg-white/10 transition-all duration-500 group">
                          <div className="text-5xl transform group-hover:scale-110 transition-transform duration-500">{benefit.icon}</div>
-                         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] opacity-60 group-hover:opacity-100 transition-opacity leading-relaxed">{benefit.title}</h4>
+                         <h4 className="text-[10px] uppercase tracking-[0.2em] opacity-60 group-hover:opacity-100 transition-opacity leading-relaxed">{benefit.title}</h4>
                       </div>
                     ))}
                  </div>

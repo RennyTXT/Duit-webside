@@ -49,14 +49,14 @@ export default function FAQPage() {
     <div className="bg-white min-h-screen pt-20 pb-32">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center py-24 space-y-6">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">FAQ</h1>
+          <h1 className="text-5xl md:text-6xl tracking-tighter uppercase">FAQ</h1>
           <p className="text-secondary font-medium">คำถามที่พบบ่อยเกี่ยวกับการใช้งานและบริการของเรา</p>
         </div>
 
         <div className="space-y-16">
           {faqs.map((group, groupIdx) => (
             <div key={groupIdx} className="space-y-8">
-              <h2 className="text-xs font-black uppercase tracking-ultra text-accent border-b border-neutral-100 pb-4">{group.category}</h2>
+              <h2 className="text-xs uppercase tracking-ultra text-accent border-b border-neutral-100 pb-4">{group.category}</h2>
               <div className="space-y-4">
                 {group.items.map((item, itemIdx) => {
                   const id = `${groupIdx}-${itemIdx}`;
@@ -67,7 +67,7 @@ export default function FAQPage() {
                         onClick={() => setOpenIndex(isOpen ? null : id)}
                         className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors"
                       >
-                        <span className="font-bold text-primary">{item.q}</span>
+                        <span className="text-primary">{item.q}</span>
                         <ChevronDown className={`transition-transform duration-300 ${isOpen ? 'rotate-180 text-accent' : 'text-neutral-300'}`} size={20} />
                       </button>
                       <AnimatePresence>
@@ -97,10 +97,10 @@ export default function FAQPage() {
               <MessageCircle size={32} />
            </div>
            <div className="space-y-2">
-              <h3 className="text-xl font-bold">ยังไม่ได้คำตอบที่ต้องการ?</h3>
+              <h3 className="text-xl">ยังไม่ได้คำตอบที่ต้องการ?</h3>
               <p className="text-sm text-secondary">ทีมสนับสนุนของเราพร้อมช่วยเหลือคุณเสมอ</p>
            </div>
-           <a href="/contact" className="inline-block bg-primary text-white px-10 py-4 rounded-full font-bold text-sm hover:bg-accent transition-all">
+           <a href="/contact" className="inline-block bg-primary text-white px-10 py-4 rounded-full text-sm hover:bg-accent transition-all">
               ติดต่อเราเลย
            </a>
         </div>

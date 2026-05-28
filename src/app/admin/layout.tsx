@@ -63,7 +63,7 @@ export default function AdminLayout({
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6">
         <div className="w-16 h-16 border-t-2 border-primary rounded-full animate-spin"></div>
-        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">Establishing Secure Session...</p>
+        <p className="text-[10px] uppercase tracking-[0.4em] text-neutral-300">Establishing Secure Session...</p>
       </div>
     );
   }
@@ -99,13 +99,13 @@ export default function AdminLayout({
         <div className={`h-24 flex items-center border-b border-neutral-50 bg-cream-light/30 transition-all duration-500 ${isCollapsed ? 'justify-center px-0' : 'px-10'}`}>
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg shrink-0">
-               <span className="font-black text-xs">D</span>
+               <span className="text-xs">D</span>
             </div>
             {!isCollapsed && (
               <motion.span 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-xl font-black tracking-[-0.05em]"
+                className="text-xl tracking-[-0.05em]"
               >
                 DUIT <span className="text-accent-gold italic">TH</span>
               </motion.span>
@@ -115,7 +115,7 @@ export default function AdminLayout({
 
         <div className="flex-grow p-6 space-y-12 overflow-y-auto no-scrollbar">
           <div className="space-y-4">
-            {!isCollapsed && <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300 ml-4">TH</span>}
+            {!isCollapsed && <span className="text-[10px] uppercase tracking-[0.4em] text-neutral-300 ml-4">TH</span>}
             <nav className="space-y-2">
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
@@ -123,14 +123,14 @@ export default function AdminLayout({
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`flex items-center rounded-[20px] text-[13px] font-black transition-all duration-500 group relative ${isCollapsed ? 'h-14 w-14 justify-center mx-auto' : 'px-6 py-4 gap-5'} ${isActive ? 'bg-cream-light text-primary shadow-sm' : 'text-neutral-400 hover:bg-neutral-50 hover:text-primary'}`}
+                    className={`flex items-center rounded-[20px] text-[13px] transition-all duration-500 group relative ${isCollapsed ? 'h-14 w-14 justify-center mx-auto' : 'px-6 py-4 gap-5'} ${isActive ? 'bg-cream-light text-primary shadow-sm' : 'text-neutral-400 hover:bg-neutral-50 hover:text-primary'}`}
                   >
                     <item.icon size={18} strokeWidth={isActive ? 2.5 : 1.5} className={isActive ? 'text-accent-gold' : 'group-hover:text-primary transition-colors'} />
                     {!isCollapsed && <span className={`uppercase tracking-tight transition-colors duration-500 ${isActive ? 'text-primary' : 'group-hover:text-primary'}`}>{item.name}</span>}
                     {isActive && !isCollapsed && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-accent-gold shadow-[0_0_10px_rgba(197,160,89,1)]"></div>}
                     
                     {isCollapsed && (
-                      <div className="absolute left-full ml-4 px-3 py-2 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 shadow-luxury">
+                      <div className="absolute left-full ml-4 px-3 py-2 bg-primary text-white text-[10px] uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 shadow-luxury">
                         {item.name}
                       </div>
                     )}
@@ -144,14 +144,14 @@ export default function AdminLayout({
         <div className={`p-6 border-t border-neutral-50 bg-cream-light/10 space-y-4 ${isCollapsed ? 'items-center' : ''}`}>
           <button 
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className={`w-full flex items-center gap-5 px-4 h-14 rounded-2xl text-[10px] font-black uppercase tracking-widest text-neutral-400 hover:bg-neutral-50 hover:text-primary transition-all duration-500 ${isCollapsed ? 'justify-center' : ''}`}
+            className={`w-full flex items-center gap-5 px-4 h-14 rounded-2xl text-[10px] uppercase tracking-widest text-neutral-400 hover:bg-neutral-50 hover:text-primary transition-all duration-500 ${isCollapsed ? 'justify-center' : ''}`}
           >
             <Menu size={18} strokeWidth={2} />
             {!isCollapsed && <span>Collapse</span>}
           </button>
           <button 
             onClick={handleLogout}
-            className={`w-full flex items-center gap-5 px-4 h-14 rounded-2xl text-[10px] font-black uppercase tracking-widest text-red-400 hover:bg-red-50 hover:text-red-600 transition-all duration-500 ${isCollapsed ? 'justify-center' : ''}`}
+            className={`w-full flex items-center gap-5 px-4 h-14 rounded-2xl text-[10px] uppercase tracking-widest text-red-400 hover:bg-red-50 hover:text-red-600 transition-all duration-500 ${isCollapsed ? 'justify-center' : ''}`}
           >
             <LogOut size={18} strokeWidth={2} />
             {!isCollapsed && <span>Log Out</span>}
@@ -172,16 +172,16 @@ export default function AdminLayout({
            <div className="flex items-center gap-8 ml-auto">
               <Link 
                 href="/" 
-                className="flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-neutral-400 hover:bg-neutral-50 hover:text-primary transition-all duration-300 border border-neutral-100/50 hover:border-neutral-200"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] uppercase tracking-widest text-neutral-400 hover:bg-neutral-50 hover:text-primary transition-all duration-300 border border-neutral-100/50 hover:border-neutral-200"
               >
                 <ExternalLink size={14} />
                 <span className="hidden md:inline">View Store</span>
               </Link>
               <div className="text-right hidden sm:block space-y-1">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary leading-none">The Director</p>
-                <p className="text-[9px] font-bold text-accent-gold uppercase leading-none">Access Granted</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-primary leading-none">The Director</p>
+                <p className="text-[9px] text-accent-gold uppercase leading-none">Access Granted</p>
               </div>
-              <div className="w-12 h-12 rounded-[20px] bg-primary text-white flex items-center justify-center font-black text-xs shadow-luxury border-2 border-cream-light relative group cursor-pointer">
+              <div className="w-12 h-12 rounded-[20px] bg-primary text-white flex items-center justify-center text-xs shadow-luxury border-2 border-cream-light relative group cursor-pointer">
                 AD
                 <div className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm"></div>
               </div>

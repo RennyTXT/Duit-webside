@@ -71,14 +71,14 @@ export default function AdminLoginPage() {
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="h-[1px] w-8 bg-accent-gold/40"></div>
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-gold">Secure Access</span>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">Secure Access</span>
               <div className="h-[1px] w-8 bg-accent-gold/40"></div>
             </div>
-            <h1 className="text-4xl font-black tracking-[-0.04em] uppercase text-primary leading-none">
+            <h1 className="text-4xl tracking-[-0.04em] uppercase text-primary leading-none">
               Atelier <br />
               <span className="text-luxury-gradient">Concierge</span>
             </h1>
-            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest pt-2">
+            <p className="text-[10px] text-neutral-400 uppercase tracking-widest pt-2">
               Management Portal for Duit Thailand
             </p>
           </div>
@@ -97,7 +97,7 @@ export default function AdminLoginPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm font-bold focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 tracking-tight"
+                  className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 tracking-tight"
                 />
               </div>
 
@@ -112,7 +112,7 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm font-bold focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 tracking-tight"
+                  className="w-full h-16 bg-neutral-50 border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none placeholder:text-neutral-300 tracking-tight"
                 />
               </div>
             </div>
@@ -128,7 +128,7 @@ export default function AdminLoginPage() {
                 <Loader2 size={20} className="animate-spin relative z-10 text-white" />
               ) : (
                 <>
-                  <span className="relative z-10 font-black uppercase tracking-[0.2em] text-[10px]">Verify Identity</span>
+                  <span className="relative z-10 uppercase tracking-[0.2em] text-[10px]">Verify Identity</span>
                   <ChevronRight size={16} className="relative z-10 transition-transform group-hover:translate-x-1" />
                 </>
               )}
@@ -137,7 +137,7 @@ export default function AdminLoginPage() {
 
           {/* Footer Info */}
           <div className="pt-4 text-center">
-            <p className="text-[9px] font-bold text-neutral-300 uppercase tracking-[0.2em] leading-relaxed">
+            <p className="text-[9px] text-neutral-300 uppercase tracking-[0.2em] leading-relaxed">
               Authorized Personnel Only. <br />
               Encryption active and monitored.
             </p>
