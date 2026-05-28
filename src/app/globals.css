@@ -1,81 +1,23 @@
 @import "tailwindcss";
 
-/* Luxury Grain Effect */
-.grain-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.02; /* Reduced from 0.04 for a cleaner look */
-  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-}
-
-/* Mask Reveal Animation */
-.mask-reveal {
-  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-  mask-size: 100% 200%;
-  mask-position: 0 100%;
-  transition: mask-position 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.mask-reveal:hover {
-  mask-position: 0 0;
-}
-
-/* Golden Glow Soft */
-.gold-glow-soft {
-  box-shadow: 0 0 50px rgba(197, 160, 89, 0.1);
-}
-
-/* Frosted Glass Luxury */
-.glass-luxury {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.text-spacing-luxury {
-  letter-spacing: 0.4em;
-}
-
-.parallax-container {
-  perspective: 1000px;
-}
-
-.perspective-2000 {
-  perspective: 2000px;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
+/* Minimal Soft Backgrounds */
 :root {
   --background: #ffffff;
-  --foreground: #0A0F1A; /* Deep Midnight Blue from reference */
-  --primary: #0A0F1A;
-  --secondary: #4A5568;
-  --accent-gold: #B88E2F; /* More refined gold like reference */
-  --accent-blue: #1A365D;
-  --cream-light: #FBFBFA; /* Clean off-white from reference */
-  --cream-medium: #F4F4F2;
+  --foreground: #1a1a1a;
+  --primary: #1a1a1a;
+  --secondary: #767676;
+  --accent-gold: #b88e2f; /* Kept but sparingly used for highlights if needed */
+  --cream-light: #ffffff;
+  --cream-medium: #f9f9f9;
 
-  --neutral-50: #F7FAFC;
-  --neutral-100: #EDF2F7;
-  --neutral-200: #E2E8F0;
-  --neutral-300: #CBD5E0;
-  --neutral-400: #A0AEC0;
+  --neutral-50: #f9f9f9;
+  --neutral-100: #f2f2f2;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
 
-  --shadow-luxury: 0 20px 60px rgba(10, 15, 26, 0.04);
-  --shadow-luxury-hover: 0 40px 100px rgba(10, 15, 26, 0.08);
+  --shadow-luxury: 0 4px 20px rgba(0, 0, 0, 0.02);
+  --shadow-luxury-hover: 0 10px 40px rgba(0, 0, 0, 0.04);
 }
 
 @theme inline {
@@ -84,7 +26,6 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent-gold: var(--accent-gold);
-  --color-accent-blue: var(--accent-blue);
   --color-cream-light: var(--cream-light);
   --color-cream-medium: var(--cream-medium);
 
@@ -92,82 +33,48 @@
   --shadow-luxury-hover: var(--shadow-luxury-hover);
 
   --font-sans: var(--font-greycliff), var(--font-outfit), var(--font-anuphan), "GreycliffCF", "Outfit", "Anuphan", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  
-  --animate-gradient-x: gradient-x 15s ease infinite;
-  --animate-pulse-gold: pulse-gold 3s ease-in-out infinite;
-
-  @keyframes gradient-x {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  @keyframes pulse-gold {
-    0%, 100% { opacity: 0.1; transform: scale(1); }
-    50% { opacity: 0.2; transform: scale(1.05); }
-  }
 }
 
 @layer base {
   * {
-    @apply border-neutral-100/50;
+    @apply border-neutral-100;
     font-weight: 400 !important;
   }
   body {
     @apply bg-background text-foreground antialiased selection:bg-primary selection:text-white overflow-x-hidden font-sans;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv11";
-    letter-spacing: -0.01em;
     -webkit-tap-highlight-color: transparent;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight uppercase text-primary;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.02em;
     font-weight: 400 !important;
-  }
-  
-  .bg-white, .bg-cream-light, .bg-cream-medium {
-    @apply text-primary;
   }
 }
 
 @layer components {
   .glass-light {
-    @apply bg-white/70 backdrop-blur-2xl border border-white/40;
+    @apply bg-white/80 backdrop-blur-xl border border-white/20;
   }
   .card-luxury {
-    @apply bg-white border border-neutral-100 shadow-luxury transition-all duration-700 hover:shadow-luxury-hover hover:-translate-y-2 rounded-[40px];
+    @apply bg-white border border-neutral-100/50 transition-all duration-500 hover:border-neutral-200;
   }
-  .text-luxury-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent-gold to-primary bg-[length:200%_auto];
-    animation: var(--animate-gradient-x);
-  }
-  
   .btn-primary {
-    @apply bg-primary text-white px-10 py-5 text-[10px] uppercase tracking-[0.3em] hover:bg-accent-gold transition-all duration-700 shadow-luxury active:scale-95 rounded-full;
-  }
-
-  .gold-glow {
-    @apply relative after:absolute after:inset-0 after:bg-accent-gold/20 after:blur-[60px] after:rounded-full after:-z-10;
+    @apply bg-primary text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] hover:opacity-80 transition-all duration-500 active:scale-95 rounded-none;
   }
 }
 
 @layer utilities {
-  .bg-mesh {
-    background-color: var(--background);
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(184, 142, 47, 0.05) 0, transparent 40%), 
-      radial-gradient(at 100% 0%, rgba(10, 15, 26, 0.03) 0, transparent 40%),
-      radial-gradient(at 50% 100%, rgba(184, 142, 47, 0.02) 0, transparent 50%);
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
-/* Enhanced Grain Layer */
-.grain-overlay::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 9999;
+/* Remove heavy grain overlay */
+.grain-overlay {
+  display: none;
 }

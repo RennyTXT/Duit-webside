@@ -2,9 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronRight, ArrowUpRight } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Product } from '@/data/products';
 
 interface ProductCardProps {
@@ -12,127 +10,52 @@ interface ProductCardProps {
   variant?: 'default' | 'shop' | 'compact';
 }
 
-// Sub-component to handle Parallax safely after hydration
-const ParallaxImage = ({ src, alt, containerRef }: { src: string, alt: string, containerRef: React.RefObject<HTMLDivElement | null> }) => {
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-  
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-
-  return (
-    <motion.div 
-      style={{ y: imageY }} 
-      className="absolute -inset-x-0 -inset-y-20 flex items-center justify-center"
-    >
-      <Image 
-        src={src} 
-        alt={alt}
-        fill
-        className="object-cover group-hover:scale-105 transition-transform duration-[2s] ease-out"
-      />
-    </motion.div>
-  );
-};
-
 export default function ProductCard({ product, variant = 'default' }: ProductCardProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const isCompact = variant === 'compact';
   const productImage = product.image && product.image !== "" ? product.image : "/placeholder-product.png";
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    },
-  };
 
   return (
     <motion.div
-      ref={containerRef}
-      variants={itemVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-50px' }}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
       className="group"
     >
-      <Link href={`/products/${product.id}`} className="block h-full">
-        <div className={`relative overflow-hidden bg-white border border-neutral-100 group-hover:border-primary/10 transition-all duration-700 shadow-luxury hover:shadow-luxury-hover
-          ${isCompact ? 'rounded-[24px] md:rounded-[32px] p-4 md:p-5' : 'rounded-[32px] md:rounded-[48px] mb-6 md:mb-10'}
-        `}>
-          <div className={`relative overflow-hidden bg-cream-light ${isCompact ? 'rounded-[20px] md:rounded-[24px] aspect-square' : 'rounded-[24px] md:rounded-[36px] aspect-[4/5] m-3 md:m-4'}`}>
-            
-            {isMounted ? (
-              <ParallaxImage src={productImage} alt={product.name} containerRef={containerRef} />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Image src={productImage} alt={product.name} fill className="object-cover" />
-              </div>
+      <Link href={`/products/${product.id}`} className="block space-y-4">
+        <div className="relative aspect-square overflow-hidden bg-neutral-50 rounded-sm">
+          <Image 
+            src={productImage} 
+            alt={product.name} 
+            fill 
+            className="object-cover transition-transform duration-700 group-hover:scale-105" 
+          />
+          
+          {/* Subtle Badges */}
+          <div className="absolute top-4 left-4 flex flex-col gap-2">
+            {product.isNew && (
+              <span className="bg-white/90 backdrop-blur-sm text-[8px] px-2 py-1 uppercase tracking-widest text-primary border border-neutral-100">New</span>
             )}
-            
-            {/* Badges */}
-            <div className="absolute top-6 left-6 flex flex-col gap-3 z-10">
-              {product.isNew && (
-                <div className="bg-primary text-white text-[8px] px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-[0.2em] border border-white/10">New</div>
-              )}
-              {product.isBest && (
-                <div className="bg-white/90 backdrop-blur-md text-primary text-[8px] px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-[0.2em] border border-neutral-100">Essential</div>
-              )}
-              {product.modelUrl && (
-                <div className="bg-accent-gold text-white text-[8px] px-4 py-1.5 rounded-full shadow-2xl uppercase tracking-[0.2em] border border-white/10 flex items-center gap-2">
-                  <div className="w-1 h-1 bg-white rounded-full animate-pulse"></div>
-                  3D View
-                </div>
-              )}
-            </div>
-
-            {/* Hover Overlay - Only for non-compact */}
-            {!isCompact && (
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-700 flex items-center justify-center backdrop-blur-[3px]">
-                <div className="bg-white text-black px-10 py-5 rounded-full text-[10px] uppercase tracking-[0.2em] transform translate-y-12 group-hover:translate-y-0 transition-all duration-700 shadow-2xl flex items-center gap-3">
-                  Discover Details <ArrowUpRight size={14} />
-                </div>
-              </div>
+            {product.isBest && (
+              <span className="bg-white/90 backdrop-blur-sm text-[8px] px-2 py-1 uppercase tracking-widest text-secondary border border-neutral-100">Essential</span>
             )}
           </div>
-
-          {isCompact && (
-            <div className="mt-8 space-y-3 px-2">
-               <div className="flex justify-between items-start">
-                  <h3 className="text-xs text-primary group-hover:text-accent-gold transition-colors uppercase leading-tight line-clamp-1 tracking-wider">{product.name}</h3>
-                  <span className="text-xs text-primary">฿{product.price.toLocaleString()}</span>
-               </div>
-               <p className="text-[10px] text-secondary font-medium line-clamp-1 opacity-60 italic tracking-wide">{product.tagline}</p>
-            </div>
-          )}
         </div>
 
-        {!isCompact && (
-          <div className="px-6 space-y-3">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg text-primary group-hover:text-accent-gold transition-colors truncate uppercase tracking-tight">{product.name}</h3>
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-primary bg-cream-light px-4 py-1.5 rounded-xl border border-neutral-100">฿{product.price.toLocaleString()}</span>
-                <div className="w-8 h-8 rounded-full border border-neutral-100 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm">
-                   <ChevronRight size={16} strokeWidth={3} />
-                </div>
-              </div>
-            </div>
-            <p className="text-sm text-secondary line-clamp-1 font-medium italic opacity-60 tracking-wide">{product.tagline}</p>
+        <div className="space-y-1 px-1">
+          <h3 className="text-xs uppercase tracking-[0.1em] text-primary group-hover:opacity-60 transition-opacity">
+            {product.name}
+          </h3>
+          <div className="flex justify-between items-baseline">
+            <p className="text-[11px] text-secondary">
+              ฿{product.price.toLocaleString()}
+            </p>
+            {product.category && (
+              <span className="text-[9px] uppercase tracking-widest text-neutral-300">
+                {product.category}
+              </span>
+            )}
           </div>
-        )}
+        </div>
       </Link>
     </motion.div>
   );
