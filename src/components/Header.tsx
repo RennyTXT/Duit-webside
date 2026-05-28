@@ -9,6 +9,7 @@ import { useLanguageStore, translations } from '@/store/useLanguageStore';
 import { useWishlistStore } from '@/store/useWishlistStore';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import ArchiveSidebar from './ArchiveSidebar';
+import SearchOverlay from './SearchOverlay';
 
 const Header = () => {
   const { language } = useLanguageStore();
@@ -17,6 +18,7 @@ const Header = () => {
   const { items } = useWishlistStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
@@ -105,7 +107,10 @@ const Header = () => {
               </AnimatePresence>
             </button>
 
-            <button className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}>
+            <button 
+              onClick={() => setIsSearchOpen(true)}
+              className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}
+            >
               <Search size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
             </button>
             <Link href="/pet-profile" className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}>
@@ -176,6 +181,7 @@ const Header = () => {
       </AnimatePresence>
 
       <ArchiveSidebar isOpen={isArchiveOpen} onClose={() => setIsArchiveOpen(false)} />
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 };
