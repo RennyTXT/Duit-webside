@@ -221,12 +221,24 @@ export default function PetProfilePage() {
     setIsAnalyzing(true);
     setShowAnalysis(true);
     setTimeout(() => {
-      const recommended = staticProducts.filter(p => {
-        if (!p.recommendedFor) return true;
-        const typeMatch = !p.recommendedFor.type || p.recommendedFor.type === type;
-        const sizeMatch = !p.recommendedFor.size || p.recommendedFor.size === size;
-        return typeMatch && sizeMatch;
-      }).slice(0, 3);
+      // Logic to filter and prioritize products for AI recommendation
+      const recommended = [...staticProducts]
+        .filter(p => {
+          if (!p.recommendedFor) return true;
+          // Filter by type (cat/dog)
+          const typeMatch = !p.recommendedFor.type || p.recommendedFor.type === type;
+          // Filter by size
+          const sizeMatch = !p.recommendedFor.size || p.recommendedFor.size === size;
+          return typeMatch && sizeMatch;
+        })
+        // Sort to ensure variety or priority (e.g., best sellers or new products)
+        .sort((a, b) => {
+          if (a.isBest && !b.isBest) return -1;
+          if (!a.isBest && b.isBest) return 1;
+          return 0;
+        })
+        .slice(0, 6); // Limit to exactly 6 products as requested
+
       setAiInsights({
         title: t.crm.identitySynthesis,
         reason: language === 'th' ? `จากการวิเคราะห์ลักษณะเฉพาะของสายพันธุ์และรูปแบบการใช้ชีวิต AI ของเราจัดหมวดหมู่ ${name} เป็น "Refined Explorer" ที่เหมาะกับงานดีไซน์เน้นการยศาสตร์สูงสุด` : `Based on breed characteristics and lifestyle patterns, our AI classifies ${name} as a "Refined Explorer" best suited for ergonomically-focused designs.`,
