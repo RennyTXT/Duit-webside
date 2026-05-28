@@ -42,11 +42,11 @@ const Home = () => {
   ];
 
   const categories = [
-    { name: t.shop.eatDrink, Icon: Utensils, href: '/collections/eat-drink', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/f41249b674844.jpg?w=1440" },
-    { name: t.shop.playRest, Icon: Gamepad2, href: '/collections/play-rest', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/a326694e82e6c.jpg?w=1440" },
-    { name: t.shop.furniture, Icon: Armchair, href: '/collections/furniture', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/7161e1b854371.jpg?w=1440" },
-    { name: t.shop.hygiene, Icon: Droplets, href: '/collections/hygiene', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/90807b55f1f45.jpg?w=1440" },
-    { name: t.shop.daily, Icon: Sparkles, href: '/collections/daily', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/13ff08bf73ad5.jpg?w=1440" },
+    { name: t.shop.eatDrink, Icon: Utensils, href: '/collections/eat-drink', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/a68dabc0835be.jpg?w=1440" },
+    { name: t.shop.playRest, Icon: Gamepad2, href: '/collections/play-rest', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/3079f9574a44e.jpg?w=1440" },
+    { name: t.shop.furniture, Icon: Armchair, href: '/collections/furniture', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/4b8dbff2a9510.jpg?w=1440" },
+    { name: t.shop.hygiene, Icon: Droplets, href: '/collections/hygiene', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/af852a145b564.jpg?w=1440" },
+    { name: t.shop.daily, Icon: Sparkles, href: '/collections/daily', image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/9389a51da3da9.jpg?w=1440" },
   ];
 
   useEffect(() => {
