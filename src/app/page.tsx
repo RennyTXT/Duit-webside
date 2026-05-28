@@ -80,60 +80,62 @@ const Home = () => {
   return (
     <div className="flex flex-col bg-white">
       
-      {/* 1. HERO - CLEAN & EDGE-TO-EDGE */}
-      <section className="relative h-screen w-full overflow-hidden bg-white">
-        <AnimatePresence mode="wait">
-          <motion.div 
-            key={currentSlide} 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }} 
-            transition={{ duration: 1.5 }} 
-            className="absolute inset-0"
-          >
-            <Image 
-              src={heroSlides[currentSlide].image} 
-              alt={heroSlides[currentSlide].title} 
-              fill 
-              className="object-cover" 
-              priority 
-            />
-            <div className="absolute inset-0 bg-white/10" />
-            
-            <div className="absolute inset-0 flex items-center justify-start px-6 md:px-20 lg:px-32">
-              <div className="max-w-3xl space-y-6">
-                  <motion.span
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-[10px] uppercase tracking-[0.4em] text-primary/60"
-                  >
-                      {heroSlides[currentSlide].tag}
-                  </motion.span>
-                  <motion.h1 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[1] text-primary uppercase"
-                  >
-                      {heroSlides[currentSlide].title.replace('.', '')}
-                  </motion.h1>
-                  <motion.div 
-                    initial={{ opacity: 0 }} 
-                    animate={{ opacity: 1 }} 
-                    transition={{ delay: 0.5 }} 
-                    className="pt-6"
-                  >
-                    <Link href="/shop" className="inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.3em] text-primary border-b border-primary/20 pb-2 hover:border-primary transition-colors">
-                      Explore Shop <ArrowRight size={14} />
-                    </Link>
-                  </motion.div>
+      {/* 1. HERO - CLEAN & BALANCED */}
+      <section className="relative h-[70vh] w-full overflow-hidden bg-white pt-20 px-6 md:px-12 lg:px-20">
+        <div className="relative w-full h-full overflow-hidden rounded-sm bg-neutral-50">
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={currentSlide} 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              transition={{ duration: 1.5 }} 
+              className="absolute inset-0"
+            >
+              <Image 
+                src={heroSlides[currentSlide].image} 
+                alt={heroSlides[currentSlide].title} 
+                fill 
+                className="object-cover" 
+                priority 
+              />
+              <div className="absolute inset-0 bg-white/5" />
+              
+              <div className="absolute inset-0 flex items-center justify-start px-12 md:px-20">
+                <div className="max-w-3xl space-y-6">
+                    <motion.span
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-[10px] uppercase tracking-[0.4em] text-primary/60"
+                    >
+                        {heroSlides[currentSlide].tag}
+                    </motion.span>
+                    <motion.h1 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="text-4xl md:text-6xl lg:text-7xl tracking-tighter leading-[1] text-primary uppercase"
+                    >
+                        {heroSlides[currentSlide].title.replace('.', '')}
+                    </motion.h1>
+                    <motion.div 
+                      initial={{ opacity: 0 }} 
+                      animate={{ opacity: 1 }} 
+                      transition={{ delay: 0.5 }} 
+                      className="pt-6"
+                    >
+                      <Link href="/shop" className="inline-flex items-center gap-4 text-[10px] uppercase tracking-[0.3em] text-primary border-b border-primary/20 pb-2 hover:border-primary transition-colors">
+                        Explore Shop <ArrowRight size={14} />
+                      </Link>
+                    </motion.div>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* Minimal Indicators */}
-        <div className="absolute bottom-12 right-12 flex flex-col gap-4">
+        <div className="absolute bottom-12 right-20 flex flex-col gap-4 z-10">
            {heroSlides.map((_, i) => (
              <button 
               key={i} 
