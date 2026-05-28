@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { User, Search, Menu, X, ChevronDown, Star } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -62,14 +61,9 @@ const Header = () => {
           {/* Left: Logo */}
           <div className="flex-1">
             <Link href="/" className="inline-block transition-all duration-700 hover:scale-105 active:scale-95">
-              <Image 
-                src="/logo.jpg" 
-                alt="DUIT Logo" 
-                width={60} 
-                height={60} 
-                className="object-contain"
-                priority
-              />
+              <span className="font-greycliff text-3xl font-black lowercase tracking-[-0.02em] text-primary">
+                duit
+              </span>
             </Link>
           </div>
 

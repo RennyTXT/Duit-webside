@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Anuphan } from "next/font/google";
+import localFont from "next/font/local";
 import { Toaster } from 'sonner';
 import MainLayout from "@/components/MainLayout";
-import SmoothScroll from "@/components/SmoothScroll";
 import AuraCursor from "@/components/AuraCursor";
 import "./globals.css";
 
@@ -18,6 +18,32 @@ const anuphan = Anuphan({
   subsets: ['thai', 'latin'],
   variable: '--font-anuphan',
   display: 'swap',
+});
+
+const greycliff = localFont({
+  src: [
+    {
+      path: "../../public/fonts/GreycliffCF-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GreycliffCF-Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GreycliffCF-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/GreycliffCF-Heavy.otf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-greycliff",
 });
 
 export const metadata: Metadata = {
@@ -47,15 +73,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${anuphan.variable} antialiased`}>
+    <html lang="en" className={`${outfit.variable} ${anuphan.variable} ${greycliff.variable} antialiased`}>
       <body className="bg-white text-black min-h-screen flex flex-col font-sans selection:bg-black selection:text-white overflow-x-hidden">
         <div className="grain-overlay" />
-        <SmoothScroll>
-          <Toaster position="top-center" richColors />
-          <MainLayout>
-            {children}
-          </MainLayout>
-        </SmoothScroll>
+        <Toaster position="top-center" richColors />
+        <MainLayout>
+          {children}
+        </MainLayout>
       </body>
     </html>
   );

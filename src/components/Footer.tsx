@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Mail, MapPin, Phone, MessageCircle, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getSettings } from '@/app/admin/actions/settings';
@@ -64,13 +63,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 mb-24">
           <div className="lg:col-span-5 space-y-12">
             <Link href="/" className="inline-block hover:scale-105 transition-transform duration-500">
-              <Image 
-                src="/logo.jpg" 
-                alt="DUIT Logo" 
-                width={80} 
-                height={80} 
-                className="rounded-2xl shadow-luxury"
-              />
+              <span className="font-greycliff text-4xl font-black lowercase tracking-[-0.02em] text-white">
+                duit
+              </span>
             </Link>
             <p className="text-lg text-neutral-400 font-medium leading-relaxed max-w-md opacity-80">
               {settings?.mission_statement || t.footer.mission}
