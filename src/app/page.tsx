@@ -38,6 +38,18 @@ const Home = () => {
       title: t.hero.slide3Title,
       subtitle: t.hero.slide3Sub,
       tag: "Living Series"
+    },
+    {
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/7161e1b854371.jpg?w=1440",
+      title: "Clean. Pure. Minimal.",
+      subtitle: "Experience the quiet beauty of Duit design.",
+      tag: "Design Lab"
+    },
+    {
+      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/f41249b674844.jpg?w=1440",
+      title: "For Your Companion",
+      subtitle: "Thoughtfully crafted furniture for the modern pet.",
+      tag: "Atelier"
     }
   ];
 
@@ -134,13 +146,13 @@ const Home = () => {
           </AnimatePresence>
         </div>
 
-        {/* Minimal Indicators */}
-        <div className="absolute bottom-12 right-20 flex flex-col gap-4 z-10">
+        {/* Dot Indicators */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
            {heroSlides.map((_, i) => (
              <button 
               key={i} 
               onClick={() => setCurrentSlide(i)}
-              className={`w-1 h-8 transition-all duration-500 ${currentSlide === i ? 'bg-primary' : 'bg-neutral-200 hover:bg-neutral-300'}`}
+              className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${currentSlide === i ? 'bg-primary w-4' : 'bg-neutral-300 hover:bg-neutral-400'}`}
              />
            ))}
         </div>
