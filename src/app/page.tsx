@@ -38,36 +38,6 @@ const Home = () => {
       title: "Living Series",
       subtitle: "Seamlessly blending into your home.",
       tag: "Heritage"
-    },
-    {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/8040a424e8150.jpg?w=1440",
-      title: "Dining Culture",
-      subtitle: "Elevating the daily ritual of eating.",
-      tag: "Eat & Drink"
-    },
-    {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/7161e1b854371.jpg?w=1440",
-      title: "Pure Form",
-      subtitle: "Furniture designed with architectural precision.",
-      tag: "Atelier"
-    },
-    {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/f41249b674844.jpg?w=1440",
-      title: "Quiet Hygiene",
-      subtitle: "Clean solutions for a harmonious life.",
-      tag: "Hygiene"
-    },
-    {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/a326694e82e6c.jpg?w=1440",
-      title: "Window Hammock",
-      subtitle: "A wider world, wider enjoyment.",
-      tag: "Relax"
-    },
-    {
-      image: "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/90807b55f1f45.jpg?w=1440",
-      title: "The Table Plus",
-      subtitle: "Customized automatic feeding in your hand.",
-      tag: "Technology"
     }
   ];
 
