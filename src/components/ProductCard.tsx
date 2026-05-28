@@ -42,15 +42,15 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
         </div>
 
         <div className="space-y-1 px-1">
-          <h3 className="text-xs uppercase tracking-[0.1em] text-primary group-hover:opacity-60 transition-opacity">
+          <h3 className="text-sm uppercase tracking-[0.1em] text-primary group-hover:opacity-60 transition-opacity">
             {product.name}
           </h3>
           <div className="flex justify-between items-baseline">
-            <p className="text-[11px] text-secondary">
+            <p className="text-[13px] text-secondary">
               ฿{product.price.toLocaleString()}
             </p>
             {product.category && (
-              <span className="text-[9px] uppercase tracking-widest text-neutral-300">
+              <span className="text-[10px] uppercase tracking-widest text-neutral-300">
                 {product.category}
               </span>
             )}

@@ -73,7 +73,7 @@ const Header = () => {
               <Link 
                 key={link.name} 
                 href={link.href} 
-                className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 uppercase ${language === 'th' ? 'text-[18px] font-light tracking-normal' : 'text-[11px] tracking-[0.25em]'} ${useDarkText ? 'text-secondary' : 'text-white/70'}`}
+                className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 uppercase ${language === 'th' ? 'text-[18px] font-light tracking-normal' : 'text-[12.5px] tracking-[0.25em]'} ${useDarkText ? 'text-secondary' : 'text-white/70'}`}
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-gold transition-all duration-500 group-hover:w-full"></span>

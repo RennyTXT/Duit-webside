@@ -44,6 +44,7 @@
     @apply bg-background text-foreground antialiased selection:bg-primary selection:text-white overflow-x-hidden font-sans;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv11";
     -webkit-tap-highlight-color: transparent;
+    font-size: 17px; /* Increased from default 16px */
   }
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight uppercase text-primary;
