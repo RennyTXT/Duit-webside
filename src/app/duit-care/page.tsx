@@ -12,6 +12,7 @@ import { createClient } from '@/lib/supabase/client';
 
 export default function DuitCarePage() {
   const { profile } = usePetStore();
+  const { language } = useLanguageStore();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const supabase = createClient();
@@ -173,5 +174,8 @@ export default function DuitCarePage() {
         </div>
       </section>
     </div>
+  );
+}
+ </div>
   );
 }
