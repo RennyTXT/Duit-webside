@@ -167,7 +167,7 @@ export default function PetProfilePage() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     clearProfile(); // ล้างข้อมูลสัตว์เลี้ยงเมื่อ Logout
-    toast.success('Signed out successfully');
+    toast.success(t.common.signedOut);
     window.location.href = '/';
   };
 
@@ -232,10 +232,6 @@ export default function PetProfilePage() {
       if (profileData) {
         setMemberTier(profileData.tier || 'Silver');
         setMemberPoints(profileData.duit_coins || 0);
-        // ถ้าต้องการอัปเดตชื่อผู้ใช้จากโปรไฟล์
-        if (profileData.full_name && !name) {
-           //SetName(profileData.full_name); // อาจจะไม่ต้องทำถ้าเราเน้นชื่อสัตว์เลี้ยง
-        }
       }
 
       // 2. Fetch Pet Data
@@ -376,7 +372,7 @@ export default function PetProfilePage() {
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6">
         <div className="w-16 h-16 border-t-2 border-accent-gold rounded-full animate-spin"></div>
-        <p className="text-[10px] uppercase tracking-[0.4em] text-neutral-300">Authenticating Experience...</p>
+        <p className="text-[10px] uppercase tracking-[0.4em] text-neutral-300">{t.crm.authenticating}</p>
       </div>
     );
   }
@@ -428,8 +424,8 @@ export default function PetProfilePage() {
               {step === 3 && (
                 <div className="max-w-2xl mx-auto space-y-12 sm:space-y-16 px-4">
                    <div className="text-center space-y-2 sm:space-y-4">
-                      <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">Stage 02</span>
-                      <h2 className="text-3xl sm:text-5xl uppercase tracking-tight">{language === 'th' ? 'ภาพลักษณ์ของน้อง' : 'The Visual Identity.'}</h2>
+                      <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">{t.crm.stage02}</span>
+                      <h2 className="text-3xl sm:text-5xl uppercase tracking-tight">{t.crm.visualIdentity}</h2>
                    </div>
                    <div className="flex flex-col items-center gap-12">
                       <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-[48px] overflow-hidden border-2 border-dashed border-neutral-200 bg-neutral-50 flex items-center justify-center group hover:border-accent-gold transition-colors">
@@ -445,14 +441,14 @@ export default function PetProfilePage() {
                             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center text-neutral-300 group-hover:text-accent-gold shadow-sm transition-colors">
                                <Camera size={32} strokeWidth={1.5} />
                             </div>
-                            <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-400">{language === 'th' ? 'อัปโหลดรูปภาพ' : 'Upload Portrait'}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-400">{t.crm.uploadPortrait}</span>
                             <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
                           </label>
                         )}
                       </div>
                       <div className="flex gap-4 w-full">
-                         <button onClick={() => setStep(2)} className="flex-1 h-16 rounded-full border border-neutral-100 text-[10px] uppercase tracking-[0.2em] hover:bg-neutral-50 transition-colors">Back</button>
-                         <button onClick={() => setStep(4)} className="flex-[2] h-16 bg-primary text-white rounded-full text-[10px] uppercase tracking-[0.2em] hover:bg-accent-gold transition-all shadow-lg">{language === 'th' ? 'ขั้นตอนถัดไป' : 'Proceed'}</button>
+                         <button onClick={() => setStep(2)} className="flex-1 h-16 rounded-full border border-neutral-100 text-[10px] uppercase tracking-[0.2em] hover:bg-neutral-50 transition-colors">{t.crm.back}</button>
+                         <button onClick={() => setStep(4)} className="flex-[2] h-16 bg-primary text-white rounded-full text-[10px] uppercase tracking-[0.2em] hover:bg-accent-gold transition-all shadow-lg">{t.crm.proceed}</button>
                       </div>
                    </div>
                 </div>
@@ -461,7 +457,7 @@ export default function PetProfilePage() {
               {step === 4 && (
                 <div className="max-w-2xl mx-auto space-y-12 sm:space-y-16 px-4">
                    <div className="text-center space-y-2 sm:space-y-4">
-                      <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">Stage 03</span>
+                      <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">{t.crm.stage03}</span>
                       <h2 className="text-3xl sm:text-5xl uppercase tracking-tight">{t.crm.detailedPortfolio}</h2>
                    </div>
                    <div className="space-y-8 sm:space-y-12">
@@ -537,14 +533,14 @@ export default function PetProfilePage() {
                                    <p className="text-base sm:text-lg text-secondary font-medium leading-relaxed italic">"{aiInsights?.reason}"</p>
                                    <div className="flex flex-wrap gap-6 sm:gap-8">
                                       <div className="text-left">
-                                         <span className="block text-[8px] text-neutral-400 uppercase tracking-widest mb-2">Energy Level</span>
+                                         <span className="block text-[8px] text-neutral-400 uppercase tracking-widest mb-2">{t.crm.energyLevel}</span>
                                          <div className="flex gap-1">
                                             {[1,2,3,4,5].map(i => <div key={i} className={`w-4 sm:w-6 h-1 rounded-full ${i <= 4 ? (type === 'dog' ? 'bg-blue-600' : 'bg-accent-gold') : 'bg-neutral-200'}`}></div>)}
                                          </div>
                                       </div>
                                       <div className="text-left">
-                                         <span className="block text-[8px] text-neutral-400 uppercase tracking-widest mb-1">Design Preference</span>
-                                         <span className="text-[10px] uppercase tracking-widest">MINIMALIST</span>
+                                         <span className="block text-[8px] text-neutral-400 uppercase tracking-widest mb-1">{t.crm.designPreference}</span>
+                                         <span className="text-[10px] uppercase tracking-widest">{t.crm.minimalist}</span>
                                       </div>
                                    </div>
                                 </div>
@@ -556,11 +552,11 @@ export default function PetProfilePage() {
                               'donut2548donut@gmail.com'
                             ].includes(userEmail) && (
                               <Link href="/admin" className="flex items-center gap-3 text-accent-gold text-[10px] uppercase tracking-[0.2em] hover:scale-105 transition-all">
-                                <ShieldCheck size={16} /> Atelier Management
+                                <ShieldCheck size={16} /> {t.crm.atelierManagement}
                               </Link>
                             )}
                             <button onClick={() => { clearProfile(); setStep(1); setImageUrl(''); }} className="flex items-center gap-3 text-red-500 text-[10px] uppercase tracking-[0.2em] hover:translate-x-2 transition-all"><Trash2 size={16} /> {t.crm.resetProfile}</button>
-                            <button onClick={handleLogout} className="flex items-center gap-3 text-neutral-400 text-[10px] uppercase tracking-[0.2em] hover:text-primary transition-all"><LogOut size={16} /> Sign Out</button>
+                            <button onClick={handleLogout} className="flex items-center gap-3 text-neutral-400 text-[10px] uppercase tracking-[0.2em] hover:text-primary transition-all"><LogOut size={16} /> {t.crm.signOut}</button>
                           </div>
                        </div>
                        <div className="space-y-8 sm:space-y-12">
@@ -572,7 +568,7 @@ export default function PetProfilePage() {
                                    <div className="space-y-1">
                                       <span className={`text-[8px] sm:text-[9px] ${type === 'dog' ? 'text-blue-600' : 'text-accent-gold'} uppercase tracking-[0.2em]`}>{t.crm.recommended}</span>
                                       <h4 className="text-base sm:text-xl uppercase tracking-tight line-clamp-1">{p.name}</h4>
-                                      <p className="text-[10px] sm:text-sm text-secondary font-medium opacity-60">Design for refined aesthetics</p>
+                                      <p className="text-[10px] sm:text-sm text-secondary font-medium opacity-60">{t.crm.designForRefined}</p>
                                    </div>
                                    <div className="ml-auto w-8 h-8 sm:w-12 sm:h-12 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all"><ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" /></div>
                                 </Link>
@@ -590,7 +586,7 @@ export default function PetProfilePage() {
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 text-left mt-10 sm:mt-16">
                           <div className="p-8 sm:p-10 border border-neutral-100 rounded-[32px] sm:rounded-[48px] bg-white/50 space-y-4 shadow-sm">
                              <h4 className="text-lg sm:text-xl uppercase">Duit The Table</h4>
-                             <p className="text-[10px] sm:text-xs text-green-600 tracking-widest uppercase">Warranty Active</p>
+                             <p className="text-[10px] sm:text-xs text-green-600 tracking-widest uppercase">{t.crm.warrantyActive}</p>
                           </div>
                           <button className="p-8 sm:p-10 border-2 border-dashed border-neutral-200 rounded-[32px] sm:rounded-[48px] flex flex-col items-center justify-center gap-4 hover:border-accent-gold hover:bg-white/50 transition-all text-neutral-300 hover:text-accent-gold active:scale-95">
                              <QrCode className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1} />
