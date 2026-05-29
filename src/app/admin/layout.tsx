@@ -40,12 +40,28 @@ export default function AdminLayout({
       }
 
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
           router.push('/admin/login');
-        } else {
-          setIsFetchingAuth(false);
+          return;
         }
+
+        // --- ADMIN AUTHORIZATION LOGIC ---
+        // อนุญาตเฉพาะอีเมลที่อยู่ในรายการนี้เท่านั้น (Whitelist)
+        const authorizedAdmins = [
+          's6606021610117@email.kmutnb.ac.th',
+          'donut2548donut@gmail.com'
+        ];
+
+        if (!authorizedAdmins.includes(user.email || '')) {
+          toast.error('Access Denied: คุณไม่มีสิทธิ์เข้าถึงหน้าผู้ดูแลระบบ');
+          await supabase.auth.signOut();
+          router.push('/admin/login');
+          return;
+        }
+        
+        setIsFetchingAuth(false);
       } catch (err) {
         console.error('Auth check error:', err);
         router.push('/admin/login');
