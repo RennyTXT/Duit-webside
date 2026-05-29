@@ -1,6 +1,7 @@
 'use client';
 
 import { usePetStore } from '@/store/usePetStore';
+import { useLanguageStore } from '@/store/useLanguageStore';
 import { getRecommendedProducts, Product } from '@/data/products';
 import { useMemo, useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -54,7 +55,7 @@ export default function DuitCarePage() {
           </div>
           <Link href="/pet-profile" className="group relative inline-block w-full bg-primary text-white py-6 rounded-full overflow-hidden transition-all shadow-luxury">
             <div className="absolute inset-0 bg-accent-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-            <span className="relative z-10 uppercase tracking-[0.2em] text-xs">{language === 'th' ? 'เริ่มต้นสร้างโปรไฟล์' : 'Initialize Profile'}</span>
+            <span className="relative z-10 uppercase tracking-[0.2em] text-xs">{language === 'th' ? 'เริ่มต้นสร้างโปรไฟล์' : 'เริ่มต้นสร้างโปรไฟล์'}</span>
           </Link>
         </div>
       </div>
@@ -174,8 +175,5 @@ export default function DuitCarePage() {
         </div>
       </section>
     </div>
-  );
-}
- </div>
   );
 }
