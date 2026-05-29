@@ -135,6 +135,21 @@ export default function PetProfilePage() {
   const t = translations[language];
   const router = useRouter();
   
+  const supabase = createClient();
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+
+  useEffect(() => {
+    async function checkUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push('/login');
+      } else {
+        setIsLoadingAuth(false);
+      }
+    }
+    checkUser();
+  }, [router, supabase]);
+
   const [activeTab, setActiveTab] = useState<'profile' | 'rewards' | 'registry'>('profile');
   const [step, setStep] = useState(profile ? 5 : 1);
 
@@ -197,10 +212,14 @@ export default function PetProfilePage() {
 
   const [isSaving, setIsSaving] = useState(false);
 
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchProfileAndPet = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+      
+      setUserEmail(user.email || null);
 
       // 1. Fetch User Profile
       const { data: profileData } = await supabase
@@ -342,6 +361,15 @@ export default function PetProfilePage() {
       setIsAnalyzing(false);
     }, 2000);
   };
+
+  if (isLoadingAuth) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6">
+        <div className="w-16 h-16 border-t-2 border-accent-gold rounded-full animate-spin"></div>
+        <p className="text-[10px] uppercase tracking-[0.4em] text-neutral-300">Authenticating Experience...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen text-primary transition-colors duration-1000 ${themeColors.bg}`}>
@@ -513,6 +541,14 @@ export default function PetProfilePage() {
                              </div>
                           </div>
                           <div className="flex flex-col sm:flex-row items-center gap-6">
+                            {userEmail && [
+                              's6606021610117@email.kmutnb.ac.th',
+                              'donut2548donut@gmail.com'
+                            ].includes(userEmail) && (
+                              <Link href="/admin" className="flex items-center gap-3 text-accent-gold text-[10px] uppercase tracking-[0.2em] hover:scale-105 transition-all">
+                                <ShieldCheck size={16} /> Atelier Management
+                              </Link>
+                            )}
                             <button onClick={() => { clearProfile(); setStep(1); setImageUrl(''); }} className="flex items-center gap-3 text-red-500 text-[10px] uppercase tracking-[0.2em] hover:translate-x-2 transition-all"><Trash2 size={16} /> {t.crm.resetProfile}</button>
                             <button onClick={handleLogout} className="flex items-center gap-3 text-neutral-400 text-[10px] uppercase tracking-[0.2em] hover:text-primary transition-all"><LogOut size={16} /> Sign Out</button>
                           </div>
