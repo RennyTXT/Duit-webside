@@ -211,6 +211,8 @@ export default function PetProfilePage() {
   const [isSaving, setIsSaving] = useState(false);
 
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [memberTier, setMemberTier] = useState('Silver');
+  const [memberPoints, setMemberPoints] = useState(0);
 
   useEffect(() => {
     const fetchProfileAndPet = async () => {
@@ -225,6 +227,15 @@ export default function PetProfilePage() {
         .select('*')
         .eq('id', user.id)
         .single();
+
+      if (profileData) {
+        setMemberTier(profileData.tier || 'Silver');
+        setMemberPoints(profileData.duit_coins || 0);
+        // ถ้าต้องการอัปเดตชื่อผู้ใช้จากโปรไฟล์
+        if (profileData.full_name && !name) {
+           //SetName(profileData.full_name); // อาจจะไม่ต้องทำถ้าเราเน้นชื่อสัตว์เลี้ยง
+        }
+      }
 
       // 2. Fetch Pet Data
       const { data: petData } = await supabase
