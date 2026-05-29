@@ -142,13 +142,14 @@ export default function PetProfilePage() {
     async function checkUser() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
+        clearProfile(); // ล้างข้อมูลสัตว์เลี้ยงในเครื่องทันที
         router.push('/login');
       } else {
         setIsLoadingAuth(false);
       }
     }
     checkUser();
-  }, [router, supabase]);
+  }, [router, supabase, clearProfile]);
 
   const [activeTab, setActiveTab] = useState<'profile' | 'rewards' | 'registry'>('profile');
   const [step, setStep] = useState(profile ? 5 : 1);
@@ -165,9 +166,9 @@ export default function PetProfilePage() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    clearProfile(); // ล้างข้อมูลสัตว์เลี้ยงเมื่อ Logout
     toast.success('Signed out successfully');
-    router.push('/');
-    router.refresh();
+    window.location.href = '/';
   };
 
   const breeds = type === 'dog' ? dogBreeds : type === 'cat' ? catBreeds : [];
@@ -512,7 +513,7 @@ export default function PetProfilePage() {
                        <button onClick={() => setActiveTab('rewards')} className={`px-6 sm:px-10 py-3 sm:py-5 rounded-full text-[9px] sm:text-[10px] uppercase tracking-[0.2em] transition-all whitespace-nowrap ${activeTab === 'rewards' ? 'bg-primary text-white shadow-xl' : 'bg-white/50 text-neutral-400 hover:bg-white'}`}>{t.crm.tabPrivileges}</button>
                     </div>
                  </div>
-                 <LuxuryCard profile={profile} tier="Gold" points={2450} t={t} />
+                 <LuxuryCard profile={profile} tier={memberTier} points={memberPoints} t={t} />
               </div>
 
               <div className="pt-16 sm:pt-24 border-t border-neutral-100">
