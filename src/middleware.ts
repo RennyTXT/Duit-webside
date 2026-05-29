@@ -36,14 +36,21 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const isAuthPage = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register')
-  const isProtectedPage = request.nextUrl.pathname.startsWith('/pet-profile')
+  const isProtectedPage = 
+    request.nextUrl.pathname.startsWith('/pet-profile') || 
+    request.nextUrl.pathname.startsWith('/admin')
 
   if (isAuthPage && user) {
     return NextResponse.redirect(new URL('/pet-profile', request.url))
   }
 
   if (isProtectedPage && !user) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    const url = new URL('/login', request.url)
+    // สำหรับหน้าแอดมิน ให้ไปหน้าแอดมินล็อกอิน
+    if (request.nextUrl.pathname.startsWith('/admin')) {
+      url.pathname = '/admin/login'
+    }
+    return NextResponse.redirect(url)
   }
 
   return supabaseResponse
