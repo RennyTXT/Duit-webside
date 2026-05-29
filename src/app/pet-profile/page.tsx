@@ -210,6 +210,7 @@ export default function PetProfilePage() {
   }, [type, language]);
 
   const [isSaving, setIsSaving] = useState(false);
+  const [petId, setPetId] = useState<string | null>(null);
 
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [memberTier, setMemberTier] = useState('Silver');
