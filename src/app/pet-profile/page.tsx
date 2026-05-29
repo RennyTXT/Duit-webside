@@ -195,26 +195,121 @@ export default function PetProfilePage() {
     }
   }, [type, language]);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error(language === 'th' ? 'รูปภาพต้องมีขนาดไม่เกิน 5MB' : 'Image must be under 5MB');
-        return;
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    const fetchProfileAndPet = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // 1. Fetch User Profile
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      // 2. Fetch Pet Data
+      const { data: petData } = await supabase
+        .from('pets')
+        .select('*')
+        .eq('owner_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (petData) {
+        setName(petData.name);
+        setType(petData.type as PetType);
+        setBreed(petData.breed || '');
+        setSize(petData.size as PetSize);
+        setImageUrl(petData.image_url || '');
+        
+        // Update local store as well
+        setProfile({ 
+          name: petData.name, 
+          type: petData.type as PetType, 
+          breed: petData.breed || '', 
+          size: petData.size as PetSize, 
+          age: null, 
+          imageUrl: petData.image_url || '' 
+        });
+        
+        setStep(5);
+        runAIAnalysis();
       }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    };
+
+    fetchProfileAndPet();
+  }, [supabase, setProfile]);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error(language === 'th' ? 'รูปภาพต้องมีขนาดไม่เกิน 5MB' : 'Image must be under 5MB');
+      return;
+    }
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}-${Math.random()}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('pets')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('pets')
+        .getPublicUrl(filePath);
+
+      setImageUrl(publicUrl);
+      toast.success(language === 'th' ? 'อัปโหลดรูปภาพสำเร็จ' : 'Image uploaded successfully');
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!name || !type || !breed || !size) return;
-    setProfile({ name, type, breed, size, age: null, imageUrl });
-    setStep(5);
-    runAIAnalysis();
+    
+    setIsSaving(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Unauthorized');
+
+      // 1. Update Profile (Sync name)
+      await supabase.from('profiles').update({ full_name: name }).eq('id', user.id);
+
+      // 2. Upsert Pet Data
+      const petData = {
+        owner_id: user.id,
+        name,
+        type,
+        breed,
+        size,
+        image_url: imageUrl,
+      };
+
+      const { error } = await supabase.from('pets').upsert([petData], { onConflict: 'owner_id' });
+      if (error) throw error;
+
+      setProfile({ name, type, breed, size, age: null, imageUrl });
+      setStep(5);
+      runAIAnalysis();
+      toast.success(language === 'th' ? 'บันทึกข้อมูลเรียบร้อย' : 'Profile saved successfully');
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const runAIAnalysis = () => {
