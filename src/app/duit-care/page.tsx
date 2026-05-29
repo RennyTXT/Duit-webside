@@ -43,13 +43,17 @@ export default function DuitCarePage() {
             <Heart size={40} strokeWidth={1} className="fill-accent-gold/10" />
           </div>
           <div className="space-y-6">
-            <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">Exclusivity</span>
-            <h1 className="text-4xl md:text-5xl uppercase tracking-tight">The Inner Circle</h1>
-            <p className="text-secondary font-medium leading-relaxed max-w-sm mx-auto opacity-70">Experience personalized care and elite benefits designed for the most discerning pet owners.</p>
+            <span className="text-[10px] uppercase tracking-[0.4em] text-accent-gold">{language === 'th' ? 'เอกสิทธิ์เฉพาะ' : 'Exclusivity'}</span>
+            <h1 className="text-4xl md:text-5xl uppercase tracking-tight">{language === 'th' ? 'ไพรเวท เซอร์เคิล' : 'The Inner Circle'}</h1>
+            <p className="text-secondary font-medium leading-relaxed max-w-sm mx-auto opacity-70">
+              {language === 'th' 
+                ? 'สัมผัสการดูแลที่ออกแบบมาเพื่อคุณโดยเฉพาะ พร้อมสิทธิประโยชน์ระดับพรีเมียมสำหรับเจ้าของสัตว์เลี้ยงที่พิถีพิถันที่สุด' 
+                : 'Experience personalized care and elite benefits designed for the most discerning pet owners.'}
+            </p>
           </div>
           <Link href="/pet-profile" className="group relative inline-block w-full bg-primary text-white py-6 rounded-full overflow-hidden transition-all shadow-luxury">
             <div className="absolute inset-0 bg-accent-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-            <span className="relative z-10 uppercase tracking-[0.2em] text-xs">Initialize Profile</span>
+            <span className="relative z-10 uppercase tracking-[0.2em] text-xs">{language === 'th' ? 'เริ่มต้นสร้างโปรไฟล์' : 'Initialize Profile'}</span>
           </Link>
         </div>
       </div>
