@@ -314,7 +314,13 @@ export default function PetProfilePage() {
       // 1. Update Profile (Sync name)
       await supabase.from('profiles').update({ full_name: name }).eq('id', user.id);
 
-      // 2. Upsert Pet Data
+      // 2. Check if pet already exists to decide between Update or Insert
+      const { data: existingPet } = await supabase
+        .from('pets')
+        .select('id')
+        .eq('owner_id', user.id)
+        .maybeSingle();
+
       const petData = {
         owner_id: user.id,
         name,
@@ -324,8 +330,20 @@ export default function PetProfilePage() {
         image_url: imageUrl,
       };
 
-      const { error } = await supabase.from('pets').upsert([petData], { onConflict: 'owner_id' });
-      if (error) throw error;
+      if (existingPet) {
+        // Update existing pet
+        const { error } = await supabase
+          .from('pets')
+          .update(petData)
+          .eq('id', existingPet.id);
+        if (error) throw error;
+      } else {
+        // Insert new pet
+        const { error } = await supabase
+          .from('pets')
+          .insert([petData]);
+        if (error) throw error;
+      }
 
       setProfile({ name, type, breed, size, age: null, imageUrl });
       setStep(5);
