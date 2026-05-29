@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, ArrowRight, ShieldCheck, RefreshCw, Loader2, X } from 'lucide-react';
+import { Mail, ArrowRight, ShieldCheck, RefreshCw, Loader2, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { createClient } from '@/lib/supabase/client';
@@ -10,14 +10,14 @@ import { useLanguageStore, translations } from '@/store/useLanguageStore';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function PhoneLoginPage() {
+export default function EmailLoginPage() {
   const { language } = useLanguageStore();
   const t = translations[language];
   const router = useRouter();
   const supabase = createClient();
 
-  const [step, setStep] = useState<'phone' | 'otp'>('phone');
-  const [phone, setPhone] = useState('');
+  const [step, setStep] = useState<'email' | 'otp'>('email');
+  const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [isSending, setIsSending] = useState(false);
   const [timer, setTimer] = useState(0);
@@ -33,26 +33,34 @@ export default function PhoneLoginPage() {
 
   const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (phone.length < 10) {
-      toast.error(language === 'th' ? 'กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง' : 'Please enter a valid phone number');
+    if (!email || !email.includes('@')) {
+      toast.error(language === 'th' ? 'กรุณากรอกอีเมลให้ถูกต้อง' : 'Please enter a valid email address');
       return;
     }
 
     setIsSending(true);
-    // Simulation of OTP Sending
-    // In production, you would call: await supabase.auth.signInWithOtp({ phone: `+66${phone.substring(1)}` })
-    setTimeout(() => {
-      setIsSending(false);
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+          shouldCreateUser: true,
+        }
+      });
+
+      if (error) throw error;
+
       setStep('otp');
       setTimer(60);
-      toast.success(language === 'th' ? 'ส่งรหัส OTP เรียบร้อยแล้ว' : 'OTP sent successfully');
-      // For Demo: Use 123456
-      console.log("Demo OTP: 123456");
-    }, 1500);
+      toast.success(language === 'th' ? 'ส่งรหัส OTP ไปที่อีเมลแล้ว' : 'OTP sent to your email');
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const handleOtpChange = (index: number, value: string) => {
-    if (isNaN(Number(value))) return;
+    if (isNaN(Number(value)) && value !== "") return;
     const newOtp = [...otp];
     newOtp[index] = value.substring(value.length - 1);
     setOtp(newOtp);
@@ -69,17 +77,21 @@ export default function PhoneLoginPage() {
     if (code.length < 6) return;
 
     setIsVerifying(true);
-    
-    // Simulation of OTP Verification
-    setTimeout(async () => {
-      if (code === '123456') {
-        toast.success(language === 'th' ? 'เข้าสู่ระบบสำเร็จ' : 'Logged in successfully');
-        router.push('/pet-profile');
-      } else {
-        toast.error(language === 'th' ? 'รหัส OTP ไม่ถูกต้อง' : 'Invalid OTP code');
-        setIsVerifying(false);
-      }
-    }, 1500);
+    try {
+      const { data, error } = await supabase.auth.verifyOtp({
+        email: email,
+        token: code,
+        type: 'email',
+      });
+
+      if (error) throw error;
+
+      toast.success(language === 'th' ? 'เข้าสู่ระบบสำเร็จ' : 'Logged in successfully');
+      router.push('/pet-profile');
+    } catch (error: any) {
+      toast.error(language === 'th' ? 'รหัส OTP ไม่ถูกต้องหรือหมดอายุ' : 'Invalid or expired OTP');
+      setIsVerifying(false);
+    }
   };
 
   return (
@@ -96,22 +108,22 @@ export default function PhoneLoginPage() {
           </Link>
           <div className="space-y-2">
             <h1 className="text-2xl uppercase tracking-tighter">
-              {step === 'phone' 
+              {step === 'email' 
                 ? (language === 'th' ? 'เข้าสู่ระบบ / สมัครสมาชิก' : 'Sign In / Register')
                 : (language === 'th' ? 'ยืนยันรหัส OTP' : 'Verify OTP')}
             </h1>
             <p className="text-sm text-secondary font-medium opacity-60">
-              {step === 'phone'
-                ? (language === 'th' ? 'ใช้เบอร์โทรศัพท์เพื่อสะสมคะแนนจากทุกช่องทาง' : 'Use your phone number to sync rewards across all channels')
-                : (language === 'th' ? `เราได้ส่งรหัส 6 หลักไปที่เบอร์ ${phone}` : `We sent a 6-digit code to ${phone}`)}
+              {step === 'email'
+                ? (language === 'th' ? 'ใช้อีเมลเพื่อสะสมคะแนนจากทุกช่องทาง' : 'Use your email to sync rewards across all channels')
+                : (language === 'th' ? `เราได้ส่งรหัส 6 หลักไปที่ ${email}` : `We sent a 6-digit code to ${email}`)}
             </p>
           </div>
         </div>
 
         <AnimatePresence mode="wait">
-          {step === 'phone' ? (
+          {step === 'email' ? (
             <motion.form 
-              key="phone-step"
+              key="email-step"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -120,20 +132,20 @@ export default function PhoneLoginPage() {
             >
               <div className="relative group">
                 <div className="absolute left-6 top-1/2 -translate-y-1/2 text-neutral-300 group-focus-within:text-primary transition-colors">
-                  <Phone size={18} strokeWidth={1.5} />
+                  <Mail size={18} strokeWidth={1.5} />
                 </div>
                 <input 
-                  type="tel" 
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="081 234 5678"
-                  className="w-full h-20 bg-neutral-50 border border-neutral-100 rounded-3xl px-16 text-xl tracking-widest outline-none focus:bg-white focus:border-primary transition-all shadow-sm"
-                  maxLength={10}
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  className="w-full h-20 bg-neutral-50 border border-neutral-100 rounded-3xl px-16 text-lg tracking-tight outline-none focus:bg-white focus:border-primary transition-all shadow-sm"
+                  required
                 />
               </div>
 
               <button 
-                disabled={isSending || phone.length < 10}
+                disabled={isSending || !email.includes('@')}
                 className="w-full h-20 bg-primary text-white rounded-3xl flex items-center justify-center gap-4 uppercase tracking-[0.3em] text-xs hover:bg-neutral-800 disabled:opacity-30 disabled:hover:bg-primary transition-all shadow-xl active:scale-95"
               >
                 {isSending ? <Loader2 className="animate-spin" size={20} /> : (
@@ -162,6 +174,7 @@ export default function PhoneLoginPage() {
                     onChange={(e) => handleOtpChange(i, e.target.value)}
                     className="w-full aspect-square bg-neutral-50 border border-neutral-100 rounded-2xl text-center text-2xl font-medium outline-none focus:bg-white focus:border-primary transition-all shadow-sm"
                     maxLength={1}
+                    autoComplete="one-time-code"
                   />
                 ))}
               </div>
@@ -182,10 +195,10 @@ export default function PhoneLoginPage() {
 
                 <div className="flex flex-col items-center gap-4 pt-4">
                   <button 
-                    onClick={() => setStep('phone')}
+                    onClick={() => setStep('email')}
                     className="text-[10px] uppercase tracking-widest text-secondary hover:text-primary transition-colors"
                   >
-                    {language === 'th' ? 'เปลี่ยนเบอร์โทรศัพท์' : 'Change Phone Number'}
+                    {language === 'th' ? 'เปลี่ยนอีเมล' : 'Change Email'}
                   </button>
                   
                   {timer > 0 ? (
