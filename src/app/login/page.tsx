@@ -16,12 +16,14 @@ export default function EmailLoginPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  const [step, setStep] = useState<'email' | 'otp'>('email');
+  const [step, setStep] = useState<'email' | 'otp' | 'name'>('email');
   const [email, setEmail] = useState('');
+  const [fullname, setFullname] = useState('');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [isSending, setIsSending] = useState(false);
   const [timer, setTimer] = useState(0);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     let interval: any;
@@ -78,6 +80,7 @@ export default function EmailLoginPage() {
 
     setIsVerifying(true);
     try {
+      // 1. ยืนยันรหัส OTP กับ Supabase
       const { data, error } = await supabase.auth.verifyOtp({
         email: email,
         token: code,
@@ -86,11 +89,55 @@ export default function EmailLoginPage() {
 
       if (error) throw error;
 
-      toast.success(language === 'th' ? 'เข้าสู่ระบบสำเร็จ' : 'Logged in successfully');
-      router.push('/pet-profile');
+      // 2. ดึงข้อมูลโปรไฟล์แบบรวดเร็ว (ใช้ maybeSingle แทน single เพื่อลด Error)
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', data.user?.id)
+        .maybeSingle();
+
+      // 3. ถ้ามีชื่ออยู่แล้ว ให้ไปหน้า Profile เลยทันที
+      if (profile?.full_name) {
+        toast.success(language === 'th' ? 'เข้าสู่ระบบสำเร็จ' : 'Logged in successfully');
+        // ใช้ window.location เพื่อล้างแคชและไปหน้าถัดไปแบบรวดเร็ว
+        window.location.href = '/pet-profile';
+      } else {
+        // ถ้าเป็นคนใหม่ ให้ไปหน้ากรอกชื่อ
+        setStep('name');
+        setIsVerifying(false);
+      }
     } catch (error: any) {
       toast.error(language === 'th' ? 'รหัส OTP ไม่ถูกต้องหรือหมดอายุ' : 'Invalid or expired OTP');
       setIsVerifying(false);
+    }
+  };
+
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!fullname) return;
+
+    setIsSaving(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Session expired');
+
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          id: user.id,
+          email: user.email,
+          full_name: fullname,
+          updated_at: new Date().toISOString(),
+        });
+
+      if (error) throw error;
+
+      toast.success(language === 'th' ? 'สร้างบัญชีสำเร็จ' : 'Account created successfully');
+      router.push('/pet-profile');
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -108,20 +155,20 @@ export default function EmailLoginPage() {
           </Link>
           <div className="space-y-2">
             <h1 className="text-2xl uppercase tracking-tighter">
-              {step === 'email' 
-                ? (language === 'th' ? 'เข้าสู่ระบบ / สมัครสมาชิก' : 'Sign In / Register')
-                : (language === 'th' ? 'ยืนยันรหัส OTP' : 'Verify OTP')}
+              {step === 'email' && (language === 'th' ? 'เข้าสู่ระบบ / สมัครสมาชิก' : 'Sign In / Register')}
+              {step === 'otp' && (language === 'th' ? 'ยืนยันรหัส OTP' : 'Verify OTP')}
+              {step === 'name' && (language === 'th' ? 'ยินดีต้อนรับสู่ Duit' : 'Welcome to Duit')}
             </h1>
             <p className="text-sm text-secondary font-medium opacity-60">
-              {step === 'email'
-                ? (language === 'th' ? 'ใช้อีเมลเพื่อสะสมคะแนนจากทุกช่องทาง' : 'Use your email to sync rewards across all channels')
-                : (language === 'th' ? `เราได้ส่งรหัส 6 หลักไปที่ ${email}` : `We sent a 6-digit code to ${email}`)}
+              {step === 'email' && (language === 'th' ? 'ใช้อีเมลเพื่อสะสมคะแนนจากทุกช่องทาง' : 'Use your email to sync rewards across all channels')}
+              {step === 'otp' && (language === 'th' ? `เราได้ส่งรหัส 6 หลักไปที่ ${email}` : `We sent a 6-digit code to ${email}`)}
+              {step === 'name' && (language === 'th' ? 'กรุณากรอกชื่อของคุณเพื่อเริ่มต้นประสบการณ์' : 'Please enter your name to start the experience')}
             </p>
           </div>
         </div>
 
         <AnimatePresence mode="wait">
-          {step === 'email' ? (
+          {step === 'email' && (
             <motion.form 
               key="email-step"
               initial={{ opacity: 0, y: 10 }}
@@ -156,7 +203,9 @@ export default function EmailLoginPage() {
                 )}
               </button>
             </motion.form>
-          ) : (
+          )}
+
+          {step === 'otp' && (
             <motion.div 
               key="otp-step"
               initial={{ opacity: 0, y: 10 }}
@@ -217,6 +266,43 @@ export default function EmailLoginPage() {
                 </div>
               </div>
             </motion.div>
+          )}
+
+          {step === 'name' && (
+            <motion.form 
+              key="name-step"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              onSubmit={handleSaveProfile}
+              className="space-y-8"
+            >
+              <div className="relative group">
+                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-neutral-300 group-focus-within:text-primary transition-colors">
+                  <User size={18} strokeWidth={1.5} />
+                </div>
+                <input 
+                  type="text" 
+                  value={fullname}
+                  onChange={(e) => setFullname(e.target.value)}
+                  placeholder="Full Name"
+                  className="w-full h-20 bg-neutral-50 border border-neutral-100 rounded-3xl px-16 text-lg tracking-tight outline-none focus:bg-white focus:border-primary transition-all shadow-sm"
+                  required
+                />
+              </div>
+
+              <button 
+                disabled={isSaving || !fullname}
+                className="w-full h-20 bg-primary text-white rounded-3xl flex items-center justify-center gap-4 uppercase tracking-[0.3em] text-xs hover:bg-neutral-800 disabled:opacity-30 disabled:hover:bg-primary transition-all shadow-xl active:scale-95"
+              >
+                {isSaving ? <Loader2 className="animate-spin" size={20} /> : (
+                  <>
+                    {language === 'th' ? 'เริ่มต้นใช้งาน' : 'Get Started'}
+                    <ArrowRight size={16} />
+                  </>
+                )}
+              </button>
+            </motion.form>
           )}
         </AnimatePresence>
 
