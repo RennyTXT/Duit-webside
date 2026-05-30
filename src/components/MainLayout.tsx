@@ -12,7 +12,6 @@ import { usePetStore } from '@/store/usePetStore';
 interface MainLayoutProps {
   children: ReactNode;
 }
-
 export default function MainLayout({ children }: MainLayoutProps) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
@@ -20,7 +19,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
   useEffect(() => {
     const supabase = createClient();
-    
+
     // 1. Check initial session
     const syncAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -41,6 +40,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       subscription.unsubscribe();
     };
   }, [clearProfile]);
+
 
   return (
     <>

@@ -19,7 +19,6 @@ const Header = () => {
   const pathname = usePathname();
   const { items } = useWishlistStore();
   const { clearProfile } = usePetStore();
-  const supabase = createClient();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
