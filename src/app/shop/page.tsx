@@ -19,7 +19,6 @@ export default function ShopPage() {
   const [sortBy, setSortBy] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
-  const supabase = createClient();
 
   const categoryList = [
     { id: 'all', name: t.shop.allProducts, color: 'neutral' },
@@ -36,6 +35,7 @@ export default function ShopPage() {
   }, [activeCategory]);
 
   useEffect(() => {
+    const supabase = createClient();
     const fetchProducts = async () => {
       try {
         const { data } = await supabase
@@ -62,7 +62,7 @@ export default function ShopPage() {
       }
     };
     fetchProducts();
-  }, [supabase]);
+  }, []);
 
   const filteredProducts = activeCategory === 'all' 
     ? products 

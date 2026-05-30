@@ -10,22 +10,23 @@ import { motion } from 'framer-motion';
 import { Heart, Settings, Star, ShoppingBag, ShieldCheck, ChevronRight, Dog, Cat, Loader2 } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import { createClient } from '@/lib/supabase/client';
-
 export default function DuitCarePage() {
   const { profile } = usePetStore();
   const { language } = useLanguageStore();
+  const t = translations[language];
+
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const supabase = createClient();
 
   useEffect(() => {
+    const supabase = createClient();
     const fetchProducts = async () => {
       try {
         const { data, error } = await supabase
           .from('products')
           .select('*')
           .order('created_at', { ascending: false });
-        
+
         if (data && data.length > 0) {
           setProducts(data.map(p => ({ 
             ...p, 
@@ -45,8 +46,8 @@ export default function DuitCarePage() {
       }
     };
     fetchProducts();
-  }, [supabase]);
-  
+  }, []);
+
   const recommendations = useMemo(() => getRecommendedProducts(profile, products), [profile, products]);
 
 

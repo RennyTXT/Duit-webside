@@ -18,7 +18,6 @@ const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
-  const supabase = createClient();
 
   const heroSlides = [
     {
@@ -57,6 +56,7 @@ const Home = () => {
   }, [heroSlides.length]);
 
   useEffect(() => {
+    const supabase = createClient();
     const fetchProducts = async () => {
       try {
         const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false });
@@ -70,7 +70,7 @@ const Home = () => {
       }
     };
     fetchProducts();
-  }, [supabase]);
+  }, []);
 
   const bestSellers = useMemo(() => {
     const filtered = products.filter(p => p.isBest);

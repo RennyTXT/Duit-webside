@@ -21,9 +21,9 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
   const [results, setResults] = useState<Product[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const supabase = createClient();
 
   useEffect(() => {
+    const supabase = createClient();
     const fetchAllProducts = async () => {
       try {
         const { data } = await supabase.from('products').select('*');
@@ -37,7 +37,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
       }
     };
     fetchAllProducts();
-  }, [supabase]);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {

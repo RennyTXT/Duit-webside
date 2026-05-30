@@ -14,7 +14,6 @@ export default function CategoryView({ category }: { category: string }) {
   const catKey = category;
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const supabase = createClient();
 
   const categoryNames: Record<string, string> = {
     'eat-drink': t.shop.eatDrink,
@@ -27,6 +26,7 @@ export default function CategoryView({ category }: { category: string }) {
   };
   
   useEffect(() => {
+    const supabase = createClient();
     const fetchProducts = async () => {
       try {
         const { data } = await supabase
@@ -55,7 +55,7 @@ export default function CategoryView({ category }: { category: string }) {
       }
     };
     fetchProducts();
-  }, [catKey, supabase]);
+  }, [catKey]);
 
   const title = categoryNames[catKey] || catKey.replace('-', ' ');
 
