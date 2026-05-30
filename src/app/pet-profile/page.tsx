@@ -3,7 +3,27 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { usePetStore, PetType, PetSize } from '@/store/usePetStore';
 import { useRouter } from 'next/navigation';
-import { Trash2, Dog, Cat, Sparkles, ChevronRight, Loader2, Award, QrCode, ShieldCheck, Gift, Clock, CreditCard, Star, MapPin, Camera, Upload, X, LogOut } from 'lucide-react';
+import { 
+  Trash2, 
+  Dog, 
+  Cat, 
+  Sparkles, 
+  ChevronRight, 
+  Loader2, 
+  Award, 
+  QrCode, 
+  ShieldCheck, 
+  Gift, 
+  Clock, 
+  CreditCard, 
+  Star, 
+  MapPin, 
+  Camera, 
+  Upload, 
+  X, 
+  LogOut,
+  Edit2
+} from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { dogBreeds, catBreeds } from '@/data/breeds';
 import { products as staticProducts, Product } from '@/data/products';
@@ -630,6 +650,9 @@ export default function PetProfilePage() {
                                 <ShieldCheck size={16} /> {t.crm.atelierManagement}
                               </Link>
                             )}
+                            <button onClick={() => setStep(2)} className="flex items-center gap-3 text-accent-gold text-[10px] uppercase tracking-[0.2em] hover:scale-105 transition-all">
+                              <Edit2 size={16} /> {t.crm.editProfile}
+                            </button>
                             <button onClick={() => { clearProfile(); setStep(1); setImageUrl(''); }} className="flex items-center gap-3 text-red-500 text-[10px] uppercase tracking-[0.2em] hover:translate-x-2 transition-all"><Trash2 size={16} /> {t.crm.resetProfile}</button>
                             <button onClick={handleLogout} className="flex items-center gap-3 text-neutral-400 text-[10px] uppercase tracking-[0.2em] hover:text-primary transition-all"><LogOut size={16} /> {t.crm.signOut}</button>
                           </div>
