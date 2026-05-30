@@ -1,6 +1,6 @@
 'use client';
 
-import { Package, TicketPercent, TrendingUp, Users, ArrowUpRight, Plus } from 'lucide-react';
+import { Package, TicketPercent, TrendingUp, Users, ArrowUpRight, Plus, Heart } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
