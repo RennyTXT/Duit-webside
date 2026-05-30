@@ -17,7 +17,9 @@ import {
   CheckCircle2, 
   Calendar, 
   PawPrint, 
-  Maximize2 
+  Maximize2,
+  X,
+  Camera
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
