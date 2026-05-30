@@ -33,6 +33,7 @@ export default function RegisterWizard() {
 
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFindingAddress, setIsFindingAddress] = useState(false);
 
   // --- FORM STATE ---
   const [formData, setFormData] = useState({
@@ -183,6 +184,46 @@ export default function RegisterWizard() {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleFindAddress = async () => {
+    if (!formData.postalCode || formData.postalCode.length !== 5) {
+      toast.error(language === 'th' ? 'กรุณากรอกรหัสไปรษณีย์ 5 หลัก' : 'Please enter a 5-digit postal code');
+      return;
+    }
+
+    setIsFindingAddress(true);
+    try {
+      // Fetch Thai address database from a reliable CDN
+      const response = await fetch('https://raw.githubusercontent.com/earthchie/jquery.Thailand.js/master/jquery.Thailand.js/database/db.json');
+      const data = await response.json();
+      
+      // The database is an array of [province, district, subdistrict, postal_code]
+      // or similar structure depending on the version. Let's handle the common one.
+      // Search for matches
+      const matches = data.filter((item: any) => 
+        String(item.zipcode) === formData.postalCode || 
+        (Array.isArray(item.zipcode) && item.zipcode.includes(Number(formData.postalCode)))
+      );
+
+      if (matches.length > 0) {
+        const match = matches[0];
+        setFormData(prev => ({
+          ...prev,
+          subdistrict: match.district || match.subdistrict || '',
+          district: match.amphoe || match.district || '',
+          province: match.province || '',
+        }));
+        toast.success(language === 'th' ? 'ค้นหาที่อยู่เรียบร้อย' : 'Address found');
+      } else {
+        toast.error(language === 'th' ? 'ไม่พบข้อมูลสำหรับรหัสไปรษณีย์นี้' : 'No address found for this postal code');
+      }
+    } catch (error) {
+      console.error('Address lookup failed:', error);
+      toast.error(language === 'th' ? 'ระบบค้นหาที่อยู่ขัดข้อง กรุณาพิมพ์เอง' : 'Lookup service unavailable, please type manually');
+    } finally {
+      setIsFindingAddress(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white pt-24 sm:pt-32 pb-20 relative overflow-hidden">
       {/* Background grain & pattern */}
@@ -308,8 +349,12 @@ export default function RegisterWizard() {
                         placeholder={t.auth.postalCode}
                         className="w-48 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                       />
-                      <button className="px-10 bg-neutral-200 text-neutral-900 rounded-2xl text-[11px] uppercase tracking-widest font-bold hover:bg-neutral-300 transition-colors">
-                        {t.auth.findAddress}
+                      <button 
+                        onClick={handleFindAddress}
+                        disabled={isFindingAddress}
+                        className="px-10 bg-neutral-200 text-neutral-900 rounded-2xl text-[11px] uppercase tracking-widest font-bold hover:bg-neutral-300 transition-colors flex items-center justify-center min-w-[140px]"
+                      >
+                        {isFindingAddress ? <Loader2 size={16} className="animate-spin" /> : t.auth.findAddress}
                       </button>
                     </div>
                     
