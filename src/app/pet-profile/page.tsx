@@ -258,7 +258,7 @@ export default function PetProfilePage() {
       
       // Use the global consolidated logic
       const tempProfile: PetProfile = { name, type, breed, size, age: null };
-      const recommended = getRecommendedProducts(tempProfile, products);
+      const recommended = getRecommendedProducts(tempProfile, staticProducts);
 
       setAiInsights({
         title: selectedBreed?.archetype || t.crm.identitySynthesis,
