@@ -228,7 +228,76 @@ export default function PetProfilePage() {
     }
 
     initProfile();
-  }, [router, supabase, clearProfile, setProfile]);
+  }, [router, supabase, clearProfile, setProfile, profile]);
+
+  const runAIAnalysis = () => {
+    setIsAnalyzing(true);
+    setShowAnalysis(true);
+    
+    setTimeout(() => {
+      const selectedBreed = dogBreeds.find(b => b.en === breed) || catBreeds.find(b => b.en === breed);
+      
+      // Logic to filter and prioritize products for AI recommendation
+      let recommended = [...staticProducts].filter(p => {
+        if (!p.recommendedFor) return true;
+        const typeMatch = !p.recommendedFor.type || p.recommendedFor.type === type;
+        const sizeMatch = !p.recommendedFor.size || p.recommendedFor.size === size;
+        return typeMatch && sizeMatch;
+      });
+
+      // Breed-specific logic for dogs
+      if (type === 'dog' && selectedBreed) {
+        recommended = recommended.sort((a, b) => {
+          let scoreA = 0;
+          let scoreB = 0;
+
+          const traits = selectedBreed.trait?.toLowerCase() || '';
+          const arch = selectedBreed.archetype?.toLowerCase() || '';
+
+          // 1. Cooling needs (Frenchie, Husky, etc.)
+          if (traits.includes('cooling') || arch.includes('comedian') || arch.includes('escape artist')) {
+            if (a.id === 'summer-cushion') scoreA += 50;
+            if (b.id === 'summer-cushion') scoreB += 50;
+          }
+
+          // 2. Intellectual/Nosework needs (Poodle, Border Collie, etc.)
+          if (traits.includes('smart') || arch.includes('intellectual')) {
+            if (a.id === 'yummy-ball') scoreA += 50;
+            if (b.id === 'yummy-ball') scoreB += 50;
+          }
+
+          // 3. Grooming needs (Golden, Pomeranian, etc.)
+          if (traits.includes('coat') || traits.includes('grooming') || arch.includes('little star') || arch.includes('socialite')) {
+            if (a.id === 'banana-brush') scoreA += 50;
+            if (b.id === 'banana-brush') scoreB += 50;
+          }
+
+          // 4. Hygiene for indoor/small dogs
+          if (size === 'small') {
+            if (a.id === 'custom-potty' || a.id === 'floating-bathtub') scoreA += 30;
+            if (b.id === 'custom-potty' || b.id === 'floating-bathtub') scoreB += 30;
+          }
+
+          // 5. Training/Active needs
+          if (traits.includes('active') || traits.includes('tough')) {
+            if (a.id === 'anti-bug-light') scoreA += 20;
+            if (b.id === 'anti-bug-light') scoreB += 20;
+          }
+
+          return scoreB - scoreA;
+        });
+      }
+
+      setAiInsights({
+        title: selectedBreed?.archetype || t.crm.identitySynthesis,
+        reason: language === 'th' 
+          ? (selectedBreed?.description_th || `วิเคราะห์จากสายพันธุ์ ${breed} พบว่ามีความต้องการเฉพาะตัวที่ Duit สามารถดูแลได้อย่างลงตัว`)
+          : (selectedBreed?.description_en || `Based on ${breed} characteristics, our AI identifies unique needs that Duit products can perfectly fulfill.`),
+        products: recommended.slice(0, 6)
+      });
+      setIsAnalyzing(false);
+    }, 2000);
+  };
 
   // Run AI analysis only after step 5 is confirmed and products are loaded
   useEffect(() => {
@@ -236,6 +305,45 @@ export default function PetProfilePage() {
       runAIAnalysis();
     }
   }, [step, breed, type, size]);
+
+  const breeds = type === 'dog' ? dogBreeds : type === 'cat' ? catBreeds : [];
+
+  const themeColors = useMemo(() => {
+    if (type === 'cat') return { accent: 'text-accent-gold', bg: 'bg-[#faf7f2]', card: 'bg-white' };
+    if (type === 'dog') return { accent: 'text-blue-600', bg: 'bg-[#f0f4f8]', card: 'bg-white' };
+    return { accent: 'text-accent-gold', bg: 'bg-white', card: 'bg-white' };
+  }, [type]);
+
+  const sortedBreeds = useMemo(() => {
+    return [...breeds].sort((a, b) => {
+      const nameA = language === 'th' ? a.th : a.en;
+      const nameB = language === 'th' ? b.th : b.en;
+      return nameA.localeCompare(nameB, language === 'th' ? 'th' : 'en');
+    });
+  }, [breeds, language]);
+
+  const sizeOptions = useMemo(() => {
+    if (type === 'dog') {
+      return [
+        { value: 'small', label: language === 'th' ? 'ขนาดเล็ก (< 10 กก.)' : 'Small (< 10kg)' },
+        { value: 'medium', label: language === 'th' ? 'ขนาดกลาง (10-25 กก.)' : 'Average (10-25kg)' },
+        { value: 'large', label: language === 'th' ? 'ขนาดใหญ่ (> 25 กก.)' : 'Big (> 25kg)' },
+      ];
+    } else {
+      return [
+        { value: 'small', label: language === 'th' ? 'ขนาดเล็ก (< 3.5 กก.)' : 'Small (< 3.5kg)' },
+        { value: 'medium', label: language === 'th' ? 'ขนาดปกติ (3.6-5.5 กก.)' : 'Average (3.6-5.5kg)' },
+        { value: 'large', label: language === 'th' ? 'ขนาดใหญ่ (> 5.5 กก.)' : 'Big (> 5.5kg)' },
+      ];
+    }
+  }, [type, language]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    clearProfile();
+    toast.success(t.common.signedOut);
+    window.location.href = '/';
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -322,75 +430,6 @@ export default function PetProfilePage() {
     } finally {
       setIsSaving(false);
     }
-  };
-
-  const runAIAnalysis = () => {
-    setIsAnalyzing(true);
-    setShowAnalysis(true);
-    
-    setTimeout(() => {
-      const selectedBreed = dogBreeds.find(b => b.en === breed) || catBreeds.find(b => b.en === breed);
-      
-      // Logic to filter and prioritize products for AI recommendation
-      let recommended = [...staticProducts].filter(p => {
-        if (!p.recommendedFor) return true;
-        const typeMatch = !p.recommendedFor.type || p.recommendedFor.type === type;
-        const sizeMatch = !p.recommendedFor.size || p.recommendedFor.size === size;
-        return typeMatch && sizeMatch;
-      });
-
-      // Breed-specific logic for dogs
-      if (type === 'dog' && selectedBreed) {
-        recommended = recommended.sort((a, b) => {
-          let scoreA = 0;
-          let scoreB = 0;
-
-          const traits = selectedBreed.trait?.toLowerCase() || '';
-          const arch = selectedBreed.archetype?.toLowerCase() || '';
-
-          // 1. Cooling needs (Frenchie, Husky, etc.)
-          if (traits.includes('cooling') || arch.includes('comedian') || arch.includes('escape artist')) {
-            if (a.id === 'summer-cushion') scoreA += 50;
-            if (b.id === 'summer-cushion') scoreB += 50;
-          }
-
-          // 2. Intellectual/Nosework needs (Poodle, Border Collie, etc.)
-          if (traits.includes('smart') || arch.includes('intellectual')) {
-            if (a.id === 'yummy-ball') scoreA += 50;
-            if (b.id === 'yummy-ball') scoreB += 50;
-          }
-
-          // 3. Grooming needs (Golden, Pomeranian, etc.)
-          if (traits.includes('coat') || traits.includes('grooming') || arch.includes('little star') || arch.includes('socialite')) {
-            if (a.id === 'banana-brush') scoreA += 50;
-            if (b.id === 'banana-brush') scoreB += 50;
-          }
-
-          // 4. Hygiene for indoor/small dogs
-          if (size === 'small') {
-            if (a.id === 'custom-potty' || a.id === 'floating-bathtub') scoreA += 30;
-            if (b.id === 'custom-potty' || b.id === 'floating-bathtub') scoreB += 30;
-          }
-
-          // 5. Training/Active needs
-          if (traits.includes('active') || traits.includes('tough')) {
-            if (a.id === 'anti-bug-light') scoreA += 20;
-            if (b.id === 'anti-bug-light') scoreB += 20;
-          }
-
-          return scoreB - scoreA;
-        });
-      }
-
-      setAiInsights({
-        title: selectedBreed?.archetype || t.crm.identitySynthesis,
-        reason: language === 'th' 
-          ? (selectedBreed?.description_th || `วิเคราะห์จากสายพันธุ์ ${breed} พบว่ามีความต้องการเฉพาะตัวที่ Duit สามารถดูแลได้อย่างลงตัว`)
-          : (selectedBreed?.description_en || `Based on ${breed} characteristics, our AI identifies unique needs that Duit products can perfectly fulfill.`),
-        products: recommended.slice(0, 6)
-      });
-      setIsAnalyzing(false);
-    }, 2000);
   };
 
   if (isLoadingAuth) {
