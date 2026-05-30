@@ -63,7 +63,7 @@ export default function RegisterWizard() {
 
   // --- VALIDATION LOGIC ---
   const validateStep1 = () => {
-    const { username, email, password, confirmPassword, fullname, mobilePhonePart1, mobilePhonePart2 } = formData;
+    const { username, email, password, confirmPassword, fullname, mobilePhone } = formData;
 
     // Username: 4-16 alphanumeric
     if (!/^[a-z0-9]{4,16}$/.test(username)) {
@@ -93,7 +93,7 @@ export default function RegisterWizard() {
       return false;
     }
 
-    if (!mobilePhonePart1 || !mobilePhonePart2) {
+    if (!mobilePhone) {
       toast.error(language === 'th' ? 'กรุณากรอกเบอร์มือถือ' : 'Mobile phone is required');
       return false;
     }
@@ -133,9 +133,6 @@ export default function RegisterWizard() {
       if (!authData.user) throw new Error('Auth failed');
 
       // 2. Update Profile with detailed info
-      const fullHomePhone = formData.homePhonePart1 ? `${formData.homePhonePrefix}-${formData.homePhonePart1}-${formData.homePhonePart2}` : '';
-      const fullMobilePhone = `${formData.mobilePhonePrefix}-${formData.mobilePhonePart1}-${formData.mobilePhonePart2}`;
-
       const { error: profileError } = await supabase
         .from('profiles')
         .upsert({
@@ -145,9 +142,12 @@ export default function RegisterWizard() {
           email: formData.email,
           address_postal: formData.postalCode,
           address_basic: formData.basicAddress,
+          subdistrict: formData.subdistrict,
+          district: formData.district,
+          province: formData.province,
           address_detail: formData.detailAddress,
-          home_phone: fullHomePhone,
-          mobile_phone: fullMobilePhone,
+          home_phone: formData.homePhone,
+          mobile_phone: formData.mobilePhone,
           referral_code: formData.referralCode,
           updated_at: new Date().toISOString(),
         });
