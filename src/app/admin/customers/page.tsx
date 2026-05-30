@@ -10,10 +10,10 @@ export default function AdminCustomersPage() {
   const [customers, setCustomers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const supabase = createClient();
 
   const loadCustomers = async () => {
     setIsLoading(true);
+    const supabase = createClient();
     try {
       const { data, error } = await supabase
         .from('profiles')

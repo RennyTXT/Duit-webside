@@ -12,10 +12,10 @@ export default function AdminAdoptionsPage() {
   const [adoptions, setAdoptions] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const supabase = createClient();
 
   const loadAdoptions = async () => {
     setIsLoading(true);
+    const supabase = createClient();
     try {
       const { data, error } = await supabase
         .from('adoptions')
