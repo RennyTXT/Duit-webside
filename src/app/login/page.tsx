@@ -86,6 +86,7 @@ export default function EmailLoginPage() {
     if (code.length < 6) return;
 
     setIsVerifying(true);
+    const supabase = createClient();
     try {
       // 1. ยืนยันรหัส OTP กับ Supabase
       const { data, error } = await supabase.auth.verifyOtp({
@@ -124,6 +125,7 @@ export default function EmailLoginPage() {
     if (!fullname) return;
 
     setIsSaving(true);
+    const supabase = createClient();
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Session expired');
