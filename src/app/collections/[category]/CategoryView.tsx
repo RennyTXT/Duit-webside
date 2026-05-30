@@ -36,7 +36,13 @@ export default function CategoryView({ category }: { category: string }) {
           .order('created_at', { ascending: false });
         
         if (data && data.length > 0) {
-          setProducts(data.map(p => ({ ...p, image: p.image_url })));
+          setProducts(data.map(p => ({ 
+            ...p, 
+            image: p.image_url,
+            isBest: p.is_best,
+            isNew: p.is_new,
+            recommendedFor: p.recommended_for
+          })));
         } else {
           const filtered = staticProducts.filter(p => p.category === catKey);
           setProducts(filtered);

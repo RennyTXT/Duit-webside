@@ -20,15 +20,29 @@ export default function DuitCarePage() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (data) {
-        setProducts(data.map(p => ({ ...p, image: p.image_url })));
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (data && data.length > 0) {
+          setProducts(data.map(p => ({ 
+            ...p, 
+            image: p.image_url,
+            isBest: p.is_best,
+            isNew: p.is_new,
+            recommendedFor: p.recommended_for
+          })));
+        } else {
+          setProducts(staticProducts);
+        }
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        setProducts(staticProducts);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     fetchProducts();
   }, [supabase]);
