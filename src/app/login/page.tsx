@@ -74,6 +74,13 @@ export default function EmailLoginPage() {
     }
   };
 
+  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      const prevInput = document.getElementById(`otp-${index - 1}`);
+      prevInput?.focus();
+    }
+  };
+
   const handleVerifyOTP = async () => {
     const code = otp.join('');
     if (code.length < 6) return;
@@ -221,6 +228,7 @@ export default function EmailLoginPage() {
                     type="text"
                     value={digit}
                     onChange={(e) => handleOtpChange(i, e.target.value)}
+                    onKeyDown={(e) => handleOtpKeyDown(i, e)}
                     className="w-full aspect-square bg-neutral-50 border border-neutral-100 rounded-2xl text-center text-2xl font-medium outline-none focus:bg-white focus:border-primary transition-all shadow-sm"
                     maxLength={1}
                     autoComplete="one-time-code"

@@ -137,77 +137,18 @@ export default function PetProfilePage() {
   
   const supabase = createClient();
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
-
-  useEffect(() => {
-    async function checkUser() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        clearProfile(); // ล้างข้อมูลสัตว์เลี้ยงในเครื่องทันที
-        router.push('/login');
-      } else {
-        setIsLoadingAuth(false);
-      }
-    }
-    checkUser();
-  }, [router, supabase, clearProfile]);
-
   const [activeTab, setActiveTab] = useState<'profile' | 'rewards' | 'registry'>('profile');
-  const [step, setStep] = useState(profile ? 5 : 1);
+  const [step, setStep] = useState(1);
 
-  const [name, setName] = useState(profile?.name || '');
-  const [type, setType] = useState<PetType>(profile?.type || null);
-  const [breed, setBreed] = useState(profile?.breed || '');
-  const [size, setSize] = useState<PetSize>(profile?.size || null);
-  const [imageUrl, setImageUrl] = useState(profile?.imageUrl || '');
+  const [name, setName] = useState('');
+  const [type, setType] = useState<PetType>(null);
+  const [breed, setBreed] = useState('');
+  const [size, setSize] = useState<PetSize>(null);
+  const [imageUrl, setImageUrl] = useState('');
   
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [aiInsights, setAiInsights] = useState<{title: string, reason: string, products: Product[]} | null>(null);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    clearProfile(); // ล้างข้อมูลสัตว์เลี้ยงเมื่อ Logout
-    toast.success(t.common.signedOut);
-    window.location.href = '/';
-  };
-
-  const breeds = type === 'dog' ? dogBreeds : type === 'cat' ? catBreeds : [];
-
-  const themeColors = useMemo(() => {
-    if (type === 'cat') return { accent: 'text-accent-gold', bg: 'bg-[#faf7f2]', card: 'bg-white' };
-    if (type === 'dog') return { accent: 'text-blue-600', bg: 'bg-[#f0f4f8]', card: 'bg-white' };
-    return { accent: 'text-accent-gold', bg: 'bg-white', card: 'bg-white' };
-  }, [type]);
-
-  useEffect(() => {
-    if (profile && !aiInsights && step === 5) {
-      runAIAnalysis();
-    }
-  }, [profile, step]);
-
-  const sortedBreeds = useMemo(() => {
-    return [...breeds].sort((a, b) => {
-      const nameA = language === 'th' ? a.th : a.en;
-      const nameB = language === 'th' ? b.th : b.en;
-      return nameA.localeCompare(nameB, language === 'th' ? 'th' : 'en');
-    });
-  }, [breeds, language]);
-
-  const sizeOptions = useMemo(() => {
-    if (type === 'dog') {
-      return [
-        { value: 'small', label: language === 'th' ? 'ขนาดเล็ก (< 10 กก.)' : 'Small (< 10kg)' },
-        { value: 'medium', label: language === 'th' ? 'ขนาดกลาง (10-25 กก.)' : 'Average (10-25kg)' },
-        { value: 'large', label: language === 'th' ? 'ขนาดใหญ่ (> 25 กก.)' : 'Big (> 25kg)' },
-      ];
-    } else {
-      return [
-        { value: 'small', label: language === 'th' ? 'ขนาดเล็ก (< 3.5 กก.)' : 'Small (< 3.5kg)' },
-        { value: 'medium', label: language === 'th' ? 'ขนาดปกติ (3.6-5.5 กก.)' : 'Average (3.6-5.5kg)' },
-        { value: 'large', label: language === 'th' ? 'ขนาดใหญ่ (> 5.5 กก.)' : 'Big (> 5.5kg)' },
-      ];
-    }
-  }, [type, language]);
 
   const [isSaving, setIsSaving] = useState(false);
   const [petId, setPetId] = useState<string | null>(null);
@@ -217,57 +158,84 @@ export default function PetProfilePage() {
   const [memberPoints, setMemberPoints] = useState(0);
 
   useEffect(() => {
-    const fetchProfileAndPet = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-      
-      setUserEmail(user.email || null);
-
-      // 1. Fetch User Profile
-      const { data: profileData } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (profileData) {
-        setMemberTier(profileData.tier || 'Silver');
-        setMemberPoints(profileData.duit_coins || 0);
-      }
-
-      // 2. Fetch Pet Data
-      const { data: petData } = await supabase
-        .from('pets')
-        .select('*')
-        .eq('owner_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-      if (petData) {
-        setName(petData.name);
-        setType(petData.type as PetType);
-        setBreed(petData.breed || '');
-        setSize(petData.size as PetSize);
-        setImageUrl(petData.image_url || '');
+    async function initProfile() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
         
-        // Update local store as well
-        setProfile({ 
-          name: petData.name, 
-          type: petData.type as PetType, 
-          breed: petData.breed || '', 
-          size: petData.size as PetSize, 
-          age: null, 
-          imageUrl: petData.image_url || '' 
-        });
-        
-        setStep(5);
-        runAIAnalysis();
-      }
-    };
+        if (!user) {
+          clearProfile();
+          router.push('/login');
+          return;
+        }
 
-    fetchProfileAndPet();
-  }, [supabase, setProfile]);
+        setUserEmail(user.email || null);
+
+        // 1. Fetch User Profile
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        if (profileData) {
+          setMemberTier(profileData.tier || 'Silver');
+          setMemberPoints(profileData.duit_coins || 0);
+        }
+
+        // 2. Fetch Pet Data
+        const { data: petData } = await supabase
+          .from('pets')
+          .select('*')
+          .eq('owner_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (petData) {
+          setName(petData.name);
+          setType(petData.type as PetType);
+          setBreed(petData.breed || '');
+          setSize(petData.size as PetSize);
+          setImageUrl(petData.image_url || '');
+          setPetId(petData.id);
+          
+          setProfile({ 
+            name: petData.name, 
+            type: petData.type as PetType, 
+            breed: petData.breed || '', 
+            size: petData.size as PetSize, 
+            age: null, 
+            imageUrl: petData.image_url || '' 
+          });
+          
+          setStep(5);
+        } else {
+          // Check if local store has data
+          if (profile) {
+            setName(profile.name || '');
+            setType(profile.type || null);
+            setBreed(profile.breed || '');
+            setSize(profile.size || null);
+            setImageUrl(profile.imageUrl || '');
+          }
+          setStep(1);
+        }
+      } catch (error) {
+        console.error("Initialization error:", error);
+      } finally {
+        setIsLoadingAuth(false);
+      }
+    }
+
+    initProfile();
+  }, [router, supabase, clearProfile, setProfile]);
+
+  // Run AI analysis only after step 5 is confirmed and products are loaded
+  useEffect(() => {
+    if (step === 5 && !isAnalyzing && !aiInsights && breed && type && size) {
+      runAIAnalysis();
+    }
+  }, [step, breed, type, size]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

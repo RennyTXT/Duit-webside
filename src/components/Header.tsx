@@ -2,11 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { User, Search, Menu, X, ChevronDown, Star } from 'lucide-react';
+import { User, Search, Menu, X, ChevronDown, Star, LogOut } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguageStore, translations } from '@/store/useLanguageStore';
 import { useWishlistStore } from '@/store/useWishlistStore';
+import { usePetStore } from '@/store/usePetStore';
+import { createClient } from '@/lib/supabase/client';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import ArchiveSidebar from './ArchiveSidebar';
 import SearchOverlay from './SearchOverlay';
@@ -16,12 +18,16 @@ const Header = () => {
   const t = translations[language];
   const pathname = usePathname();
   const { items } = useWishlistStore();
+  const { clearProfile } = usePetStore();
+  const supabase = createClient();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   const isHomePage = pathname === '/';
   const shouldShowSolid = !isHomePage || isScrolled;
@@ -38,8 +44,30 @@ const Header = () => {
     };
     
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+    
+    // Check initial user session
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    checkUser();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      subscription.unsubscribe();
+    };
+  }, [lastScrollY, supabase]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    clearProfile();
+    window.location.href = '/';
+  };
 
   const navLinks = [
     { name: t.nav.collections, href: '/shop' },
@@ -116,6 +144,16 @@ const Header = () => {
             <Link href="/pet-profile" className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}>
               <User size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
             </Link>
+
+            {user && (
+              <button 
+                onClick={handleLogout}
+                className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-red-500 hover:text-white shadow-sm' : 'hover:bg-red-50/50 text-red-500'}`}
+                title={t.common.logout}
+              >
+                <LogOut size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+              </button>
+            )}
             
             {/* Mobile Menu Toggle */}
             <button 
