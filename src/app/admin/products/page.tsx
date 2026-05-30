@@ -65,20 +65,20 @@ export default function AdminProductsPage() {
         </Link>
       </div>
 
-      {/* Toolbar */}
-      <div className="bg-white p-6 md:p-8 rounded-[40px] border border-neutral-50 shadow-luxury flex flex-col md:flex-row gap-8 items-center">
-        <div className="relative flex-grow w-full">
-          <Search className="absolute left-8 top-1/2 -translate-y-1/2 text-neutral-300" size={18} strokeWidth={1.5} />
+      {/* Refined Minimal Toolbar */}
+      <div className="flex flex-col md:flex-row gap-6 items-center">
+        <div className="relative flex-grow w-full group">
+          <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-neutral-300 group-focus-within:text-accent-gold transition-colors" size={18} strokeWidth={1.5} />
           <input 
             type="text"
-            placeholder="Search by designation or classification..."
+            placeholder="Search assets..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full h-16 bg-cream-light/30 border border-neutral-100 rounded-full pl-20 pr-10 text-sm focus:ring-4 ring-accent-gold/5 focus:border-accent-gold transition-all outline-none uppercase tracking-tight"
+            className="w-full h-14 bg-white border border-neutral-100 rounded-2xl pl-16 pr-6 text-sm focus:border-accent-gold transition-all outline-none uppercase tracking-widest placeholder:text-neutral-200"
           />
         </div>
-        <button className="h-16 px-12 bg-white border border-neutral-100 rounded-full text-[10px] uppercase tracking-[0.3em] text-neutral-400 hover:text-primary hover:border-primary transition-all flex items-center gap-4 shadow-sm group">
-          <Filter size={14} className="group-hover:text-accent-gold transition-colors" /> 
+        <button className="h-14 px-8 bg-white border border-neutral-100 rounded-2xl text-[10px] uppercase tracking-[0.3em] text-neutral-400 hover:text-primary hover:border-primary transition-all flex items-center gap-3 shrink-0 active:scale-95">
+          <Filter size={14} strokeWidth={1.5} /> 
           <span>Refine</span>
         </button>
       </div>
