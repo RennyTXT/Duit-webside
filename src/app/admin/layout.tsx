@@ -77,7 +77,7 @@ export default function AdminLayout({
       }
     }
     checkAuth();
-  }, [pathname, router, supabase.auth]);
+  }, [pathname, router]);
 
   // Render children immediately for login page to avoid waiting for useEffect
   if (pathname?.endsWith('/admin/login') || pathname?.endsWith('/admin/login/')) {
