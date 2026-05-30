@@ -2,7 +2,7 @@
 
 import { usePetStore } from '@/store/usePetStore';
 import { useLanguageStore } from '@/store/useLanguageStore';
-import { getRecommendedProducts, Product } from '@/data/products';
+import { getRecommendedProducts, Product, products as staticProducts } from '@/data/products';
 import { useMemo, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
