@@ -45,7 +45,6 @@ export default function ProductDetailView({ id }: { id: string }) {
   const [viewMode, setViewMode] = useState<'image' | '3d'>('image');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
-  const supabase = createClient();
 
   const { scrollY } = useScroll();
   const showStickyBar = useTransform(scrollY, [600, 700], [0, 1]);
@@ -66,6 +65,7 @@ export default function ProductDetailView({ id }: { id: string }) {
 
   useEffect(() => {
     setIsMounted(true);
+    const supabase = createClient();
     const fetchProductAndOptions = async () => {
       try {
         const { data: prodData } = await supabase.from('products').select('*').eq('id', id).single();

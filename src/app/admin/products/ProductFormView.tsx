@@ -24,7 +24,6 @@ import Link from 'next/link';
 export default function ProductFormView({ id }: { id?: string }) {
   const isEdit = !!id;
   const router = useRouter();
-  const supabase = createClient();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -47,6 +46,7 @@ export default function ProductFormView({ id }: { id?: string }) {
 
   useEffect(() => {
     if (isEdit) {
+      const supabase = createClient();
       const fetchProduct = async () => {
         try {
           const { data } = await supabase
@@ -70,13 +70,14 @@ export default function ProductFormView({ id }: { id?: string }) {
       };
       fetchProduct();
     }
-  }, [id, isEdit, supabase]);
+  }, [id, isEdit]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
     setIsUploading(true);
+    const supabase = createClient();
     try {
       const newImages = [...formData.images];
       
@@ -131,6 +132,7 @@ export default function ProductFormView({ id }: { id?: string }) {
     }
 
     setIsUploadingModel(true);
+    const supabase = createClient();
     try {
       const fileName = `${Math.random()}.glb`;
       const filePath = `product-models/${fileName}`;

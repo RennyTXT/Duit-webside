@@ -14,9 +14,9 @@ export default function AdminDashboardPage() {
     customers: 0
   });
   const [recentProducts, setRecentProducts] = useState<any[]>([]);
-  const supabase = createClient();
 
   useEffect(() => {
+    const supabase = createClient();
     async function fetchDashboardData() {
       // Fetch counts
       const { count: productCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
@@ -39,7 +39,7 @@ export default function AdminDashboardPage() {
       if (latestProducts) setRecentProducts(latestProducts);
     }
     fetchDashboardData();
-  }, [supabase]);
+  }, []);
 
   const stats = [
     { name: 'Portfolio Assets', value: statsData.products.toString(), icon: Package, change: '+2 this month', color: 'bg-cream-light text-primary' },

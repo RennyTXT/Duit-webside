@@ -30,7 +30,6 @@ export default function RegisterWizard() {
   const { language } = useLanguageStore();
   const t = translations[language];
   const router = useRouter();
-  const supabase = createClient();
 
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -125,6 +124,7 @@ export default function RegisterWizard() {
     }
 
     setIsLoading(true);
+    const supabase = createClient();
     try {
       // 1. Create User in Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({

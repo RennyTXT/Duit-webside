@@ -12,23 +12,24 @@ export default function AdminLoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const supabase = createClient();
 
   useEffect(() => {
     // เช็คว่าถ้า login อยู่แล้วให้ไปหน้า admin เลย
     const checkUser = async () => {
+      const supabase = createClient();
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         router.push('/admin');
       }
     };
     checkUser();
-  }, [router, supabase]);
+  }, [router]);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setIsLoading(true);
 
+    const supabase = createClient();
     try {
       // แปลง username เป็นรูปแบบ email ที่เรากำหนดไว้ใน Supabase
       const email = username.includes('@') ? username : `${username}@duit.admin`;

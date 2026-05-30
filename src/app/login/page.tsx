@@ -14,7 +14,6 @@ export default function EmailLoginPage() {
   const { language } = useLanguageStore();
   const t = translations[language];
   const router = useRouter();
-  const supabase = createClient();
 
   const [step, setStep] = useState<'email' | 'otp' | 'name'>('email');
   const [email, setEmail] = useState('');
@@ -41,6 +40,7 @@ export default function EmailLoginPage() {
     }
 
     setIsSending(true);
+    const supabase = createClient();
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email: email,
