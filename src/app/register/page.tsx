@@ -383,6 +383,7 @@ export default function RegisterWizard() {
                     />
                   </div>
                 </div>
+              </div>
 
               <div className="flex justify-center">
                 <button 
