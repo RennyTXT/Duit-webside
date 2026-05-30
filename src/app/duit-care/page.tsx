@@ -1,7 +1,7 @@
 'use client';
 
 import { usePetStore } from '@/store/usePetStore';
-import { useLanguageStore } from '@/store/useLanguageStore';
+import { useLanguageStore, translations } from '@/store/useLanguageStore';
 import { getRecommendedProducts, Product, products as staticProducts } from '@/data/products';
 import { useMemo, useEffect, useState } from 'react';
 import Link from 'next/link';
