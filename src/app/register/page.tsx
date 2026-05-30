@@ -44,13 +44,12 @@ export default function RegisterWizard() {
     fullname: '',
     postalCode: '',
     basicAddress: '',
+    subdistrict: '',
+    district: '',
+    province: '',
     detailAddress: '',
-    homePhonePrefix: '02',
-    homePhonePart1: '',
-    homePhonePart2: '',
-    mobilePhonePrefix: '010',
-    mobilePhonePart1: '',
-    mobilePhonePart2: '',
+    homePhone: '',
+    mobilePhone: '',
 
     // Step 2: Pet Info
     petBirthYear: '',
@@ -313,6 +312,7 @@ export default function RegisterWizard() {
                         {t.auth.findAddress}
                       </button>
                     </div>
+                    
                     <input 
                       type="text" 
                       value={formData.basicAddress}
@@ -320,6 +320,31 @@ export default function RegisterWizard() {
                       placeholder={t.auth.basicAddress}
                       className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                     />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                       <input 
+                        type="text" 
+                        value={formData.subdistrict}
+                        onChange={e => updateField('subdistrict', e.target.value)}
+                        placeholder={t.auth.subdistrict}
+                        className="h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
+                      />
+                      <input 
+                        type="text" 
+                        value={formData.district}
+                        onChange={e => updateField('district', e.target.value)}
+                        placeholder={t.auth.district}
+                        className="h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
+                      />
+                      <input 
+                        type="text" 
+                        value={formData.province}
+                        onChange={e => updateField('province', e.target.value)}
+                        placeholder={t.auth.province}
+                        className="h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
+                      />
+                    </div>
+
                     <input 
                       type="text" 
                       value={formData.detailAddress}
@@ -333,76 +358,31 @@ export default function RegisterWizard() {
                 {/* Phones */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start border-t border-neutral-100 pt-10">
                   {/* Home Phone */}
-                  <div className="flex flex-col gap-4">
-                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold mt-4">{t.auth.homePhone}</label>
-                  </div>
-                  <div className="md:col-span-3 flex items-center gap-4">
-                     <select 
-                      value={formData.homePhonePrefix}
-                      onChange={e => updateField('homePhonePrefix', e.target.value)}
-                      className="h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-base text-primary outline-none font-bold"
-                     >
-                       <option>02</option>
-                       <option>03</option>
-                       <option>04</option>
-                       <option>05</option>
-                       <option>07</option>
-                     </select>
-                     <span className="text-neutral-400 font-bold">-</span>
-                     <input 
+                  <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold mt-4">{t.auth.homePhone}</label>
+                  <div className="md:col-span-3">
+                    <input 
                       type="text" 
-                      maxLength={4}
-                      value={formData.homePhonePart1}
-                      onChange={e => updateField('homePhonePart1', e.target.value)}
-                      className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-center text-lg text-primary outline-none shadow-sm"
-                     />
-                     <span className="text-neutral-400 font-bold">-</span>
-                     <input 
-                      type="text" 
-                      maxLength={4}
-                      value={formData.homePhonePart2}
-                      onChange={e => updateField('homePhonePart2', e.target.value)}
-                      className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-center text-lg text-primary outline-none shadow-sm"
-                     />
+                      value={formData.homePhone}
+                      onChange={e => updateField('homePhone', e.target.value)}
+                      placeholder="02-XXX-XXXX"
+                      className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
+                    />
                   </div>
 
                   {/* Mobile Phone */}
-                  <div className="flex flex-col gap-4 border-t border-neutral-100 pt-6 md:border-0 md:pt-0">
-                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold mt-4">
-                      {t.auth.mobilePhone} <span className="text-red-500">*</span>
-                    </label>
-                  </div>
-                  <div className="md:col-span-3 flex items-center gap-4 pt-0 md:pt-4">
-                     <select 
-                      value={formData.mobilePhonePrefix}
-                      onChange={e => updateField('mobilePhonePrefix', e.target.value)}
-                      className="h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-base text-primary outline-none font-bold"
-                     >
-                       <option>010</option>
-                       <option>011</option>
-                       <option>06</option>
-                       <option>08</option>
-                       <option>09</option>
-                     </select>
-                     <span className="text-neutral-400 font-bold">-</span>
-                     <input 
+                  <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold mt-4">
+                    {t.auth.mobilePhone} <span className="text-red-500">*</span>
+                  </label>
+                  <div className="md:col-span-3">
+                    <input 
                       type="text" 
-                      maxLength={4}
-                      value={formData.mobilePhonePart1}
-                      onChange={e => updateField('mobilePhonePart1', e.target.value)}
-                      className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-center text-lg text-primary outline-none shadow-sm"
-                     />
-                     <span className="text-neutral-400 font-bold">-</span>
-                     <input 
-                      type="text" 
-                      maxLength={4}
-                      value={formData.mobilePhonePart2}
-                      onChange={e => updateField('mobilePhonePart2', e.target.value)}
-                      className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-center text-lg text-primary outline-none shadow-sm"
-                     />
+                      value={formData.mobilePhone}
+                      onChange={e => updateField('mobilePhone', e.target.value)}
+                      placeholder="0XX-XXX-XXXX"
+                      className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm font-bold"
+                    />
                   </div>
                 </div>
-              </div>
 
               <div className="flex justify-center">
                 <button 
