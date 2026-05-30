@@ -47,7 +47,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       {!isAdmin && <Header />}
       <main className="flex-grow">
         {isAdmin ? children : (
-          <PageTransition>
+          <PageTransition key={pathname}>
             {children}
           </PageTransition>
         )}

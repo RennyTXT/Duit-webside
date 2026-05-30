@@ -172,7 +172,10 @@ export const products: Product[] = [
     name: "Duit Standing Board",
     price: 1990,
     image: "https://duit.kr/web/product/big/standing_board.jpg",
-    images: [],
+    images: [
+      "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/c9f28df13b2e5.jpg",
+      "https://cdn-optimized.imweb.me/upload/S20240401733b573a10ea4/8282367d30f30.jpg"
+    ],
     category: "play-rest",
     tagline: "The successor to the All Day Board, an essential for all cats",
     description: "A vertical standing scratcher that provides a different scratching angle for cats who prefer upright surfaces, saving your furniture.",
@@ -180,7 +183,10 @@ export const products: Product[] = [
     specs: [
       { label: "Type", value: "Standing Scratcher" }
     ],
-    recommendedFor: { type: "cat" }
+    recommendedFor: { type: "cat" },
+    infoImages: [
+      "TH_RECRAFTED_STANDING_BOARD" // Placeholder for my custom component
+    ]
   },
   {
     id: "peanut-board",

@@ -28,6 +28,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useLanguageStore, translations } from '@/store/useLanguageStore';
 import { useWishlistStore } from '@/store/useWishlistStore';
 import { toast } from 'sonner';
+import RecraftedStandingBoard from '@/components/RecraftedStandingBoard';
 
 interface ProductOption {
   id: string;
@@ -393,24 +394,30 @@ export default function ProductDetailView({ id }: { id: string }) {
         {/* --- DYNAMIC INFO & SPECIFICATION IMAGES --- */}
         {product.infoImages && product.infoImages.length > 0 && (
           <div className="mt-40 space-y-20 border-t border-neutral-100 pt-40">
-             <div className="text-center space-y-4">
-                <span className="text-[10px] uppercase tracking-[0.6em] text-accent-gold">{language === 'th' ? 'รายละเอียดทางเทคนิค' : 'Technical Specifications'}</span>
-                <h2 className="text-4xl uppercase tracking-tighter text-primary">{language === 'th' ? 'ข้อมูลเชิงลึกของชิ้นงาน' : 'Masterpiece Insight'}</h2>
-             </div>
-             
-             <div className="flex flex-col gap-12 max-w-5xl mx-auto">
-                {product.infoImages.map((url, i) => (
-                  <motion.div 
-                    key={i} 
-                    initial={{ opacity: 0, y: 30 }} 
-                    whileInView={{ opacity: 1, y: 0 }} 
-                    viewport={{ once: true }} 
-                    className="relative w-full rounded-[40px] overflow-hidden shadow-luxury border border-neutral-100 bg-white"
-                  >
-                     <Image src={url} alt={`Detail ${i}`} width={1920} height={1080} className="w-full h-auto object-contain" />
-                  </motion.div>
-                ))}
-             </div>
+             {product.id === 'standing-board' ? (
+                <RecraftedStandingBoard />
+             ) : (
+                <>
+                  <div className="text-center space-y-4">
+                      <span className="text-[10px] uppercase tracking-[0.6em] text-accent-gold">{language === 'th' ? 'รายละเอียดทางเทคนิค' : 'Technical Specifications'}</span>
+                      <h2 className="text-4xl uppercase tracking-tighter text-primary">{language === 'th' ? 'ข้อมูลเชิงลึกของชิ้นงาน' : 'Masterpiece Insight'}</h2>
+                  </div>
+                  
+                  <div className="flex flex-col gap-12 max-w-5xl mx-auto">
+                      {product.infoImages.map((url, i) => (
+                        <motion.div 
+                          key={i} 
+                          initial={{ opacity: 0, y: 30 }} 
+                          whileInView={{ opacity: 1, y: 0 }} 
+                          viewport={{ once: true }} 
+                          className="relative w-full rounded-[40px] overflow-hidden shadow-luxury border border-neutral-100 bg-white"
+                        >
+                          <Image src={url} alt={`Detail ${i}`} width={1920} height={1080} className="w-full h-auto object-contain" />
+                        </motion.div>
+                      ))}
+                  </div>
+                </>
+             )}
           </div>
         )}
 
