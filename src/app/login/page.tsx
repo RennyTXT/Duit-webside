@@ -140,7 +140,11 @@ export default function EmailLoginPage() {
       if (error) throw error;
 
       toast.success(language === 'th' ? 'สร้างบัญชีสำเร็จ' : 'Account created successfully');
-      router.push('/pet-profile');
+      
+      // Use window.location to force a clean reload into the pet-profile dashboard
+      setTimeout(() => {
+        window.location.href = '/pet-profile';
+      }, 500);
     } catch (error: any) {
       toast.error(error.message);
     } finally {
