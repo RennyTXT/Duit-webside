@@ -161,13 +161,13 @@ const Header = () => {
               <div className="hidden sm:flex items-center gap-2">
                 <Link 
                   href="/login" 
-                  className={`px-4 py-2 rounded-full text-sm uppercase tracking-widest transition-all ${shouldShowSolid ? 'text-primary hover:bg-neutral-50' : 'text-white hover:bg-white/10'}`}
+                  className={`px-4 py-2 rounded-full text-sm uppercase tracking-widest transition-all ${shouldShowSolid ? 'text-primary hover:bg-neutral-50' : 'text-primary hover:bg-white/10'}`}
                 >
                   {language === 'th' ? 'เข้าสู่ระบบ' : 'Sign In'}
                 </Link>
                 <Link 
                   href="/register" 
-                  className={`px-5 py-2 rounded-full text-sm uppercase tracking-widest font-bold transition-all ${shouldShowSolid ? 'bg-primary text-white hover:bg-accent-gold' : 'bg-white text-primary hover:bg-neutral-100'}`}
+                  className={`px-5 py-2 rounded-full text-sm uppercase tracking-widest font-bold transition-all ${shouldShowSolid ? 'bg-primary text-white hover:bg-accent-gold' : 'bg-primary text-white hover:bg-neutral-900'}`}
                 >
                   {language === 'th' ? 'สมัครสมาชิก' : 'Register'}
                 </Link>

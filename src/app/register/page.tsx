@@ -468,30 +468,34 @@ export default function RegisterWizard() {
                     <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold">
                       {t.auth.petBirthday} <span className="text-red-500">*</span>
                     </label>
-                    <div className="md:col-span-3 flex items-center gap-4">
-                       <input 
-                        type="text" 
-                        placeholder={t.auth.year}
-                        value={formData.petBirthYear}
-                        onChange={e => updateField('petBirthYear', e.target.value)}
-                        className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-4 text-center text-lg text-primary outline-none shadow-sm"
-                       />
-                       <span className="text-neutral-400 font-bold">/</span>
-                       <input 
-                        type="text" 
-                        placeholder={t.auth.month}
-                        value={formData.petBirthMonth}
-                        onChange={e => updateField('petBirthMonth', e.target.value)}
-                        className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-4 text-center text-lg text-primary outline-none shadow-sm"
-                       />
-                       <span className="text-neutral-400 font-bold">/</span>
-                       <input 
-                        type="text" 
-                        placeholder={t.auth.day}
-                        value={formData.petBirthDay}
-                        onChange={e => updateField('petBirthDay', e.target.value)}
-                        className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-4 text-center text-lg text-primary outline-none shadow-sm"
-                       />
+                    <div className="md:col-span-3 grid grid-cols-3 gap-2 sm:gap-4 items-center">
+                       <div className="relative">
+                          <input 
+                            type="text" 
+                            placeholder={t.auth.year}
+                            value={formData.petBirthYear}
+                            onChange={e => updateField('petBirthYear', e.target.value)}
+                            className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-2 sm:px-4 text-center text-base sm:text-lg text-primary outline-none shadow-sm"
+                          />
+                       </div>
+                       <div className="relative">
+                          <input 
+                            type="text" 
+                            placeholder={t.auth.month}
+                            value={formData.petBirthMonth}
+                            onChange={e => updateField('petBirthMonth', e.target.value)}
+                            className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-2 sm:px-4 text-center text-base sm:text-lg text-primary outline-none shadow-sm"
+                          />
+                       </div>
+                       <div className="relative">
+                          <input 
+                            type="text" 
+                            placeholder={t.auth.day}
+                            value={formData.petBirthDay}
+                            onChange={e => updateField('petBirthDay', e.target.value)}
+                            className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-2 sm:px-4 text-center text-base sm:text-lg text-primary outline-none shadow-sm"
+                          />
+                       </div>
                     </div>
                  </div>
 
