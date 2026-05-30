@@ -339,6 +339,7 @@ export default function PetProfilePage() {
   }, [type, language]);
 
   const handleLogout = async () => {
+    const supabase = createClient();
     await supabase.auth.signOut();
     clearProfile();
     toast.success(t.common.signedOut);
@@ -355,6 +356,7 @@ export default function PetProfilePage() {
     }
 
     try {
+      const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
