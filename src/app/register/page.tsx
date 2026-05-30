@@ -185,40 +185,47 @@ export default function RegisterWizard() {
   };
 
   const handleFindAddress = async () => {
-    if (!formData.postalCode || formData.postalCode.length !== 5) {
+    const zipInput = formData.postalCode?.trim();
+    if (!zipInput || zipInput.length !== 5) {
       toast.error(language === 'th' ? 'กรุณากรอกรหัสไปรษณีย์ 5 หลัก' : 'Please enter a 5-digit postal code');
       return;
     }
 
     setIsFindingAddress(true);
+    const loadingToast = toast.loading(language === 'th' ? 'กำลังดึงข้อมูลที่อยู่...' : 'Fetching address data...');
+    
     try {
-      // Fetch Thai address database from a reliable CDN
-      const response = await fetch('https://raw.githubusercontent.com/earthchie/jquery.Thailand.js/master/jquery.Thailand.js/database/db.json');
+      // Use the consolidated geography dataset for efficiency (one request instead of three)
+      const response = await fetch('https://cdn.jsdelivr.net/gh/thailand-geography-data/thailand-geography-json@main/src/geography.json');
+      
+      if (!response.ok) throw new Error('Failed to fetch dataset');
+      
       const data = await response.json();
       
-      // The database is an array of [province, district, subdistrict, postal_code]
-      // or similar structure depending on the version. Let's handle the common one.
-      // Search for matches
-      const matches = data.filter((item: any) => 
-        String(item.zipcode) === formData.postalCode || 
-        (Array.isArray(item.zipcode) && item.zipcode.includes(Number(formData.postalCode)))
+      // Find matching entry
+      const zipNum = Number(zipInput);
+      const match = data.find((item: any) => 
+        String(item.postalCode) === zipInput || item.postalCode === zipNum
       );
 
-      if (matches.length > 0) {
-        const match = matches[0];
+      if (match) {
         setFormData(prev => ({
           ...prev,
-          subdistrict: match.district || match.subdistrict || '',
-          district: match.amphoe || match.district || '',
-          province: match.province || '',
+          subdistrict: match.subdistrictNameTh || '',
+          district: match.districtNameTh || '',
+          province: match.provinceNameTh || '',
         }));
-        toast.success(language === 'th' ? 'ค้นหาที่อยู่เรียบร้อย' : 'Address found');
+        
+        toast.dismiss(loadingToast);
+        toast.success(language === 'th' ? 'ดึงข้อมูลที่อยู่เรียบร้อย' : 'Address filled');
       } else {
-        toast.error(language === 'th' ? 'ไม่พบข้อมูลสำหรับรหัสไปรษณีย์นี้' : 'No address found for this postal code');
+        toast.dismiss(loadingToast);
+        toast.error(language === 'th' ? 'ไม่พบข้อมูลสำหรับรหัสไปรษณีย์นี้' : 'No data found for this postal code');
       }
     } catch (error) {
       console.error('Address lookup failed:', error);
-      toast.error(language === 'th' ? 'ระบบค้นหาที่อยู่ขัดข้อง กรุณาพิมพ์เอง' : 'Lookup service unavailable, please type manually');
+      toast.dismiss(loadingToast);
+      toast.error(language === 'th' ? 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณากรอกเอง' : 'Connection failed, please type manually');
     } finally {
       setIsFindingAddress(false);
     }
