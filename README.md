@@ -65,6 +65,41 @@
 
 ---
 
+## 🚀 คู่มือการย้ายและตั้งค่าระบบ (Migration & Setup Guide)
+*สำหรับผู้ที่ต้องการนำไปใช้ต่อในเครื่องอื่น หรือเปลี่ยนบัญชีใหม่ (For non-coders & developers)*
+
+หากคุณต้องการย้ายโปรเจกต์นี้ไปทำต่อที่อื่น หรือเปลี่ยนไปใช้บัญชี **Supabase** และ **โดเมน** ใหม่ ให้ทำตามขั้นตอนที่ "ต้องทำ" ดังนี้ครับ:
+
+### 1. การเตรียมฐานข้อมูล (Supabase Setup)
+1.  **รันคำสั่ง SQL:** เข้าไปที่ **SQL Editor** ใน Supabase แล้วคัดลอกโค้ดจากไฟล์ในโฟลเดอร์ `scripts/` ไปวางและกด **Run** ตามลำดับนี้:
+    *   `setup_crm.sql` (สร้างโครงสร้างหลัก)
+    *   `update_registration_schema.sql` (เพิ่มข้อมูลที่อยู่และเบอร์โทร)
+    *   `import_catalog.sql` (ถ้าต้องการข้อมูลสินค้าเริ่มต้น)
+2.  **สร้างที่เก็บรูปภาพ (Storage):** ไปที่เมนู **Storage** และสร้าง "ถัง" 2 ใบ:
+    *   ชื่อ **`pets`** และ **`products`** (ต้องตั้งเป็น **Public**)
+    *   เข้าไปที่ **Policies** ของแต่ละใบ -> กด **New Policy** -> เลือกอันที่อนุญาตให้คนล็อกอิน (Authenticated) ทำได้ทุกอย่าง (INSERT, SELECT, UPDATE, DELETE)
+3.  **ตั้งค่าอีเมล (Resend):**
+    *   ไปที่ **Authentication -> SMTP** และกรอกรหัส API จาก Resend ของคุณ (อย่าลืม Verify Domain ใน Resend ก่อน)
+
+### 2. การเชื่อมต่อหน้าเว็บ (Environment Variables)
+ในเครื่องคอมพิวเตอร์เครื่องใหม่ ให้สร้างไฟล์ชื่อ **`.env.local`** ไว้ในโฟลเดอร์หลัก และใส่ค่าดังนี้:
+```env
+NEXT_PUBLIC_SUPABASE_URL=ที่อยู่_Project_URL_ของคุณ
+NEXT_PUBLIC_SUPABASE_ANON_KEY=รหัส_Anon_Key_ของคุณ
+```
+*(หาได้จากเมนู Project Settings -> API ใน Supabase)*
+
+### 3. การนำขึ้นออนไลน์ (Vercel Deployment)
+1.  เมื่อเชื่อม GitHub กับ Vercel แล้ว ให้ไปที่หน้า **Settings -> Environment Variables**
+2.  ใส่ค่า URL และ Key เหมือนในข้อ 2 ลงไป
+3.  **ตั้งค่า Site URL:** ใน Supabase (เมนู Authentication -> URL Configuration) ให้เปลี่ยน **Site URL** เป็นชื่อโดเมนใหม่ของคุณ (เช่น `https://your-new-domain.com`) เพื่อให้ระบบล็อกอินทำงานได้ถูกต้อง
+
+### 4. การตั้งค่าผู้ดูแลระบบ (Admin Access)
+1.  ไปที่ไฟล์ `src/app/admin/layout.tsx` และเปลี่ยนอีเมลใน `authorizedAdmins` ให้เป็นอีเมลของคุณ
+2.  ใน Supabase ไปที่ตาราง `profiles` หาแถวที่เป็นของคุณ แล้วเปลี่ยนช่อง `role` จาก `customer` เป็น **`admin`**
+
+---
+
 ## 📐 ปรัชญาของเรา | Design Philosophy
 > *"เราไม่ได้แค่ออกแบบผลิตภัณฑ์สำหรับสัตว์เลี้ยง แต่เราออกแบบความสุขและความสวยงามที่ยั่งยืนให้กับการใช้ชีวิตร่วมกัน"* — **Duit Thailand**
 
