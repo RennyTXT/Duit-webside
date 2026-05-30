@@ -59,6 +59,7 @@ export default function RegisterWizard() {
     petNickname: '',
     petType: '' as 'dog' | 'cat' | '',
     petSize: '' as 'small' | 'medium' | 'large' | '',
+    petImageUrl: '',
     referralCode: '',
   });
 
@@ -187,6 +188,7 @@ export default function RegisterWizard() {
           type: formData.petType,
           size: formData.petSize,
           birth_date: birthDate,
+          image_url: formData.petImageUrl,
         });
 
       if (petError) throw petError;
@@ -248,6 +250,42 @@ export default function RegisterWizard() {
       toast.error(language === 'th' ? 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณากรอกเอง' : 'Connection failed, please type manually');
     } finally {
       setIsFindingAddress(false);
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error(language === 'th' ? 'รูปภาพต้องมีขนาดไม่เกิน 5MB' : 'Image must be under 5MB');
+      return;
+    }
+
+    const loadingToast = toast.loading(language === 'th' ? 'กำลังอัปโหลดรูปภาพ...' : 'Uploading image...');
+    try {
+      const supabase = createClient();
+      
+      // Temporary ID for anonymous/registering users
+      const fileName = `temp-${Math.random()}.${file.name.split('.').pop()}`;
+      const filePath = `avatars/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('pets')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('pets')
+        .getPublicUrl(filePath);
+
+      updateField('petImageUrl', publicUrl);
+      toast.dismiss(loadingToast);
+      toast.success(language === 'th' ? 'อัปโหลดรูปภาพสำเร็จ' : 'Image uploaded successfully');
+    } catch (error: any) {
+      toast.dismiss(loadingToast);
+      toast.error(error.message);
     }
   };
 
@@ -515,6 +553,36 @@ export default function RegisterWizard() {
                          <option value="">{t.auth.day}</option>
                          {daysArr.map(d => <option key={d} value={d}>{d}</option>)}
                        </select>
+                    </div>
+                 </div>
+
+                 {/* Pet Photo */}
+                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center border-t border-neutral-100 pt-10">
+                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold">
+                      {language === 'th' ? 'รูปภาพของน้อง' : 'Pet Photo'}
+                    </label>
+                    <div className="md:col-span-3">
+                       <div className="flex flex-col items-center sm:items-start gap-6">
+                          <div className="relative w-40 h-40 rounded-[32px] overflow-hidden border-2 border-dashed border-neutral-200 bg-white flex items-center justify-center group hover:border-primary transition-colors">
+                            {formData.petImageUrl ? (
+                              <>
+                                <Image src={formData.petImageUrl} alt="Pet Preview" fill className="object-cover" />
+                                <button 
+                                  onClick={() => updateField('petImageUrl', '')}
+                                  className="absolute top-2 right-2 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-md hover:bg-red-500 transition-colors"
+                                >
+                                   <X size={16} />
+                                </button>
+                              </>
+                            ) : (
+                              <label className="cursor-pointer flex flex-col items-center gap-2">
+                                <Camera className="text-neutral-300 group-hover:text-primary transition-colors" size={32} />
+                                <span className="text-[10px] uppercase tracking-widest text-neutral-400">{t.crm.uploadPortrait}</span>
+                                <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                              </label>
+                            )}
+                          </div>
+                       </div>
                     </div>
                  </div>
 
