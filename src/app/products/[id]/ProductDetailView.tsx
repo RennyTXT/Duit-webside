@@ -169,7 +169,8 @@ export default function ProductDetailView({ id }: { id: string }) {
       description: language === 'th' ? (staticInfo?.description || product.description) : (staticInfo?.description || product.description),
       category: language === 'th' ? catInfo.th : catInfo.en,
       features: product.features || [],
-      specs: product.specs || []
+      specs: product.specs || [],
+      infoImages: product.infoImages || []
     };
   }, [product, language, id, t]);
 
