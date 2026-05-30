@@ -94,6 +94,7 @@ export default function AdminLayout({
   }
 
   const handleLogout = async () => {
+    const supabase = createClient();
     await supabase.auth.signOut();
     toast.success('Sign out successful');
     router.push('/admin/login');
