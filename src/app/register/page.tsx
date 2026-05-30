@@ -78,17 +78,9 @@ export default function RegisterWizard() {
       return false;
     }
 
-    // Password: 10-16 chars, mix of types
-    // Screenshot: "การผสมผสานอย่างน้อย 2 อย่างของตัวอักษรภาษาอังกฤษพิมพ์ใหญ่/พิมพ์เล็ก ตัวเลข และอักขระพิเศษ ความยาว 10 ถึง 16 ตัวอักษร"
-    const typesCount = [
-      /[a-z]/.test(password),
-      /[A-Z]/.test(password),
-      /[0-9]/.test(password),
-      /[^a-zA-Z0-9]/.test(password),
-    ].filter(Boolean).length;
-
-    if (password.length < 10 || password.length > 16 || typesCount < 2) {
-      toast.error(t.auth.passwordHint);
+    // Password: Min 8 chars
+    if (password.length < 8) {
+      toast.error(language === 'th' ? 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร' : 'Password must be at least 8 characters');
       return false;
     }
 
@@ -234,23 +226,23 @@ export default function RegisterWizard() {
               <div className="bg-neutral-50 rounded-[40px] p-8 sm:p-12 space-y-10 border border-neutral-100 shadow-sm">
                 {/* Username */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                  <label className="text-xs uppercase tracking-widest text-secondary font-bold flex items-center gap-2">
-                    {t.auth.username} <span className="text-red-500">*</span>
+                  <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold flex items-center gap-2">
+                    {language === 'th' ? 'ชื่อผู้ใช้' : 'Username'} <span className="text-red-500">*</span>
                   </label>
                   <div className="md:col-span-3 space-y-2">
                     <input 
                       type="text" 
                       value={formData.username}
                       onChange={e => updateField('username', e.target.value)}
-                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                     />
-                    <p className="text-[11px] text-neutral-400 italic">{t.auth.usernameHint}</p>
+                    <p className="text-xs text-neutral-600 font-medium italic">{t.auth.usernameHint}</p>
                   </div>
                 </div>
 
                 {/* Email */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center border-t border-neutral-100 pt-10">
-                  <label className="text-xs uppercase tracking-widest text-secondary font-bold">
+                  <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold">
                     {t.auth.email} <span className="text-red-500">*</span>
                   </label>
                   <div className="md:col-span-3 space-y-2">
@@ -258,15 +250,15 @@ export default function RegisterWizard() {
                       type="email" 
                       value={formData.email}
                       onChange={e => updateField('email', e.target.value)}
-                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                     />
-                    <p className="text-[11px] text-neutral-400 italic">{t.auth.emailHint}</p>
+                    <p className="text-xs text-neutral-600 font-medium italic">{t.auth.emailHint}</p>
                   </div>
                 </div>
 
                 {/* Password */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-start border-t border-neutral-100 pt-10">
-                  <label className="text-xs uppercase tracking-widest text-secondary font-bold mt-4">
+                  <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold mt-4">
                     {t.auth.password} <span className="text-red-500">*</span>
                   </label>
                   <div className="md:col-span-3 space-y-4">
@@ -275,22 +267,22 @@ export default function RegisterWizard() {
                       value={formData.password}
                       onChange={e => updateField('password', e.target.value)}
                       placeholder={t.auth.password}
-                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                     />
                     <input 
                       type="password" 
                       value={formData.confirmPassword}
                       onChange={e => updateField('confirmPassword', e.target.value)}
                       placeholder={t.auth.confirmPassword}
-                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                     />
-                    <p className="text-[11px] text-neutral-400 italic">{t.auth.passwordHint}</p>
+                    <p className="text-xs text-neutral-600 font-medium italic">{t.auth.passwordHint}</p>
                   </div>
                 </div>
 
                 {/* Full Name */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center border-t border-neutral-100 pt-10">
-                  <label className="text-xs uppercase tracking-widest text-secondary font-bold">
+                  <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold">
                     {t.auth.name} <span className="text-red-500">*</span>
                   </label>
                   <div className="md:col-span-3">
@@ -298,14 +290,14 @@ export default function RegisterWizard() {
                       type="text" 
                       value={formData.fullname}
                       onChange={e => updateField('fullname', e.target.value)}
-                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                     />
                   </div>
                 </div>
 
                 {/* Address Block */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-start border-t border-neutral-100 pt-10">
-                  <label className="text-xs uppercase tracking-widest text-secondary font-bold mt-4">
+                  <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold mt-4">
                     {t.auth.address}
                   </label>
                   <div className="md:col-span-3 space-y-4">
@@ -315,9 +307,9 @@ export default function RegisterWizard() {
                         value={formData.postalCode}
                         onChange={e => updateField('postalCode', e.target.value)}
                         placeholder={t.auth.postalCode}
-                        className="w-48 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
+                        className="w-48 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                       />
-                      <button className="px-10 bg-neutral-200 text-secondary rounded-2xl text-[11px] uppercase tracking-widest font-bold hover:bg-neutral-300 transition-colors">
+                      <button className="px-10 bg-neutral-200 text-neutral-900 rounded-2xl text-[11px] uppercase tracking-widest font-bold hover:bg-neutral-300 transition-colors">
                         {t.auth.findAddress}
                       </button>
                     </div>
@@ -326,14 +318,14 @@ export default function RegisterWizard() {
                       value={formData.basicAddress}
                       onChange={e => updateField('basicAddress', e.target.value)}
                       placeholder={t.auth.basicAddress}
-                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                     />
                     <input 
                       type="text" 
                       value={formData.detailAddress}
                       onChange={e => updateField('detailAddress', e.target.value)}
                       placeholder={t.auth.detailAddress}
-                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none focus:border-primary transition-all shadow-sm"
                     />
                   </div>
                 </div>
@@ -342,13 +334,13 @@ export default function RegisterWizard() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start border-t border-neutral-100 pt-10">
                   {/* Home Phone */}
                   <div className="flex flex-col gap-4">
-                    <label className="text-xs uppercase tracking-widest text-secondary font-bold mt-4">{t.auth.homePhone}</label>
+                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold mt-4">{t.auth.homePhone}</label>
                   </div>
                   <div className="md:col-span-3 flex items-center gap-4">
                      <select 
                       value={formData.homePhonePrefix}
                       onChange={e => updateField('homePhonePrefix', e.target.value)}
-                      className="h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none"
+                      className="h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-base text-primary outline-none font-bold"
                      >
                        <option>02</option>
                        <option>03</option>
@@ -356,27 +348,27 @@ export default function RegisterWizard() {
                        <option>05</option>
                        <option>07</option>
                      </select>
-                     <span className="text-neutral-300">-</span>
+                     <span className="text-neutral-400 font-bold">-</span>
                      <input 
                       type="text" 
                       maxLength={4}
                       value={formData.homePhonePart1}
                       onChange={e => updateField('homePhonePart1', e.target.value)}
-                      className="flex-1 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-center text-base outline-none"
+                      className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-center text-lg text-primary outline-none shadow-sm"
                      />
-                     <span className="text-neutral-300">-</span>
+                     <span className="text-neutral-400 font-bold">-</span>
                      <input 
                       type="text" 
                       maxLength={4}
                       value={formData.homePhonePart2}
                       onChange={e => updateField('homePhonePart2', e.target.value)}
-                      className="flex-1 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-center text-base outline-none"
+                      className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-center text-lg text-primary outline-none shadow-sm"
                      />
                   </div>
 
                   {/* Mobile Phone */}
                   <div className="flex flex-col gap-4 border-t border-neutral-100 pt-6 md:border-0 md:pt-0">
-                    <label className="text-xs uppercase tracking-widest text-secondary font-bold mt-4">
+                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold mt-4">
                       {t.auth.mobilePhone} <span className="text-red-500">*</span>
                     </label>
                   </div>
@@ -384,7 +376,7 @@ export default function RegisterWizard() {
                      <select 
                       value={formData.mobilePhonePrefix}
                       onChange={e => updateField('mobilePhonePrefix', e.target.value)}
-                      className="h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none"
+                      className="h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-base text-primary outline-none font-bold"
                      >
                        <option>010</option>
                        <option>011</option>
@@ -392,21 +384,21 @@ export default function RegisterWizard() {
                        <option>08</option>
                        <option>09</option>
                      </select>
-                     <span className="text-neutral-300">-</span>
+                     <span className="text-neutral-400 font-bold">-</span>
                      <input 
                       type="text" 
                       maxLength={4}
                       value={formData.mobilePhonePart1}
                       onChange={e => updateField('mobilePhonePart1', e.target.value)}
-                      className="flex-1 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-center text-base outline-none"
+                      className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-center text-lg text-primary outline-none shadow-sm"
                      />
-                     <span className="text-neutral-300">-</span>
+                     <span className="text-neutral-400 font-bold">-</span>
                      <input 
                       type="text" 
                       maxLength={4}
                       value={formData.mobilePhonePart2}
                       onChange={e => updateField('mobilePhonePart2', e.target.value)}
-                      className="flex-1 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-center text-base outline-none"
+                      className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-center text-lg text-primary outline-none shadow-sm"
                      />
                   </div>
                 </div>
@@ -430,17 +422,17 @@ export default function RegisterWizard() {
               className="space-y-12 sm:space-y-16"
             >
               <div className="text-center space-y-4">
-                 <div className="inline-flex items-center gap-3 px-6 py-2 bg-accent-gold/10 text-accent-gold rounded-full text-[10px] uppercase tracking-widest font-bold">
-                    <Gift size={14} /> Birthday Coupon Event
+                 <div className="inline-flex items-center gap-3 px-6 py-2 bg-accent-gold/10 text-accent-gold rounded-full text-[11px] uppercase tracking-widest font-bold">
+                    <Gift size={16} /> Birthday Coupon Event
                  </div>
-                 <h1 className="text-4xl sm:text-5xl uppercase tracking-tighter leading-tight">{t.auth.petRegistrationTitle}</h1>
-                 <p className="text-sm text-secondary opacity-60 max-w-md mx-auto">{t.auth.birthdayHint}</p>
+                 <h1 className="text-4xl sm:text-5xl uppercase tracking-tighter leading-tight text-neutral-900">{t.auth.petRegistrationTitle}</h1>
+                 <p className="text-base text-neutral-600 font-medium max-w-md mx-auto">{t.auth.birthdayHint}</p>
               </div>
 
               <div className="bg-neutral-50 rounded-[40px] p-8 sm:p-12 space-y-12 border border-neutral-100 shadow-sm">
                  {/* Pet Birthday */}
                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                    <label className="text-[10px] uppercase tracking-widest text-secondary font-bold">
+                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold">
                       {t.auth.petBirthday} <span className="text-red-500">*</span>
                     </label>
                     <div className="md:col-span-3 flex items-center gap-4">
@@ -449,30 +441,30 @@ export default function RegisterWizard() {
                         placeholder={t.auth.year}
                         value={formData.petBirthYear}
                         onChange={e => updateField('petBirthYear', e.target.value)}
-                        className="flex-1 h-14 bg-white border border-neutral-100 rounded-2xl px-4 text-center text-sm outline-none"
+                        className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-4 text-center text-lg text-primary outline-none shadow-sm"
                        />
-                       <span className="text-neutral-300">/</span>
+                       <span className="text-neutral-400 font-bold">/</span>
                        <input 
                         type="text" 
                         placeholder={t.auth.month}
                         value={formData.petBirthMonth}
                         onChange={e => updateField('petBirthMonth', e.target.value)}
-                        className="flex-1 h-14 bg-white border border-neutral-100 rounded-2xl px-4 text-center text-sm outline-none"
+                        className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-4 text-center text-lg text-primary outline-none shadow-sm"
                        />
-                       <span className="text-neutral-300">/</span>
+                       <span className="text-neutral-400 font-bold">/</span>
                        <input 
                         type="text" 
                         placeholder={t.auth.day}
                         value={formData.petBirthDay}
                         onChange={e => updateField('petBirthDay', e.target.value)}
-                        className="flex-1 h-14 bg-white border border-neutral-100 rounded-2xl px-4 text-center text-sm outline-none"
+                        className="flex-1 h-16 bg-white border border-neutral-200 rounded-2xl px-4 text-center text-lg text-primary outline-none shadow-sm"
                        />
                     </div>
                  </div>
 
                  {/* Pet Nickname */}
                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center border-t border-neutral-100 pt-10">
-                    <label className="text-[10px] uppercase tracking-widest text-secondary font-bold">
+                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold">
                       {t.auth.petNickname} <span className="text-red-500">*</span>
                     </label>
                     <div className="md:col-span-3">
@@ -480,77 +472,77 @@ export default function RegisterWizard() {
                         type="text" 
                         value={formData.petNickname}
                         onChange={e => updateField('petNickname', e.target.value)}
-                        className="w-full h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none"
+                        className="w-full h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none shadow-sm"
                       />
                     </div>
                  </div>
 
                  {/* Pet Type */}
                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center border-t border-neutral-100 pt-10">
-                    <label className="text-[10px] uppercase tracking-widest text-secondary font-bold">
+                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold">
                       {t.auth.petType} <span className="text-red-500">*</span>
                     </label>
-                    <div className="md:col-span-3 flex gap-8">
-                       <label className="flex items-center gap-3 cursor-pointer group">
+                    <div className="md:col-span-3 flex gap-12">
+                       <label className="flex items-center gap-4 cursor-pointer group">
                           <input 
                             type="radio" 
                             name="petType" 
-                            className="w-5 h-5 accent-primary" 
+                            className="w-6 h-6 accent-primary" 
                             onChange={() => updateField('petType', 'cat')}
                           />
-                          <span className="text-sm font-medium group-hover:text-primary transition-colors">{language === 'th' ? 'แมว' : 'Cat'}</span>
+                          <span className="text-base font-bold text-neutral-700 group-hover:text-primary transition-colors">{language === 'th' ? 'แมว' : 'Cat'}</span>
                        </label>
-                       <label className="flex items-center gap-3 cursor-pointer group">
+                       <label className="flex items-center gap-4 cursor-pointer group">
                           <input 
                             type="radio" 
                             name="petType" 
-                            className="w-5 h-5 accent-primary" 
+                            className="w-6 h-6 accent-primary" 
                             onChange={() => updateField('petType', 'dog')}
                           />
-                          <span className="text-sm font-medium group-hover:text-primary transition-colors">{language === 'th' ? 'ลูกสุนัข' : 'Puppy'}</span>
+                          <span className="text-base font-bold text-neutral-700 group-hover:text-primary transition-colors">{language === 'th' ? 'ลูกสุนัข' : 'Puppy'}</span>
                        </label>
                     </div>
                  </div>
 
                  {/* Pet Size */}
                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center border-t border-neutral-100 pt-10">
-                    <label className="text-[10px] uppercase tracking-widest text-secondary font-bold">
+                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold">
                       {t.auth.petSize} <span className="text-red-500">*</span>
                     </label>
-                    <div className="md:col-span-3 flex flex-wrap gap-8">
-                       <label className="flex items-center gap-3 cursor-pointer group">
+                    <div className="md:col-span-3 flex flex-wrap gap-10">
+                       <label className="flex items-center gap-4 cursor-pointer group">
                           <input 
                             type="radio" 
                             name="petSize" 
-                            className="w-5 h-5 accent-primary" 
+                            className="w-6 h-6 accent-primary" 
                             onChange={() => updateField('petSize', 'small')}
                           />
-                          <span className="text-sm font-medium group-hover:text-primary transition-colors">{language === 'th' ? 'เล็ก' : 'Small'}</span>
+                          <span className="text-base font-bold text-neutral-700 group-hover:text-primary transition-colors">{language === 'th' ? 'เล็ก' : 'Small'}</span>
                        </label>
-                       <label className="flex items-center gap-3 cursor-pointer group">
+                       <label className="flex items-center gap-4 cursor-pointer group">
                           <input 
                             type="radio" 
                             name="petSize" 
-                            className="w-5 h-5 accent-primary" 
+                            className="w-6 h-6 accent-primary" 
                             onChange={() => updateField('petSize', 'medium')}
                           />
-                          <span className="text-sm font-medium group-hover:text-primary transition-colors">{language === 'th' ? 'ขนาดกลาง' : 'Medium'}</span>
+                          <span className="text-base font-bold text-neutral-700 group-hover:text-primary transition-colors">{language === 'th' ? 'ขนาดกลาง' : 'Medium'}</span>
                        </label>
-                       <label className="flex items-center gap-3 cursor-pointer group">
+                       <label className="flex items-center gap-4 cursor-pointer group">
                           <input 
                             type="radio" 
                             name="petSize" 
-                            className="w-5 h-5 accent-primary" 
+                            className="w-6 h-6 accent-primary" 
                             onChange={() => updateField('petSize', 'large')}
                           />
-                          <span className="text-sm font-medium group-hover:text-primary transition-colors">{language === 'th' ? 'ขนาดใหญ่' : 'Large'}</span>
+                          <span className="text-base font-bold text-neutral-700 group-hover:text-primary transition-colors">{language === 'th' ? 'ขนาดใหญ่' : 'Large'}</span>
                        </label>
                     </div>
                  </div>
 
                  {/* Referral Code */}
                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center border-t border-neutral-100 pt-10">
-                    <label className="text-[10px] uppercase tracking-widest text-secondary font-bold">
+                    <label className="text-sm uppercase tracking-widest text-neutral-900 font-bold">
                       {t.auth.referralCode}
                     </label>
                     <div className="md:col-span-3">
@@ -558,7 +550,7 @@ export default function RegisterWizard() {
                         type="text" 
                         value={formData.referralCode}
                         onChange={e => updateField('referralCode', e.target.value)}
-                        className="w-full sm:w-60 h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none"
+                        className="w-full sm:w-64 h-16 bg-white border border-neutral-200 rounded-2xl px-6 text-lg text-primary outline-none shadow-sm"
                       />
                     </div>
                  </div>
