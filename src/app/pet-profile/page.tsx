@@ -256,56 +256,9 @@ export default function PetProfilePage() {
     setTimeout(() => {
       const selectedBreed = dogBreeds.find(b => b.en === breed) || catBreeds.find(b => b.en === breed);
       
-      // Logic to filter and prioritize products for AI recommendation
-      let recommended = [...staticProducts].filter(p => {
-        if (!p.recommendedFor) return true;
-        const typeMatch = !p.recommendedFor.type || p.recommendedFor.type === type;
-        const sizeMatch = !p.recommendedFor.size || p.recommendedFor.size === size;
-        return typeMatch && sizeMatch;
-      });
-
-      // Breed-specific logic for dogs
-      if (type === 'dog' && selectedBreed) {
-        recommended = recommended.sort((a, b) => {
-          let scoreA = 0;
-          let scoreB = 0;
-
-          const traits = selectedBreed.trait?.toLowerCase() || '';
-          const arch = selectedBreed.archetype?.toLowerCase() || '';
-
-          // 1. Cooling needs (Frenchie, Husky, etc.)
-          if (traits.includes('cooling') || arch.includes('comedian') || arch.includes('escape artist')) {
-            if (a.id === 'summer-cushion') scoreA += 50;
-            if (b.id === 'summer-cushion') scoreB += 50;
-          }
-
-          // 2. Intellectual/Nosework needs (Poodle, Border Collie, etc.)
-          if (traits.includes('smart') || arch.includes('intellectual')) {
-            if (a.id === 'yummy-ball') scoreA += 50;
-            if (b.id === 'yummy-ball') scoreB += 50;
-          }
-
-          // 3. Grooming needs (Golden, Pomeranian, etc.)
-          if (traits.includes('coat') || traits.includes('grooming') || arch.includes('little star') || arch.includes('socialite')) {
-            if (a.id === 'banana-brush') scoreA += 50;
-            if (b.id === 'banana-brush') scoreB += 50;
-          }
-
-          // 4. Hygiene for indoor/small dogs
-          if (size === 'small') {
-            if (a.id === 'custom-potty' || a.id === 'floating-bathtub') scoreA += 30;
-            if (b.id === 'custom-potty' || b.id === 'floating-bathtub') scoreB += 30;
-          }
-
-          // 5. Training/Active needs
-          if (traits.includes('active') || traits.includes('tough')) {
-            if (a.id === 'anti-bug-light') scoreA += 20;
-            if (b.id === 'anti-bug-light') scoreB += 20;
-          }
-
-          return scoreB - scoreA;
-        });
-      }
+      // Use the global consolidated logic
+      const tempProfile: PetProfile = { name, type, breed, size, age: null };
+      const recommended = getRecommendedProducts(tempProfile, products);
 
       setAiInsights({
         title: selectedBreed?.archetype || t.crm.identitySynthesis,
@@ -315,7 +268,7 @@ export default function PetProfilePage() {
         products: recommended.slice(0, 6)
       });
       setIsAnalyzing(false);
-    }, 2000);
+    }, 800);
   };
 
   // Run AI analysis only after step 5 is confirmed and products are loaded

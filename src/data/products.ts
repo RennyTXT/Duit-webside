@@ -1,4 +1,5 @@
 import { PetType, PetSize } from '@/store/usePetStore';
+import { dogBreeds, catBreeds } from './breeds';
 
 export interface PetProfile {
   name: string;
@@ -100,7 +101,7 @@ export const products: Product[] = [
       { label: "Cooling", value: "Instant -5°C" }
     ],
     isBest: true,
-    recommendedFor: { type: "dog", size: "small" }
+    recommendedFor: { type: "dog" }
   },
   {
     id: "all-day-board",
@@ -164,7 +165,7 @@ export const products: Product[] = [
       { label: "Connectivity", value: "Wi-Fi / App" }
     ],
     isBest: true,
-    recommendedFor: { type: "dog", size: "small" }
+    recommendedFor: { type: "dog" }
   },
   {
     id: "standing-board",
@@ -443,26 +444,56 @@ export const products: Product[] = [
 export const getRecommendedProducts = (profile: PetProfile | null, productsList: Product[]) => {
   if (!profile) return productsList.filter(p => p.isBest);
   
+  const selectedBreed = dogBreeds.find(b => b.en === profile.breed) || catBreeds.find(b => b.en === profile.breed);
+  const traits = selectedBreed?.trait?.toLowerCase() || '';
+  const arch = selectedBreed?.archetype?.toLowerCase() || '';
+
   return productsList.map(product => {
     let score = 0;
-    if (!product.recommendedFor) return { product, score: 1 };
     
-    if (product.recommendedFor.type) {
-      if (product.recommendedFor.type === profile.type) score += 10;
-      else score -= 100;
+    // 1. Basic Type Match (Cat/Dog) - CRITICAL
+    if (product.recommendedFor?.type) {
+      if (product.recommendedFor.type === profile.type) score += 20;
+      else score -= 500; // Drastic penalty for wrong species
+    } else {
+      score += 5; // Neutral items
+    }
+
+    // 2. Size Match
+    if (product.recommendedFor?.size) {
+      if (product.recommendedFor.size === profile.size) score += 15;
+      else score += 2;
     } else {
       score += 5;
     }
 
-    if (product.recommendedFor.size) {
-      if (product.recommendedFor.size === profile.size) score += 8;
-      else score += 2;
-    } else {
-      score += 4;
+    // 3. AI/Breed Logic (Enhanced)
+    if (profile.type === 'dog') {
+      // Cooling needs (Frenchie, Husky, etc.)
+      if (traits.includes('cooling') || arch.includes('comedian') || arch.includes('escape artist')) {
+        if (product.id === 'summer-cushion') score += 100;
+      }
+      // Intellectual/Nosework needs (Poodle, Border Collie, etc.)
+      if (traits.includes('smart') || arch.includes('intellectual')) {
+        if (product.id === 'yummy-ball') score += 100;
+      }
+      // Grooming needs (Golden, Pomeranian, etc.)
+      if (traits.includes('coat') || traits.includes('grooming') || arch.includes('little star') || arch.includes('socialite')) {
+        if (product.id === 'banana-brush') score += 100;
+      }
+      // Hygiene for indoor/small dogs
+      if (profile.size === 'small') {
+        if (product.id === 'custom-potty' || product.id === 'floating-bathtub') score += 40;
+      }
+      // Training/Active needs
+      if (traits.includes('active') || traits.includes('tough')) {
+        if (product.id === 'anti-bug-light') score += 30;
+      }
     }
 
-    if (product.isBest) score += 2;
-    if (product.isNew) score += 2;
+    // 4. Boost Best Sellers & New
+    if (product.isBest) score += 10;
+    if (product.isNew) score += 10;
 
     return { product, score };
   })
