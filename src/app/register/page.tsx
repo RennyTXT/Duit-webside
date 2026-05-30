@@ -65,8 +65,8 @@ export default function RegisterWizard() {
   const validateStep1 = () => {
     const { username, email, password, confirmPassword, fullname, mobilePhone } = formData;
 
-    // Username: 4-16 alphanumeric
-    if (!/^[a-z0-9]{4,16}$/.test(username)) {
+    // Username: Mandatory, no character constraints
+    if (!username.trim()) {
       toast.error(t.auth.usernameHint);
       return false;
     }
