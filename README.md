@@ -1,81 +1,73 @@
-# DUIT THAILAND - Luxury Pet Design Experience
+# 🐾 DUIT THAILAND: The Digital Atelier
+### *ปฏิวัติประสบการณ์ชีวิตสัตว์เลี้ยง ด้วยดีไซน์และเทคโนโลยีระดับพรีเมียม*
+### *Redefining Pet Living through Refined Design & Technology*
 
-[![Next.js](https://img.shields.io/badge/Next.js-15+-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5+-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com/)
-
-A premium e-commerce and CRM platform for **Duit Thailand**, inspired by official Duit South Korea design philosophies. This project focuses on delivering an unparalleled user experience for pet owners who value architectural precision and aesthetic integrity.
+**Duit Thailand Web Experience** คือแพลตฟอร์มดิจิทัลที่คัดสรรมาเพื่อ "น้อง" ของคุณโดยเฉพาะ เราผสมผสานงานออกแบบสไตล์มินิมอลแบบสถาปัตยกรรม เข้ากับระบบวิเคราะห์สัตว์เลี้ยงอัจฉริยะ (AI Synthesis) เพื่อสร้างประสบการณ์ที่เหนือระดับในทุกสัมผัส
 
 ---
 
-## ✨ Key Features (จุดเด่นของโปรเจกต์)
+## ✨ คุณสมบัติเด่น | Key Masterpieces
 
-### 1. 💳 The Golden Persona Card (3D Membership)
-*   **EN:** A high-fidelity 3D membership card that tilts and reflects light based on mouse movement. Built with Framer Motion for a tactile, ultra-luxury feel.
-*   **TH:** บัตรสมาชิก 3D สุดหรูที่ขยับตามการเคลื่อนไหวของเมาส์ พร้อมเอฟเฟกต์แสงสะท้อนโลหะเสมือนจริง มอบประสบการณ์ระดับ VIP
-
-### 2. 🤖 AI Pet Persona & Bespoke Curation
-*   **EN:** An intelligent onboarding flow (Atelier Discovery) that analyzes pet traits to provide personalized product recommendations.
-*   **TH:** ระบบสร้างโปรไฟล์และวิเคราะห์ตัวตนน้องด้วย AI เพื่อแนะนำสินค้าที่คัดสรรมาให้เหมาะสมกับสรีระและสายพันธุ์โดยเฉพาะ
-
-### 3. 🔄 360-Degree Interactive Viewer
-*   **EN:** Seamless integration of interactive 3D models using `@google/model-viewer`, allowing users to inspect premium furniture details from every angle.
-*   **TH:** ระบบหมุนดูสินค้า 360 องศา เพื่อให้ลูกค้าเห็นรายละเอียดวัสดุและการประกอบอย่างประณีตในทุกมุมมอง
-
-### 4. 🌐 Full Localization (TH/EN)
-*   **EN:** A centralized translation system that instantly updates the entire UI, ensuring a consistent premium voice for both local and global customers.
-*   **TH:** ระบบสลับภาษาที่สมบูรณ์แบบ รองรับทั้งไทยและอังกฤษ โดยใช้สำนวนภาษาที่สะท้อนภาพลักษณ์แบรนด์ระดับ Luxury
-
-### 5. 🎞️ Luxury Motion & Texture
-*   **EN:** Cinematic text reveals, global grain textures, and soft parallax effects that eliminate digital "flatness" and provide an editorial feel.
-*   **TH:** แอนิเมชันเปิดตัวหนังสือแบบ Cinematic และพื้นหลังแบบเกรน (Grain Texture) ให้ผิวสัมผัสเหมือนนิตยสารพรีเมียม
+| ฟีเจอร์ | คำอธิบาย (Thai) | Description (English) |
+| :--- | :--- | :--- |
+| 🛡️ **Refined Registration** | ระบบสมัครสมาชิก 2 ขั้นตอนที่สวยงาม ออกแบบมาเพื่อคนไทยโดยเฉพาะ (เบอร์โทรและที่อยู่ละเอียด) | A sophisticated registration wizard tailored for local Thai standards and global security. |
+| 🐕 **Bespoke Discovery** | ระบบวิเคราะห์สายพันธุ์น้องหมา/แมว พร้อมแนะนำสินค้าที่ตรงตามสรีระและนิสัยจริง | Dynamic breed-based analysis and product curation based on biological needs. |
+| 🏛️ **The Admin Atelier** | ระบบจัดการหลังบ้านระดับโปร ดึงข้อมูลสถิติจริง จัดการสมาชิก และคัดเลือกสัตว์เลี้ยงรอการรับเลี้ยง | Real-time admin dashboard for member directory, assets, and adoption management. |
+| 🎨 **Minimal Readability** | ดีไซน์ที่เน้นความโปร่ง ตัวอักษรขนาดใหญ่ อ่านง่าย Contrast สูง แต่ยังคงความหรูหรา | Enhanced typography and deep contrast for effortless reading in a luxury aesthetic. |
+| 📧 **Verified Delivery** | ระบบส่งรหัส OTP ผ่านโดเมนแบรนด์ตัวเอง (via Resend) มั่นใจได้ในความปลอดภัย | Secure Email OTP verification delivered via custom brand domain for maximum trust. |
 
 ---
 
-## 🛠️ Tech Stack (เทคโนโลยีที่ใช้)
+## 🛠️ เทคโนโลยีเบื้องหลังความประณีต | The Craft Stack
 
-- **Framework:** Next.js 15 (App Router)
-- **Styling:** Tailwind CSS 4
-- **Animations:** Framer Motion (High-performance UI motion)
-- **State Management:** Zustand (Persisted stores for Cart, Language, and Pet Profile)
-- **Database/Auth:** Supabase
-- **3D Rendering:** Google Model Viewer
-- **Icons:** Lucide React
+เราเลือกใช้เทคโนโลยีที่ดีที่สุด เพื่อมอบประสบการณ์ที่ไร้รอยต่อและปลอดภัยสูงสุดให้กับคุณ:
 
----
+*   **Frontend Ecosystem:**
+    *   **Next.js 15 (App Router):** หัวใจหลักในการรันเว็บไซต์ที่รวดเร็วและทันสมัยที่สุด
+    *   **TypeScript:** มั่นใจในความถูกต้องของโค้ดและการทำงานที่เสถียร
+    *   **Tailwind CSS 4:** ดีไซน์ที่ยืดหยุ่นและสวยงามในทุกขนาดหน้าจอ
+    *   **Framer Motion:** แอนิเมชันที่นุ่มนวล มอบความรู้สึกพรีเมียมในทุกการเปลี่ยนหน้า
 
-## 🚀 Getting Started (วิธีติดตั้ง)
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/RennyTXT/Duit-webside.git
-   cd Duit-webside
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Set up Environment Variables:**
-   Create a `.env.local` file with your Supabase credentials:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
-   ```
-
-4. **Run development server:**
-   ```bash
-   npm run dev
-   ```
-
-5. **Visit:** `http://localhost:3000`
+*   **Backend & Security:**
+    *   **Supabase (PostgreSQL):** ฐานข้อมูลที่รวดเร็วและรองรับข้อมูลมหาศาล
+    *   **Row Level Security (RLS):** ข้อมูลส่วนตัวของคุณจะปลอดภัย 100% มีเพียงคุณเท่านั้นที่มีสิทธิ์เข้าถึง
+    *   **Resend Bespoke SMTP:** ระบบส่งอีเมลระดับสากล เพื่อความมั่นใจในการได้รับ OTP ทุกครั้ง
 
 ---
 
-## 📐 Design Philosophy
-Guided by the **Duit Design Lab** principle: *"Redefining the boundaries of pet living through architectural precision and enduring aesthetic value."*
+## 🛡️ มาตรฐานความปลอดภัย | Security & Privacy
+
+ความไว้วางใจของคุณคือสิ่งสำคัญที่สุด:
+*   **Data Vault:** ข้อมูลที่อยู่และเบอร์โทรศัพท์ถูกเก็บรักษาอย่างดีภายใต้กฎความปลอดภัย RLS
+*   **Secure Auth:** ระบบล็อกอินมาตรฐานโลก ป้องกันการแฮกและเข้าถึงโดยไม่ได้รับอนุญาต
+*   **Encryption:** ทุกข้อมูลสำคัญจะถูกเข้ารหัสก่อนจัดเก็บเสมอ
 
 ---
-© 2026 DUIT TH THAILAND. Official Representative.
+
+## 🚀 เริ่มต้นสัมผัสประสบการณ์ | Quick Start
+
+หากคุณต้องการนำโปรเจกต์นี้ไปพัฒนาต่อ:
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/RennyTXT/Duit-webside.git
+    ```
+2.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Setup Environment:**
+    สร้างไฟล์ `.env.local` และใส่ค่า `NEXT_PUBLIC_SUPABASE_URL` และ `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+4.  **Launch the Atelier:**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 📐 ปรัชญาของเรา | Design Philosophy
+> *"เราไม่ได้แค่ออกแบบผลิตภัณฑ์สำหรับสัตว์เลี้ยง แต่เราออกแบบความสุขและความสวยงามที่ยั่งยืนให้กับการใช้ชีวิตร่วมกัน"* — **Duit Thailand**
+
+---
+© 2026 **DUIT THAILAND**. Official Digital Experience.  
+*สร้างสรรค์ขึ้นเพื่อชีวิตที่สมบูรณ์แบบของน้องและคุณ*
