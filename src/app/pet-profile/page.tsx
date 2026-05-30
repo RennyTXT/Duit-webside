@@ -359,29 +359,67 @@ export default function PetProfilePage() {
   const runAIAnalysis = () => {
     setIsAnalyzing(true);
     setShowAnalysis(true);
+    
     setTimeout(() => {
+      const selectedBreed = dogBreeds.find(b => b.en === breed) || catBreeds.find(b => b.en === breed);
+      
       // Logic to filter and prioritize products for AI recommendation
-      const recommended = [...staticProducts]
-        .filter(p => {
-          if (!p.recommendedFor) return true;
-          // Filter by type (cat/dog)
-          const typeMatch = !p.recommendedFor.type || p.recommendedFor.type === type;
-          // Filter by size
-          const sizeMatch = !p.recommendedFor.size || p.recommendedFor.size === size;
-          return typeMatch && sizeMatch;
-        })
-        // Sort to ensure variety or priority (e.g., best sellers or new products)
-        .sort((a, b) => {
-          if (a.isBest && !b.isBest) return -1;
-          if (!a.isBest && b.isBest) return 1;
-          return 0;
-        })
-        .slice(0, 6); // Limit to exactly 6 products as requested
+      let recommended = [...staticProducts].filter(p => {
+        if (!p.recommendedFor) return true;
+        const typeMatch = !p.recommendedFor.type || p.recommendedFor.type === type;
+        const sizeMatch = !p.recommendedFor.size || p.recommendedFor.size === size;
+        return typeMatch && sizeMatch;
+      });
+
+      // Breed-specific logic for dogs
+      if (type === 'dog' && selectedBreed) {
+        recommended = recommended.sort((a, b) => {
+          let scoreA = 0;
+          let scoreB = 0;
+
+          const traits = selectedBreed.trait?.toLowerCase() || '';
+          const arch = selectedBreed.archetype?.toLowerCase() || '';
+
+          // 1. Cooling needs (Frenchie, Husky, etc.)
+          if (traits.includes('cooling') || arch.includes('comedian') || arch.includes('escape artist')) {
+            if (a.id === 'summer-cushion') scoreA += 50;
+            if (b.id === 'summer-cushion') scoreB += 50;
+          }
+
+          // 2. Intellectual/Nosework needs (Poodle, Border Collie, etc.)
+          if (traits.includes('smart') || arch.includes('intellectual')) {
+            if (a.id === 'yummy-ball') scoreA += 50;
+            if (b.id === 'yummy-ball') scoreB += 50;
+          }
+
+          // 3. Grooming needs (Golden, Pomeranian, etc.)
+          if (traits.includes('coat') || traits.includes('grooming') || arch.includes('little star') || arch.includes('socialite')) {
+            if (a.id === 'banana-brush') scoreA += 50;
+            if (b.id === 'banana-brush') scoreB += 50;
+          }
+
+          // 4. Hygiene for indoor/small dogs
+          if (size === 'small') {
+            if (a.id === 'custom-potty' || a.id === 'floating-bathtub') scoreA += 30;
+            if (b.id === 'custom-potty' || b.id === 'floating-bathtub') scoreB += 30;
+          }
+
+          // 5. Training/Active needs
+          if (traits.includes('active') || traits.includes('tough')) {
+            if (a.id === 'anti-bug-light') scoreA += 20;
+            if (b.id === 'anti-bug-light') scoreB += 20;
+          }
+
+          return scoreB - scoreA;
+        });
+      }
 
       setAiInsights({
-        title: t.crm.identitySynthesis,
-        reason: language === 'th' ? `จากการวิเคราะห์ลักษณะเฉพาะของสายพันธุ์และรูปแบบการใช้ชีวิต AI ของเราจัดหมวดหมู่ ${name} เป็น "Refined Explorer" ที่เหมาะกับงานดีไซน์เน้นการยศาสตร์สูงสุด` : `Based on breed characteristics and lifestyle patterns, our AI classifies ${name} as a "Refined Explorer" best suited for ergonomically-focused designs.`,
-        products: recommended
+        title: selectedBreed?.archetype || t.crm.identitySynthesis,
+        reason: language === 'th' 
+          ? (selectedBreed?.description_th || `วิเคราะห์จากสายพันธุ์ ${breed} พบว่ามีความต้องการเฉพาะตัวที่ Duit สามารถดูแลได้อย่างลงตัว`)
+          : (selectedBreed?.description_en || `Based on ${breed} characteristics, our AI identifies unique needs that Duit products can perfectly fulfill.`),
+        products: recommended.slice(0, 6)
       });
       setIsAnalyzing(false);
     }, 2000);
@@ -550,16 +588,25 @@ export default function PetProfilePage() {
                                       </div>
                                    </div>
                                    <p className="text-base sm:text-lg text-secondary font-medium leading-relaxed italic">"{aiInsights?.reason}"</p>
-                                   <div className="flex flex-wrap gap-6 sm:gap-8">
-                                      <div className="text-left">
-                                         <span className="block text-[8px] text-neutral-400 uppercase tracking-widest mb-2">{t.crm.energyLevel}</span>
+                                   <div className="flex flex-wrap gap-4 sm:gap-8">
+                                      <div className="flex flex-col gap-3">
+                                         <span className="block text-[8px] text-neutral-400 uppercase tracking-widest mb-1">{t.crm.energyLevel}</span>
                                          <div className="flex gap-1">
-                                            {[1,2,3,4,5].map(i => <div key={i} className={`w-4 sm:w-6 h-1 rounded-full ${i <= 4 ? (type === 'dog' ? 'bg-blue-600' : 'bg-accent-gold') : 'bg-neutral-200'}`}></div>)}
+                                            {[1,2,3,4,5].map(i => {
+                                              const selectedBreed = dogBreeds.find(b => b.en === breed);
+                                              const traits = selectedBreed?.trait?.toLowerCase() || '';
+                                              const isActive = traits.includes('active') || traits.includes('spirited') || traits.includes('energetic');
+                                              const level = isActive ? 5 : 3;
+                                              return <div key={i} className={`w-4 sm:w-6 h-1 rounded-full ${i <= level ? (type === 'dog' ? 'bg-blue-600' : 'bg-accent-gold') : 'bg-neutral-200'}`}></div>;
+                                            })}
                                          </div>
                                       </div>
-                                      <div className="text-left">
+                                      <div className="flex flex-col gap-3">
                                          <span className="block text-[8px] text-neutral-400 uppercase tracking-widest mb-1">{t.crm.designPreference}</span>
-                                         <span className="text-[10px] uppercase tracking-widest">{t.crm.minimalist}</span>
+                                         <div className="flex items-center gap-2">
+                                            <div className={`w-2 h-2 rounded-full ${type === 'dog' ? 'bg-blue-600' : 'bg-accent-gold'}`}></div>
+                                            <span className="text-[10px] uppercase tracking-widest">{t.crm.minimalist}</span>
+                                         </div>
                                       </div>
                                    </div>
                                 </div>
@@ -587,7 +634,25 @@ export default function PetProfilePage() {
                                    <div className="space-y-1">
                                       <span className={`text-[8px] sm:text-[9px] ${type === 'dog' ? 'text-blue-600' : 'text-accent-gold'} uppercase tracking-[0.2em]`}>{t.crm.recommended}</span>
                                       <h4 className="text-base sm:text-xl uppercase tracking-tight line-clamp-1">{p.name}</h4>
-                                      <p className="text-[10px] sm:text-sm text-secondary font-medium opacity-60">{t.crm.designForRefined}</p>
+                                      <p className="text-[10px] sm:text-sm text-secondary font-medium opacity-60">
+                                        {language === 'th' ? (
+                                          p.id === 'summer-cushion' ? 'ช่วยลดอุณหภูมิร่างกายและผ่อนคลาย' :
+                                          p.id === 'yummy-ball' ? 'ฝึกทักษะการดมกลิ่นและสมาธิ' :
+                                          p.id === 'banana-brush' ? 'ดูแลเส้นขนให้เงางามไม่ระคายผิว' :
+                                          p.id === 'the-table-plus' ? 'จัดการมื้ออาหารอย่างแม่นยำและถูกสุขลักษณะ' :
+                                          p.id === 'custom-potty' ? 'พื้นที่สุขาที่ถูกหลักสรีระของน้อง' :
+                                          p.id === 'anti-bug-light' ? 'เพิ่มความปลอดภัยในทุกการเดินทาง' :
+                                          t.crm.designForRefined
+                                        ) : (
+                                          p.id === 'summer-cushion' ? 'Perfect for temperature regulation' :
+                                          p.id === 'yummy-ball' ? 'Stimulates cognitive & hunting instincts' :
+                                          p.id === 'banana-brush' ? 'Professional-grade coat management' :
+                                          p.id === 'the-table-plus' ? 'Precision nutrition & weight management' :
+                                          p.id === 'custom-potty' ? 'Ergonomic hygiene for home comfort' :
+                                          p.id === 'anti-bug-light' ? 'Essential safety for active explorers' :
+                                          t.crm.designForRefined
+                                        )}
+                                      </p>
                                    </div>
                                    <div className="ml-auto w-8 h-8 sm:w-12 sm:h-12 rounded-full border border-neutral-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all"><ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" /></div>
                                 </Link>
