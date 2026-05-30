@@ -48,13 +48,22 @@ export default function AdminLayout({
         }
 
         // --- ADMIN AUTHORIZATION LOGIC ---
-        // อนุญาตเฉพาะอีเมลที่อยู่ในรายการนี้เท่านั้น (Whitelist)
+        // 1. Email Whitelist (Primary)
         const authorizedAdmins = [
           's6606021610117@email.kmutnb.ac.th',
           'donut2548donut@gmail.com'
         ];
 
-        if (!authorizedAdmins.includes(user.email || '')) {
+        // 2. Database Role Check (Secondary)
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        const isAuthorized = authorizedAdmins.includes(user.email || '') || profile?.role === 'admin';
+
+        if (!isAuthorized) {
           toast.error('Access Denied: คุณไม่มีสิทธิ์เข้าถึงหน้าผู้ดูแลระบบ');
           await supabase.auth.signOut();
           router.push('/admin/login');

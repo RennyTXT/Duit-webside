@@ -8,24 +8,44 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
 export default function AdminDashboardPage() {
-  const [productCount, setProductCount] = useState<number | null>(null);
+  const [statsData, setStatsData] = useState({
+    products: 0,
+    pets: 0,
+    customers: 0
+  });
+  const [recentProducts, setRecentProducts] = useState<any[]>([]);
   const supabase = createClient();
 
   useEffect(() => {
-    async function fetchStats() {
-      const { count } = await supabase
+    async function fetchDashboardData() {
+      // Fetch counts
+      const { count: productCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
+      const { count: petCount } = await supabase.from('pets').select('*', { count: 'exact', head: true });
+      const { count: userCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
+      
+      setStatsData({
+        products: productCount || 0,
+        pets: petCount || 0,
+        customers: userCount || 0
+      });
+
+      // Fetch recent masterpieces
+      const { data: latestProducts } = await supabase
         .from('products')
-        .select('*', { count: 'exact', head: true });
-      setProductCount(count);
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(3);
+      
+      if (latestProducts) setRecentProducts(latestProducts);
     }
-    fetchStats();
+    fetchDashboardData();
   }, [supabase]);
 
   const stats = [
-    { name: 'Portfolio Assets', value: productCount !== null ? productCount.toString() : '...', icon: Package, change: '+2 this month', color: 'bg-cream-light text-primary' },
-    { name: 'Active Privileges', value: '5', icon: TicketPercent, change: 'Running stable', color: 'bg-white text-accent-gold shadow-sm' },
-    { name: 'Daily Curations', value: '1,284', icon: Users, change: '+12.5%', color: 'bg-primary text-white shadow-luxury' },
-    { name: 'Estimated Value', value: productCount !== null ? `฿${(productCount * 8900).toLocaleString()}` : '...', icon: TrendingUp, change: '+8.2%', color: 'bg-cream-light text-primary' },
+    { name: 'Portfolio Assets', value: statsData.products.toString(), icon: Package, change: '+2 this month', color: 'bg-cream-light text-primary' },
+    { name: 'Active Members', value: statsData.customers.toString(), icon: Users, change: 'Growing stable', color: 'bg-white text-accent-gold shadow-sm' },
+    { name: 'Pet Profiles', value: statsData.pets.toString(), icon: Heart, change: '+12.5%', color: 'bg-primary text-white shadow-luxury' },
+    { name: 'Estimated Value', value: `฿${(statsData.products * 8900).toLocaleString()}`, icon: TrendingUp, change: '+8.2%', color: 'bg-cream-light text-primary' },
   ];
 
   return (
@@ -91,22 +111,37 @@ export default function AdminDashboardPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-neutral-50">
-                    {[
-                      { name: 'The Table Plus', cat: 'Eat & Drink', price: '฿8,900', status: 'Available' },
-                      { name: 'Tent Station', cat: 'Furniture', price: '฿5,900', status: 'Available' },
-                      { name: 'Eraser Bin', cat: 'Hygiene', price: '฿3,900', status: 'Reserve' },
-                    ].map((item, i) => (
-                      <tr key={i} className="hover:bg-cream-light/30 transition-colors group">
-                         <td className="px-8 py-8 text-sm text-primary group-hover:text-accent-gold transition-colors uppercase tracking-tight">{item.name}</td>
-                         <td className="px-8 py-8 text-[10px] text-neutral-400 uppercase tracking-widest">{item.cat}</td>
-                         <td className="px-8 py-8 text-sm">{item.price}</td>
-                         <td className="px-8 py-8 text-right">
-                            <span className={`text-[9px] px-4 py-1.5 rounded-full uppercase tracking-[0.2em] border ${item.status === 'Available' ? 'bg-green-50 text-green-600 border-green-100' : 'bg-red-50 text-red-600 border-red-100'}`}>
-                              {item.status}
-                            </span>
-                         </td>
-                      </tr>
-                    ))}
+                    {recentProducts.length === 0 ? (
+                      [
+                        { name: 'The Table Plus', cat: 'Eat & Drink', price: '฿8,900', status: 'Available' },
+                        { name: 'Tent Station', cat: 'Furniture', price: '฿5,900', status: 'Available' },
+                        { name: 'Eraser Bin', cat: 'Hygiene', price: '฿3,900', status: 'Reserve' },
+                      ].map((item, i) => (
+                        <tr key={i} className="hover:bg-cream-light/30 transition-colors group">
+                           <td className="px-8 py-8 text-sm text-primary group-hover:text-accent-gold transition-colors uppercase tracking-tight">{item.name}</td>
+                           <td className="px-8 py-8 text-[10px] text-neutral-400 uppercase tracking-widest">{item.cat}</td>
+                           <td className="px-8 py-8 text-sm">{item.price}</td>
+                           <td className="px-8 py-8 text-right">
+                              <span className={`text-[9px] px-4 py-1.5 rounded-full uppercase tracking-[0.2em] border ${item.status === 'Available' ? 'bg-green-50 text-green-600 border-green-100' : 'bg-red-50 text-red-600 border-red-100'}`}>
+                                {item.status}
+                              </span>
+                           </td>
+                        </tr>
+                      ))
+                    ) : (
+                      recentProducts.map((item, i) => (
+                        <tr key={i} className="hover:bg-cream-light/30 transition-colors group">
+                           <td className="px-8 py-8 text-sm text-primary group-hover:text-accent-gold transition-colors uppercase tracking-tight">{item.name}</td>
+                           <td className="px-8 py-8 text-[10px] text-neutral-400 uppercase tracking-widest">{item.category}</td>
+                           <td className="px-8 py-8 text-sm">฿{item.price.toLocaleString()}</td>
+                           <td className="px-8 py-8 text-right">
+                              <span className="text-[9px] px-4 py-1.5 rounded-full uppercase tracking-[0.2em] border bg-green-50 text-green-600 border-green-100">
+                                Available
+                              </span>
+                           </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>

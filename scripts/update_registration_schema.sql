@@ -6,7 +6,8 @@ ADD COLUMN IF NOT EXISTS address_basic TEXT,
 ADD COLUMN IF NOT EXISTS address_detail TEXT,
 ADD COLUMN IF NOT EXISTS home_phone TEXT,
 ADD COLUMN IF NOT EXISTS mobile_phone TEXT,
-ADD COLUMN IF NOT EXISTS referral_code TEXT;
+ADD COLUMN IF NOT EXISTS referral_code TEXT,
+ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'customer'; -- customer, admin
 
 -- Update pets table with nickname
 ALTER TABLE public.pets
