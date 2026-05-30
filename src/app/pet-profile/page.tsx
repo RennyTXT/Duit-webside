@@ -135,7 +135,6 @@ export default function PetProfilePage() {
   const t = translations[language];
   const router = useRouter();
   
-  const supabase = createClient();
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
   const [activeTab, setActiveTab] = useState<'profile' | 'rewards' | 'registry'>('profile');
   const [step, setStep] = useState(1);
@@ -159,6 +158,7 @@ export default function PetProfilePage() {
 
   useEffect(() => {
     async function initProfile() {
+      const supabase = createClient();
       try {
         const { data: { user } } = await supabase.auth.getUser();
         
@@ -228,7 +228,7 @@ export default function PetProfilePage() {
     }
 
     initProfile();
-  }, [router, supabase, clearProfile, setProfile, profile]);
+  }, [router, clearProfile, setProfile, profile]);
 
   const runAIAnalysis = () => {
     setIsAnalyzing(true);
