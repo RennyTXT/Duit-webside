@@ -52,7 +52,7 @@ export default function DuitCarePage() {
     fetchProducts();
   }, []);
 
-  const recommendations = useMemo(() => getRecommendedProducts(profile, products), [profile, products]);
+  const recommendations = useMemo(() => getRecommendedProducts(profile, products).slice(0, 6), [profile, products]);
 
   if (!profile) {
     return (
