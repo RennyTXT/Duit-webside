@@ -100,12 +100,12 @@ const Header = () => {
           </div>
 
           {/* Center: Desktop Navigation */}
-          <nav className={`hidden lg:flex items-center gap-10 transition-colors duration-700 ${useDarkText ? 'text-secondary' : 'text-white/70'}`}>
+          <nav className={`hidden lg:flex items-center gap-8 transition-colors duration-700 ${useDarkText ? 'text-secondary' : 'text-white/70'}`}>
             {navLinks.map((link) => (
               <Link 
                 key={link.name} 
                 href={link.href} 
-                className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 uppercase ${language === 'th' ? 'text-[20px] font-light tracking-normal' : 'text-[16px] tracking-[0.25em]'} ${useDarkText ? 'text-secondary' : 'text-white/70'}`}
+                className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 uppercase ${language === 'th' ? 'text-[14px] font-medium tracking-wide' : 'text-[11px] tracking-[0.3em]'} ${useDarkText ? 'text-secondary' : 'text-white/70'}`}
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-gold transition-all duration-500 group-hover:w-full"></span>
@@ -114,22 +114,24 @@ const Header = () => {
           </nav>
 
           {/* Right: Action Icons */}
-          <div className={`flex-1 flex items-center justify-end gap-3 md:gap-6 transition-colors duration-700 ${useDarkText ? 'text-primary' : 'text-white'}`}>
+          <div className={`flex-1 flex items-center justify-end gap-2 md:gap-4 transition-colors duration-700 ${useDarkText ? 'text-primary' : 'text-white'}`}>
             <LanguageSwitcher />
             
+            <div className="h-4 w-px bg-neutral-100 mx-2 hidden md:block" />
+
             {/* Archive Trigger */}
             <button 
               onClick={() => setIsArchiveOpen(true)}
-              className={`p-2 rounded-full transition-all group relative ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}
+              className={`p-2 rounded-full transition-all group relative ${shouldShowSolid ? 'hover:bg-neutral-50' : 'hover:bg-white/10'}`}
             >
-              <Star size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+              <Star size={16} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
               <AnimatePresence>
                 {isMounted && items.length > 0 && (
                   <motion.span 
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
-                    className="absolute top-0 right-0 w-4 h-4 bg-accent-gold text-white text-[8px] flex items-center justify-center rounded-full shadow-sm"
+                    className="absolute top-0 right-0 w-3.5 h-3.5 bg-accent-gold text-white text-[7px] flex items-center justify-center rounded-full shadow-sm font-bold"
                   >
                     {items.length}
                   </motion.span>
@@ -139,35 +141,35 @@ const Header = () => {
 
             <button 
               onClick={() => setIsSearchOpen(true)}
-              className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}
+              className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-neutral-50' : 'hover:bg-white/10'}`}
             >
-              <Search size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+              <Search size={16} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
             </button>
             
             {user ? (
-              <>
-                <Link href="/pet-profile" className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}>
-                  <User size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+              <div className="flex items-center gap-2 ml-2">
+                <Link href="/pet-profile" className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white' : 'hover:bg-white/10'}`}>
+                  <User size={16} strokeWidth={1.5} />
                 </Link>
                 <button 
                   onClick={handleLogout}
-                  className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-red-500 hover:text-white shadow-sm' : 'hover:bg-red-50/50 text-red-500'}`}
+                  className={`p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-red-500 hover:text-white' : 'hover:bg-red-500/20 text-red-500'}`}
                   title={t.common.logout}
                 >
-                  <LogOut size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+                  <LogOut size={16} strokeWidth={1.5} />
                 </button>
-              </>
+              </div>
             ) : (
-              <div className="hidden sm:flex items-center gap-2">
+              <div className="hidden sm:flex items-center gap-1 ml-2">
                 <Link 
                   href="/login" 
-                  className={`px-4 py-2 rounded-full text-sm uppercase tracking-widest transition-all ${shouldShowSolid ? 'text-primary hover:bg-neutral-50' : 'text-primary hover:bg-white/10'}`}
+                  className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.2em] transition-all font-medium ${shouldShowSolid ? 'text-primary hover:bg-neutral-50' : 'text-primary hover:bg-white/10'}`}
                 >
                   {language === 'th' ? 'เข้าสู่ระบบ' : 'Sign In'}
                 </Link>
                 <Link 
                   href="/register" 
-                  className={`px-5 py-2 rounded-full text-sm uppercase tracking-widest font-bold transition-all ${shouldShowSolid ? 'bg-primary text-white hover:bg-accent-gold' : 'bg-primary text-white hover:bg-neutral-900'}`}
+                  className={`px-5 py-2.5 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold transition-all ${shouldShowSolid ? 'bg-primary text-white hover:bg-accent-gold shadow-sm' : 'bg-primary text-white hover:bg-neutral-900'}`}
                 >
                   {language === 'th' ? 'สมัครสมาชิก' : 'Register'}
                 </Link>
