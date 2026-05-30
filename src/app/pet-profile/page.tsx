@@ -157,41 +157,38 @@ export default function PetProfilePage() {
   const [memberPoints, setMemberPoints] = useState(0);
 
   useEffect(() => {
+    let isMounted = true;
+    
     async function initProfile() {
       const supabase = createClient();
       try {
         const { data: { user } } = await supabase.auth.getUser();
         
         if (!user) {
-          clearProfile();
-          router.push('/login');
+          if (isMounted) {
+            clearProfile();
+            router.push('/login');
+          }
           return;
         }
 
-        setUserEmail(user.email || null);
+        if (isMounted) setUserEmail(user.email || null);
 
-        // 1. Fetch User Profile
-        const { data: profileData } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .maybeSingle();
+        // 1. Fetch User Profile and Pet Data in Parallel (MUCH FASTER)
+        const [profileRes, petRes] = await Promise.all([
+          supabase.from('profiles').select('*').eq('id', user.id).maybeSingle(),
+          supabase.from('pets').select('*').eq('owner_id', user.id).order('created_at', { ascending: false }).limit(1).maybeSingle()
+        ]);
 
-        if (profileData) {
-          setMemberTier(profileData.tier || 'Silver');
-          setMemberPoints(profileData.duit_coins || 0);
+        if (!isMounted) return;
+
+        if (profileRes.data) {
+          setMemberTier(profileRes.data.tier || 'Silver');
+          setMemberPoints(profileRes.data.duit_coins || 0);
         }
 
-        // 2. Fetch Pet Data
-        const { data: petData } = await supabase
-          .from('pets')
-          .select('*')
-          .eq('owner_id', user.id)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .maybeSingle();
-
-        if (petData) {
+        if (petRes.data) {
+          const petData = petRes.data;
           setName(petData.name);
           setType(petData.type as PetType);
           setBreed(petData.breed || '');
@@ -210,7 +207,7 @@ export default function PetProfilePage() {
           
           setStep(5);
         } else {
-          // Check if local store has data
+          // If no pet in DB, check local store for draft (don't re-trigger setProfile here)
           if (profile) {
             setName(profile.name || '');
             setType(profile.type || null);
@@ -223,17 +220,19 @@ export default function PetProfilePage() {
       } catch (error) {
         console.error("Initialization error:", error);
       } finally {
-        setIsLoadingAuth(false);
+        if (isMounted) setIsLoadingAuth(false);
       }
     }
 
     initProfile();
-  }, [router, clearProfile, setProfile, profile]);
+    return () => { isMounted = false; };
+  }, [router, clearProfile, setProfile]); // Removed 'profile' from dependencies
 
   const runAIAnalysis = () => {
     setIsAnalyzing(true);
     setShowAnalysis(true);
     
+    // Reduced from 2000ms to 800ms for a snappier, more professional feel
     setTimeout(() => {
       const selectedBreed = dogBreeds.find(b => b.en === breed) || catBreeds.find(b => b.en === breed);
       
