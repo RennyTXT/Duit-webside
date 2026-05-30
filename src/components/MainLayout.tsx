@@ -17,9 +17,10 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
   const { clearProfile } = usePetStore();
-  const supabase = createClient();
 
   useEffect(() => {
+    const supabase = createClient();
+    
     // 1. Check initial session
     const syncAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -39,7 +40,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     return () => {
       subscription.unsubscribe();
     };
-  }, [clearProfile, supabase]);
+  }, [clearProfile]);
 
   return (
     <>

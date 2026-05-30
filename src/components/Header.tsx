@@ -45,6 +45,8 @@ const Header = () => {
     
     window.addEventListener('scroll', handleScroll, { passive: true });
     
+    const supabase = createClient();
+    
     // Check initial user session
     const checkUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -61,9 +63,10 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll);
       subscription.unsubscribe();
     };
-  }, [lastScrollY, supabase]);
+  }, [lastScrollY]);
 
   const handleLogout = async () => {
+    const supabase = createClient();
     await supabase.auth.signOut();
     clearProfile();
     window.location.href = '/';
