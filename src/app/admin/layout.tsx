@@ -26,7 +26,6 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const supabase = createClient();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isCheckingAuth, setIsFetchingAuth] = useState(true);
@@ -39,6 +38,7 @@ export default function AdminLayout({
         return;
       }
 
+      const supabase = createClient();
       try {
         const { data: { user } } = await supabase.auth.getUser();
         

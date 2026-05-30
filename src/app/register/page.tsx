@@ -109,6 +109,18 @@ export default function RegisterWizard() {
     }
   };
 
+  // --- DROPDOWN HELPERS ---
+  const years = Array.from({ length: 25 }, (_, i) => new Date().getFullYear() - i);
+  const monthsTh = [
+    'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+    'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+  ];
+  const monthsEn = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  const daysArr = Array.from({ length: 31 }, (_, i) => i + 1);
+
   const handleRegister = async () => {
     if (!formData.petNickname || !formData.petType || !formData.petSize) {
       toast.error(language === 'th' ? 'กรุณากรอกข้อมูลสัตว์เลี้ยงให้ครบถ้วน' : 'Please fill in pet information');
@@ -130,7 +142,15 @@ export default function RegisterWizard() {
         }
       });
 
-      if (authError) throw authError;
+      if (authError) {
+        if (authError.message.toLowerCase().includes('already registered') || authError.message.toLowerCase().includes('already exists')) {
+          toast.error(language === 'th' ? 'อีเมลนี้ถูกลงทะเบียนไว้แล้ว กรุณาเข้าสู่ระบบ' : 'User already registered. Please sign in.');
+          setIsLoading(false);
+          return;
+        }
+        throw authError;
+      }
+      
       if (!authData.user) throw new Error('Auth failed');
 
       // 2. Update Profile with detailed info
@@ -469,27 +489,32 @@ export default function RegisterWizard() {
                       {t.auth.petBirthday} <span className="text-red-500">*</span>
                     </label>
                     <div className="md:col-span-3 grid grid-cols-3 gap-2 sm:gap-4 items-center w-full">
-                       <input 
-                        type="text" 
-                        placeholder={t.auth.year}
+                       <select 
                         value={formData.petBirthYear}
                         onChange={e => updateField('petBirthYear', e.target.value)}
-                        className="w-full min-w-0 h-16 bg-white border border-neutral-200 rounded-2xl px-1 sm:px-4 text-center text-sm sm:text-lg text-primary outline-none shadow-sm"
-                       />
-                       <input 
-                        type="text" 
-                        placeholder={t.auth.month}
+                        className="w-full min-w-0 h-16 bg-white border border-neutral-200 rounded-2xl px-1 sm:px-4 text-center text-sm sm:text-lg text-primary outline-none shadow-sm appearance-none cursor-pointer hover:border-primary transition-colors"
+                       >
+                         <option value="">{t.auth.year}</option>
+                         {years.map(y => <option key={y} value={y}>{y}</option>)}
+                       </select>
+                       <select 
                         value={formData.petBirthMonth}
                         onChange={e => updateField('petBirthMonth', e.target.value)}
-                        className="w-full min-w-0 h-16 bg-white border border-neutral-200 rounded-2xl px-1 sm:px-4 text-center text-sm sm:text-lg text-primary outline-none shadow-sm"
-                       />
-                       <input 
-                        type="text" 
-                        placeholder={t.auth.day}
+                        className="w-full min-w-0 h-16 bg-white border border-neutral-200 rounded-2xl px-1 sm:px-4 text-center text-sm sm:text-lg text-primary outline-none shadow-sm appearance-none cursor-pointer hover:border-primary transition-colors"
+                       >
+                         <option value="">{t.auth.month}</option>
+                         {(language === 'th' ? monthsTh : monthsEn).map((m, i) => (
+                           <option key={m} value={i + 1}>{m}</option>
+                         ))}
+                       </select>
+                       <select 
                         value={formData.petBirthDay}
                         onChange={e => updateField('petBirthDay', e.target.value)}
-                        className="w-full min-w-0 h-16 bg-white border border-neutral-200 rounded-2xl px-1 sm:px-4 text-center text-sm sm:text-lg text-primary outline-none shadow-sm"
-                       />
+                        className="w-full min-w-0 h-16 bg-white border border-neutral-200 rounded-2xl px-1 sm:px-4 text-center text-sm sm:text-lg text-primary outline-none shadow-sm appearance-none cursor-pointer hover:border-primary transition-colors"
+                       >
+                         <option value="">{t.auth.day}</option>
+                         {daysArr.map(d => <option key={d} value={d}>{d}</option>)}
+                       </select>
                     </div>
                  </div>
 
