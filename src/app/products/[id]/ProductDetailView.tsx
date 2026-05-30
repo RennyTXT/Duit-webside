@@ -146,7 +146,7 @@ export default function ProductDetailView({ id }: { id: string }) {
       }
     };
     fetchProductAndOptions();
-  }, [id, supabase]);
+  }, [id]);
 
   const localizedInfo = useMemo(() => {
     if (!product) return null;
