@@ -213,6 +213,15 @@ export default function EmailLoginPage() {
                   </>
                 )}
               </button>
+
+              <div className="text-center pt-4">
+                 <p className="text-[10px] uppercase tracking-widest text-neutral-400">
+                    {language === 'th' ? 'ยังไม่มีบัญชี?' : "Don't have an account?"}
+                    <Link href="/register" className="ml-2 text-primary font-bold hover:text-accent-gold transition-colors">
+                       {language === 'th' ? 'สมัครสมาชิกที่นี่' : 'Register Now'}
+                    </Link>
+                 </p>
+              </div>
             </motion.form>
           )}
 

@@ -141,18 +141,35 @@ const Header = () => {
             >
               <Search size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
             </button>
-            <Link href="/pet-profile" className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}>
-              <User size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
-            </Link>
-
-            {user && (
-              <button 
-                onClick={handleLogout}
-                className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-red-500 hover:text-white shadow-sm' : 'hover:bg-red-50/50 text-red-500'}`}
-                title={t.common.logout}
-              >
-                <LogOut size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
-              </button>
+            
+            {user ? (
+              <>
+                <Link href="/pet-profile" className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-primary hover:text-white shadow-sm' : 'hover:bg-neutral-100/50'}`}>
+                  <User size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+                </Link>
+                <button 
+                  onClick={handleLogout}
+                  className={`hidden sm:block p-2 rounded-full transition-all group ${shouldShowSolid ? 'hover:bg-red-500 hover:text-white shadow-sm' : 'hover:bg-red-50/50 text-red-500'}`}
+                  title={t.common.logout}
+                >
+                  <LogOut size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
+                </button>
+              </>
+            ) : (
+              <div className="hidden sm:flex items-center gap-2">
+                <Link 
+                  href="/login" 
+                  className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-widest transition-all ${shouldShowSolid ? 'text-primary hover:bg-neutral-50' : 'text-white hover:bg-white/10'}`}
+                >
+                  {language === 'th' ? 'เข้าสู่ระบบ' : 'Sign In'}
+                </Link>
+                <Link 
+                  href="/register" 
+                  className={`px-5 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold transition-all ${shouldShowSolid ? 'bg-primary text-white hover:bg-accent-gold' : 'bg-white text-primary hover:bg-neutral-100'}`}
+                >
+                  {language === 'th' ? 'สมัครสมาชิก' : 'Register'}
+                </Link>
+              </div>
             )}
             
             {/* Mobile Menu Toggle */}

@@ -228,14 +228,19 @@ const Home = () => {
 
       {/* 5. CTA - MINIMAL & BOLD */}
       <section className="py-32 px-6 md:px-20 lg:px-32 bg-white">
-         <div className="max-w-[1440px] mx-auto border border-neutral-100 p-12 md:p-24 flex flex-col md:flex-row justify-between items-center gap-12">
+         <div className="max-w-[1440px] mx-auto border border-neutral-100 p-12 md:p-24 flex flex-col md:flex-row justify-between items-center gap-12 rounded-[40px]">
             <div className="space-y-4 text-center md:text-left">
-               <span className="text-[10px] uppercase tracking-[0.4em] text-secondary">Duit Care+</span>
+               <span className="text-[10px] uppercase tracking-[0.4em] text-secondary">Duit Atelier</span>
                <h2 className="text-4xl md:text-6xl tracking-tighter text-primary uppercase leading-none">Join the <br /> <span className="text-secondary italic">Circle.</span></h2>
             </div>
-            <Link href="/pet-profile" className="inline-flex items-center gap-6 px-12 py-6 bg-primary text-white text-[10px] uppercase tracking-[0.3em] hover:bg-neutral-800 transition-colors">
-               Become a Member <ArrowRight size={16} />
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+               <Link href="/login" className="inline-flex items-center justify-center gap-6 px-12 py-6 border border-neutral-200 text-primary text-[10px] uppercase tracking-[0.3em] hover:bg-neutral-50 transition-all rounded-full">
+                  {language === 'th' ? 'เข้าสู่ระบบ' : 'Sign In'}
+               </Link>
+               <Link href="/register" className="inline-flex items-center justify-center gap-6 px-12 py-6 bg-primary text-white text-[10px] uppercase tracking-[0.3em] hover:bg-accent-gold transition-all shadow-xl rounded-full">
+                  {language === 'th' ? 'สมัครสมาชิกใหม่' : 'Become a Member'} <ArrowRight size={16} />
+               </Link>
+            </div>
          </div>
       </section>
     </div>
