@@ -234,7 +234,7 @@ export default function RegisterWizard() {
               <div className="bg-neutral-50 rounded-[40px] p-8 sm:p-12 space-y-10 border border-neutral-100 shadow-sm">
                 {/* Username */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                  <label className="text-[10px] uppercase tracking-widest text-secondary font-bold flex items-center gap-2">
+                  <label className="text-xs uppercase tracking-widest text-secondary font-bold flex items-center gap-2">
                     {t.auth.username} <span className="text-red-500">*</span>
                   </label>
                   <div className="md:col-span-3 space-y-2">
@@ -242,15 +242,15 @@ export default function RegisterWizard() {
                       type="text" 
                       value={formData.username}
                       onChange={e => updateField('username', e.target.value)}
-                      className="w-full h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
                     />
-                    <p className="text-[10px] text-neutral-400 italic">{t.auth.usernameHint}</p>
+                    <p className="text-[11px] text-neutral-400 italic">{t.auth.usernameHint}</p>
                   </div>
                 </div>
 
                 {/* Email */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center border-t border-neutral-100 pt-10">
-                  <label className="text-[10px] uppercase tracking-widest text-secondary font-bold">
+                  <label className="text-xs uppercase tracking-widest text-secondary font-bold">
                     {t.auth.email} <span className="text-red-500">*</span>
                   </label>
                   <div className="md:col-span-3 space-y-2">
@@ -258,15 +258,15 @@ export default function RegisterWizard() {
                       type="email" 
                       value={formData.email}
                       onChange={e => updateField('email', e.target.value)}
-                      className="w-full h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
                     />
-                    <p className="text-[10px] text-neutral-400 italic">{t.auth.emailHint}</p>
+                    <p className="text-[11px] text-neutral-400 italic">{t.auth.emailHint}</p>
                   </div>
                 </div>
 
                 {/* Password */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-start border-t border-neutral-100 pt-10">
-                  <label className="text-[10px] uppercase tracking-widest text-secondary font-bold mt-4">
+                  <label className="text-xs uppercase tracking-widest text-secondary font-bold mt-4">
                     {t.auth.password} <span className="text-red-500">*</span>
                   </label>
                   <div className="md:col-span-3 space-y-4">
@@ -275,22 +275,22 @@ export default function RegisterWizard() {
                       value={formData.password}
                       onChange={e => updateField('password', e.target.value)}
                       placeholder={t.auth.password}
-                      className="w-full h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
                     />
                     <input 
                       type="password" 
                       value={formData.confirmPassword}
                       onChange={e => updateField('confirmPassword', e.target.value)}
                       placeholder={t.auth.confirmPassword}
-                      className="w-full h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
                     />
-                    <p className="text-[10px] text-neutral-400 italic">{t.auth.passwordHint}</p>
+                    <p className="text-[11px] text-neutral-400 italic">{t.auth.passwordHint}</p>
                   </div>
                 </div>
 
                 {/* Full Name */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center border-t border-neutral-100 pt-10">
-                  <label className="text-[10px] uppercase tracking-widest text-secondary font-bold">
+                  <label className="text-xs uppercase tracking-widest text-secondary font-bold">
                     {t.auth.name} <span className="text-red-500">*</span>
                   </label>
                   <div className="md:col-span-3">
@@ -298,14 +298,14 @@ export default function RegisterWizard() {
                       type="text" 
                       value={formData.fullname}
                       onChange={e => updateField('fullname', e.target.value)}
-                      className="w-full h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Address Block */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-start border-t border-neutral-100 pt-10">
-                  <label className="text-[10px] uppercase tracking-widest text-secondary font-bold mt-4">
+                  <label className="text-xs uppercase tracking-widest text-secondary font-bold mt-4">
                     {t.auth.address}
                   </label>
                   <div className="md:col-span-3 space-y-4">
@@ -315,9 +315,9 @@ export default function RegisterWizard() {
                         value={formData.postalCode}
                         onChange={e => updateField('postalCode', e.target.value)}
                         placeholder={t.auth.postalCode}
-                        className="w-40 h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none focus:border-primary transition-all"
+                        className="w-48 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
                       />
-                      <button className="px-8 bg-neutral-200 text-secondary rounded-2xl text-[10px] uppercase tracking-widest font-bold hover:bg-neutral-300 transition-colors">
+                      <button className="px-10 bg-neutral-200 text-secondary rounded-2xl text-[11px] uppercase tracking-widest font-bold hover:bg-neutral-300 transition-colors">
                         {t.auth.findAddress}
                       </button>
                     </div>
@@ -326,14 +326,14 @@ export default function RegisterWizard() {
                       value={formData.basicAddress}
                       onChange={e => updateField('basicAddress', e.target.value)}
                       placeholder={t.auth.basicAddress}
-                      className="w-full h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
                     />
                     <input 
                       type="text" 
                       value={formData.detailAddress}
                       onChange={e => updateField('detailAddress', e.target.value)}
                       placeholder={t.auth.detailAddress}
-                      className="w-full h-14 bg-white border border-neutral-100 rounded-2xl px-6 text-sm outline-none focus:border-primary transition-all"
+                      className="w-full h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none focus:border-primary transition-all"
                     />
                   </div>
                 </div>
@@ -342,13 +342,13 @@ export default function RegisterWizard() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start border-t border-neutral-100 pt-10">
                   {/* Home Phone */}
                   <div className="flex flex-col gap-4">
-                    <label className="text-[10px] uppercase tracking-widest text-secondary font-bold mt-4">{t.auth.homePhone}</label>
+                    <label className="text-xs uppercase tracking-widest text-secondary font-bold mt-4">{t.auth.homePhone}</label>
                   </div>
                   <div className="md:col-span-3 flex items-center gap-4">
                      <select 
                       value={formData.homePhonePrefix}
                       onChange={e => updateField('homePhonePrefix', e.target.value)}
-                      className="h-14 bg-white border border-neutral-100 rounded-2xl px-4 text-sm outline-none"
+                      className="h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none"
                      >
                        <option>02</option>
                        <option>03</option>
@@ -362,7 +362,7 @@ export default function RegisterWizard() {
                       maxLength={4}
                       value={formData.homePhonePart1}
                       onChange={e => updateField('homePhonePart1', e.target.value)}
-                      className="flex-1 h-14 bg-white border border-neutral-100 rounded-2xl px-4 text-center text-sm outline-none"
+                      className="flex-1 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-center text-base outline-none"
                      />
                      <span className="text-neutral-300">-</span>
                      <input 
@@ -370,13 +370,13 @@ export default function RegisterWizard() {
                       maxLength={4}
                       value={formData.homePhonePart2}
                       onChange={e => updateField('homePhonePart2', e.target.value)}
-                      className="flex-1 h-14 bg-white border border-neutral-100 rounded-2xl px-4 text-center text-sm outline-none"
+                      className="flex-1 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-center text-base outline-none"
                      />
                   </div>
 
                   {/* Mobile Phone */}
                   <div className="flex flex-col gap-4 border-t border-neutral-100 pt-6 md:border-0 md:pt-0">
-                    <label className="text-[10px] uppercase tracking-widest text-secondary font-bold mt-4">
+                    <label className="text-xs uppercase tracking-widest text-secondary font-bold mt-4">
                       {t.auth.mobilePhone} <span className="text-red-500">*</span>
                     </label>
                   </div>
@@ -384,7 +384,7 @@ export default function RegisterWizard() {
                      <select 
                       value={formData.mobilePhonePrefix}
                       onChange={e => updateField('mobilePhonePrefix', e.target.value)}
-                      className="h-14 bg-white border border-neutral-100 rounded-2xl px-4 text-sm outline-none"
+                      className="h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-base outline-none"
                      >
                        <option>010</option>
                        <option>011</option>
@@ -398,7 +398,7 @@ export default function RegisterWizard() {
                       maxLength={4}
                       value={formData.mobilePhonePart1}
                       onChange={e => updateField('mobilePhonePart1', e.target.value)}
-                      className="flex-1 h-14 bg-white border border-neutral-100 rounded-2xl px-4 text-center text-sm outline-none"
+                      className="flex-1 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-center text-base outline-none"
                      />
                      <span className="text-neutral-300">-</span>
                      <input 
@@ -406,7 +406,7 @@ export default function RegisterWizard() {
                       maxLength={4}
                       value={formData.mobilePhonePart2}
                       onChange={e => updateField('mobilePhonePart2', e.target.value)}
-                      className="flex-1 h-14 bg-white border border-neutral-100 rounded-2xl px-4 text-center text-sm outline-none"
+                      className="flex-1 h-16 bg-white border border-neutral-100 rounded-2xl px-6 text-center text-base outline-none"
                      />
                   </div>
                 </div>

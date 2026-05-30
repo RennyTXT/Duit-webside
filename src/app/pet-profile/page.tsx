@@ -90,29 +90,29 @@ const LuxuryCard = ({ profile, tier, points, t }: { profile: any, tier: string, 
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 opacity-60">
-                  <div className="w-1 h-1 rounded-full bg-accent-gold" />
-                  <span className="text-[7px] sm:text-[8px] uppercase tracking-[0.4em] text-accent-gold">{t.crm.memberCard}</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
+                  <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.4em] text-accent-gold font-bold">{t.crm.memberCard}</span>
                 </div>
-                <h3 className="text-xl sm:text-3xl uppercase tracking-tight text-white">{profile?.name || "GUEST"}</h3>
+                <h3 className="text-2xl sm:text-4xl uppercase tracking-tight text-white">{profile?.name || "GUEST"}</h3>
               </div>
             </div>
-            <Award className="text-accent-gold/80 w-6 h-6 sm:w-8 sm:h-8" strokeWidth={1} />
+            <Award className="text-accent-gold/80 w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1} />
           </div>
 
-          <div className="space-y-4 sm:space-y-8" style={{ transform: "translateZ(30px)" }}>
-            <div className="flex gap-8 sm:gap-12">
-               <div className="space-y-1">
-                 <span className="block text-[7px] sm:text-[8px] uppercase tracking-[0.2em] text-neutral-500">{t.crm.tierLevel}</span>
-                 <span className="text-lg sm:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-accent-gold via-[#f3e2b4] to-accent-gold tracking-[0.1em] uppercase">{tier}</span>
+          <div className="space-y-6 sm:space-y-10" style={{ transform: "translateZ(30px)" }}>
+            <div className="flex gap-10 sm:gap-16">
+               <div className="space-y-2">
+                 <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-bold">{t.crm.tierLevel}</span>
+                 <span className="text-xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-accent-gold via-[#f3e2b4] to-accent-gold tracking-[0.1em] uppercase font-bold">{tier}</span>
                </div>
-               <div className="space-y-1">
-                 <span className="block text-[7px] sm:text-[8px] uppercase tracking-[0.2em] text-neutral-500">{t.crm.points}</span>
-                 <span className="text-lg sm:text-2xl text-white tracking-tight">{points.toLocaleString()}</span>
+               <div className="space-y-2">
+                 <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-bold">{t.crm.points}</span>
+                 <span className="text-xl sm:text-3xl text-white tracking-tight font-bold">{points.toLocaleString()}</span>
                </div>
             </div>
-            <div className="flex justify-between items-end border-t border-white/5 pt-4">
-               <span className="text-[7px] sm:text-[8px] text-neutral-500 uppercase tracking-[0.2em]">{t.crm.verifiedOwner}</span>
-               <div className="text-[7px] sm:text-[8px] font-mono text-white/20 tracking-[0.3em]">PRIME-8824</div>
+            <div className="flex justify-between items-end border-t border-white/5 pt-6">
+               <span className="text-[9px] sm:text-[10px] text-neutral-500 uppercase tracking-[0.2em] font-medium">{t.crm.verifiedOwner}</span>
+               <div className="text-[9px] sm:text-[10px] font-mono text-white/20 tracking-[0.3em]">PRIME-8824</div>
             </div>
           </div>
         </div>

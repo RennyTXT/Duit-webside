@@ -12,7 +12,6 @@ import { createClient } from '@/lib/supabase/client';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import ArchiveSidebar from './ArchiveSidebar';
 import SearchOverlay from './SearchOverlay';
-
 const Header = () => {
   const { language } = useLanguageStore();
   const t = translations[language];
@@ -21,6 +20,7 @@ const Header = () => {
   const { clearProfile } = usePetStore();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -105,7 +105,7 @@ const Header = () => {
               <Link 
                 key={link.name} 
                 href={link.href} 
-                className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 uppercase ${language === 'th' ? 'text-[18px] font-light tracking-normal' : 'text-[14px] tracking-[0.25em]'} ${useDarkText ? 'text-secondary' : 'text-white/70'}`}
+                className={`hover:text-accent-gold transition-colors whitespace-nowrap relative group py-2 uppercase ${language === 'th' ? 'text-[20px] font-light tracking-normal' : 'text-[16px] tracking-[0.25em]'} ${useDarkText ? 'text-secondary' : 'text-white/70'}`}
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-accent-gold transition-all duration-500 group-hover:w-full"></span>
@@ -161,13 +161,13 @@ const Header = () => {
               <div className="hidden sm:flex items-center gap-2">
                 <Link 
                   href="/login" 
-                  className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-widest transition-all ${shouldShowSolid ? 'text-primary hover:bg-neutral-50' : 'text-white hover:bg-white/10'}`}
+                  className={`px-4 py-2 rounded-full text-sm uppercase tracking-widest transition-all ${shouldShowSolid ? 'text-primary hover:bg-neutral-50' : 'text-white hover:bg-white/10'}`}
                 >
                   {language === 'th' ? 'เข้าสู่ระบบ' : 'Sign In'}
                 </Link>
                 <Link 
                   href="/register" 
-                  className={`px-5 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold transition-all ${shouldShowSolid ? 'bg-primary text-white hover:bg-accent-gold' : 'bg-white text-primary hover:bg-neutral-100'}`}
+                  className={`px-5 py-2 rounded-full text-sm uppercase tracking-widest font-bold transition-all ${shouldShowSolid ? 'bg-primary text-white hover:bg-accent-gold' : 'bg-white text-primary hover:bg-neutral-100'}`}
                 >
                   {language === 'th' ? 'สมัครสมาชิก' : 'Register'}
                 </Link>

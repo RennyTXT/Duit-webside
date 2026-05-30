@@ -151,7 +151,7 @@ const Home = () => {
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-24 items-start">
            <div className="lg:col-span-4 space-y-12">
               <div className="space-y-4">
-                <span className="text-[10px] uppercase tracking-[0.4em] text-secondary">Collections</span>
+                <span className="text-xs uppercase tracking-[0.4em] text-accent-gold font-bold">Collections</span>
                 <h2 className="text-4xl md:text-5xl tracking-tighter text-primary uppercase leading-[1.1]">Explore our <br /> <span className="text-secondary italic">Categories.</span></h2>
               </div>
               
@@ -160,18 +160,18 @@ const Home = () => {
                   <button 
                     key={cat.name}
                     onMouseEnter={() => setActiveCategoryIndex(i)}
-                    className={`group flex items-center justify-between py-6 border-b border-neutral-50 transition-all ${activeCategoryIndex === i ? 'px-4 bg-neutral-50' : ''}`}
+                    className={`group flex items-center justify-between py-8 border-b border-neutral-50 transition-all ${activeCategoryIndex === i ? 'px-6 bg-neutral-50' : ''}`}
                   >
-                    <span className={`text-[10px] tracking-widest ${activeCategoryIndex === i ? 'text-primary' : 'text-neutral-300'}`}>0{i+1}</span>
-                    <h3 className={`text-base uppercase tracking-tight transition-colors ${activeCategoryIndex === i ? 'text-primary' : 'text-neutral-400'}`}>{cat.name}</h3>
-                    <ArrowRight size={14} className={`transition-transform ${activeCategoryIndex === i ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}`} />
+                    <span className={`text-xs tracking-widest ${activeCategoryIndex === i ? 'text-primary' : 'text-neutral-300'}`}>0{i+1}</span>
+                    <h3 className={`text-lg uppercase tracking-tight transition-colors ${activeCategoryIndex === i ? 'text-primary' : 'text-neutral-400'} font-medium`}>{cat.name}</h3>
+                    <ArrowRight size={16} className={`transition-transform ${activeCategoryIndex === i ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}`} />
                   </button>
                 ))}
               </div>
            </div>
 
            <div className="lg:col-span-8">
-              <div className="relative aspect-[16/10] bg-neutral-50 overflow-hidden">
+              <div className="relative aspect-[16/10] bg-neutral-50 overflow-hidden rounded-[32px]">
                  <AnimatePresence mode="wait">
                     <motion.div
                       key={activeCategoryIndex}
@@ -197,17 +197,17 @@ const Home = () => {
       {/* 3. BEST SELLERS - FLUSH GRID */}
       <section className="bg-neutral-50 py-32 md:py-48 px-6 md:px-20 lg:px-32">
         <div className="max-w-[1440px] mx-auto space-y-20">
-           <div className="flex justify-between items-end border-b border-neutral-200 pb-8">
-              <div className="space-y-2">
-                <span className="text-[10px] uppercase tracking-[0.4em] text-secondary">Selection</span>
+           <div className="flex justify-between items-end border-b border-neutral-200 pb-10">
+              <div className="space-y-4">
+                <span className="text-xs uppercase tracking-[0.4em] text-accent-gold font-bold">Selection</span>
                 <h2 className="text-4xl md:text-5xl tracking-tighter text-primary uppercase leading-[1]">Best <span className="text-secondary italic">Sellers.</span></h2>
               </div>
-              <Link href="/shop" className="text-[10px] uppercase tracking-[0.2em] text-secondary hover:text-primary transition-colors">
-                View All
+              <Link href="/shop" className="text-xs uppercase tracking-[0.2em] text-secondary hover:text-primary transition-colors border-b border-secondary pb-2 font-bold">
+                View All Masterpieces
               </Link>
            </div>
 
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
               {bestSellers.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -217,28 +217,28 @@ const Home = () => {
 
       {/* 4. PHILOSOPHY - TYPOGRAPHY FOCUS */}
       <section className="py-48 px-6 md:px-20 lg:px-32 text-center bg-white">
-         <div className="max-w-4xl mx-auto space-y-12">
-            <span className="text-[10px] uppercase tracking-[0.6em] text-neutral-300">Our Ethos</span>
-            <p className="text-3xl md:text-5xl tracking-tighter text-primary leading-[1.2] uppercase">
-              "Simple solutions for a <span className="text-secondary italic">complex world</span>. We design for the quiet moments between you and your companion."
+         <div className="max-w-5xl mx-auto space-y-16">
+            <span className="text-xs uppercase tracking-[0.6em] text-neutral-300 font-bold">Our Ethos</span>
+            <p className="text-3xl md:text-6xl tracking-tighter text-primary leading-[1.2] uppercase font-light">
+              "Simple solutions for a <span className="text-secondary italic">complex world</span>. <br className="hidden md:block" /> We design for the quiet moments between you and your companion."
             </p>
-            <div className="w-12 h-px bg-neutral-200 mx-auto" />
+            <div className="w-16 h-px bg-neutral-200 mx-auto" />
          </div>
       </section>
 
       {/* 5. CTA - MINIMAL & BOLD */}
       <section className="py-32 px-6 md:px-20 lg:px-32 bg-white">
-         <div className="max-w-[1440px] mx-auto border border-neutral-100 p-12 md:p-24 flex flex-col md:flex-row justify-between items-center gap-12 rounded-[40px]">
-            <div className="space-y-4 text-center md:text-left">
-               <span className="text-[10px] uppercase tracking-[0.4em] text-secondary">Duit Atelier</span>
-               <h2 className="text-4xl md:text-6xl tracking-tighter text-primary uppercase leading-none">Join the <br /> <span className="text-secondary italic">Circle.</span></h2>
+         <div className="max-w-[1440px] mx-auto border border-neutral-100 p-12 md:p-24 flex flex-col md:flex-row justify-between items-center gap-12 rounded-[64px] shadow-sm">
+            <div className="space-y-6 text-center md:text-left">
+               <span className="text-xs uppercase tracking-[0.4em] text-secondary font-bold">Duit Atelier</span>
+               <h2 className="text-5xl md:text-7xl tracking-tighter text-primary uppercase leading-none">Join the <br /> <span className="text-secondary italic">Circle.</span></h2>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-               <Link href="/login" className="inline-flex items-center justify-center gap-6 px-12 py-6 border border-neutral-200 text-primary text-[10px] uppercase tracking-[0.3em] hover:bg-neutral-50 transition-all rounded-full">
+            <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
+               <Link href="/login" className="inline-flex items-center justify-center gap-6 px-16 py-8 border border-neutral-200 text-primary text-xs uppercase tracking-[0.3em] hover:bg-neutral-50 transition-all rounded-full font-bold">
                   {language === 'th' ? 'เข้าสู่ระบบ' : 'Sign In'}
                </Link>
-               <Link href="/register" className="inline-flex items-center justify-center gap-6 px-12 py-6 bg-primary text-white text-[10px] uppercase tracking-[0.3em] hover:bg-accent-gold transition-all shadow-xl rounded-full">
-                  {language === 'th' ? 'สมัครสมาชิกใหม่' : 'Become a Member'} <ArrowRight size={16} />
+               <Link href="/register" className="inline-flex items-center justify-center gap-8 px-16 py-8 bg-primary text-white text-xs uppercase tracking-[0.3em] hover:bg-accent-gold transition-all shadow-xl rounded-full font-bold group">
+                  {language === 'th' ? 'สมัครสมาชิกใหม่' : 'Become a Member'} <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
                </Link>
             </div>
          </div>

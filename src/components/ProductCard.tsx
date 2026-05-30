@@ -33,24 +33,24 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
           {/* Subtle Badges */}
           <div className="absolute top-4 left-4 flex flex-col gap-2">
             {product.isNew && (
-              <span className="bg-white/90 backdrop-blur-sm text-[8px] px-2 py-1 uppercase tracking-widest text-primary border border-neutral-100">New</span>
+              <span className="bg-white/90 backdrop-blur-sm text-[10px] px-3 py-1.5 uppercase tracking-widest text-primary border border-neutral-100 font-bold">New</span>
             )}
             {product.isBest && (
-              <span className="bg-white/90 backdrop-blur-sm text-[8px] px-2 py-1 uppercase tracking-widest text-secondary border border-neutral-100">Essential</span>
+              <span className="bg-white/90 backdrop-blur-sm text-[10px] px-3 py-1.5 uppercase tracking-widest text-secondary border border-neutral-100 font-bold">Essential</span>
             )}
           </div>
         </div>
 
         <div className="space-y-1 px-1">
-          <h3 className="text-sm uppercase tracking-[0.1em] text-primary group-hover:opacity-60 transition-opacity">
+          <h3 className="text-base uppercase tracking-[0.1em] text-primary group-hover:opacity-60 transition-opacity font-medium">
             {product.name}
           </h3>
           <div className="flex justify-between items-baseline">
-            <p className="text-[13px] text-secondary">
+            <p className="text-sm text-secondary font-medium">
               ฿{product.price.toLocaleString()}
             </p>
             {product.category && (
-              <span className="text-[10px] uppercase tracking-widest text-neutral-300">
+              <span className="text-[11px] uppercase tracking-widest text-neutral-300 font-medium">
                 {product.category}
               </span>
             )}

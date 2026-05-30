@@ -44,11 +44,11 @@
     @apply bg-background text-foreground antialiased selection:bg-primary selection:text-white overflow-x-hidden font-sans;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv11";
     -webkit-tap-highlight-color: transparent;
-    font-size: 18px; /* Increased from 17px */
+    font-size: 20px; /* Increased from 18px */
   }
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight uppercase text-primary;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     font-weight: 400 !important;
   }
 }
@@ -61,7 +61,7 @@
     @apply bg-white border border-neutral-100/50 transition-all duration-500 hover:border-neutral-200;
   }
   .btn-primary {
-    @apply bg-primary text-white px-8 py-4 text-[10px] uppercase tracking-[0.2em] hover:opacity-80 transition-all duration-500 active:scale-95 rounded-none;
+    @apply bg-primary text-white px-8 py-4 text-xs uppercase tracking-[0.2em] hover:opacity-80 transition-all duration-500 active:scale-95 rounded-none;
   }
 }
 
