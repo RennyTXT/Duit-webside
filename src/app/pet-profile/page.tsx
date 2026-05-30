@@ -26,7 +26,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { dogBreeds, catBreeds } from '@/data/breeds';
-import { products as staticProducts, Product, PetProfile } from '@/data/products';
+import { products as staticProducts, Product, PetProfile, getRecommendedProducts } from '@/data/products';
 import { useLanguageStore, translations } from '@/store/useLanguageStore';
 import Image from 'next/image';
 import Link from 'next/link';
